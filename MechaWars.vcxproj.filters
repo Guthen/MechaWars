@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E9C7FDCE-D52A-8D73-7EB0-C5296AF258F6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map.cpp" />
+    <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\game_manager.cpp" />
+    <ClCompile Include="src\assets_manager.cpp" />
+    <ClCompile Include="src\explosion.cpp" />
+    <ClCompile Include="src\explosion_manager.cpp" />
+    <ClCompile Include="src\game\structures\structure.cpp" />
+    <ClCompile Include="src\game\ui\ui_tile_cursor.cpp" />
+    <ClCompile Include="src\game\game_camera.cpp" />
+    <ClCompile Include="src\game\game_scene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\map.h" />
+    <ClInclude Include="src\int2.h" />
+    <ClInclude Include="src\entity.h" />
+    <ClInclude Include="src\game_manager.h" />
+    <ClInclude Include="src\assets_manager.h" />
+    <ClInclude Include="src\utility\file.h" />
+    <ClInclude Include="src\utility\xml.h" />
+    <ClInclude Include="src\utility\color.h" />
+    <ClInclude Include="src\cardinal.h" />
+    <ClInclude Include="src\utility\str_comp.h" />
+    <ClInclude Include="src\explosion.h" />
+    <ClInclude Include="src\explosion_manager.h" />
+    <ClInclude Include="src\cardinal_utils.h" />
+    <ClInclude Include="src\utility\math.h" />
+    <ClInclude Include="src\libs\perlin_noise.hpp" />
+    <ClInclude Include="src\libs\fast_noise_lite.h" />
+    <ClInclude Include="src\game\structures\structure.h" />
+    <ClInclude Include="src\utility\draw.h" />
+    <ClInclude Include="src\game\game_camera.h" />
+    <ClInclude Include="src\game\structures\structure_tree.h" />
+    <ClInclude Include="src\game\structures\structure_steel.h" />
+    <ClInclude Include="src\globals.h" />
+    <ClInclude Include="src\game\ui\ui_tile_cursor.h" />
+    <ClInclude Include="src\game\structures\structure_nexus.h" />
+    <ClInclude Include="src\game\structures\team_structure.h" />
+    <ClInclude Include="src\game\teams.h" />
+    <ClInclude Include="src\game\structures\structure_generator.h" />
+    <ClInclude Include="src\game\structures\structure_drill.h" />
+    <ClInclude Include="src\game\structures\structure_silo.h" />
+    <ClInclude Include="src\game\structures\structure.fwd.h" />
+    <ClInclude Include="src\utility\rect.h" />
+    <ClInclude Include="src\game\ui\ui_base.hpp" />
+    <ClInclude Include="src\game\ui\ui_button.hpp" />
+    <ClInclude Include="src\scene.hpp" />
+    <ClInclude Include="src\game\game_scene.h" />
+    <ClInclude Include="src\utility\defered_call.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="POSTMORTEM.md" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tileset>
+	<floors>
+		<tile_def id="0" texturepath="assets/tiles/floors/asphalt.png">
+			<speed_scale>1</speed_scale>
+		</tile_def>
+		<tile_def id="1" texturepath="assets/tiles/floors/snow.png">
+			<speed_scale>0.7</speed_scale>
+		</tile_def>
+	</floors>
+</tileset>
