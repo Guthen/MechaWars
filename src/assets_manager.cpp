@@ -22,7 +22,7 @@ Texture AssetsManager::get_or_load_texture( const char* filename )
 Shader AssetsManager::get_or_load_shader( const char* filename )
 {
 	//  retrieve our registered shader
-	if ( textures.find( filename ) != textures.end() )
+	if ( shaders.find( filename ) != shaders.end() )
 	{
 		//printf( "\nAssets: get \"%s\" (ID: %d) from cache\n", filename, textures[filename].id );
 		return shaders[filename];
