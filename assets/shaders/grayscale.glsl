@@ -1,19 +1,4 @@
-/*
-in vec2 frag_tex_coords;
-in vec4 frag_color;
-
-uniform sampler2D texture0;
-uniform vec4 diffuse;
-
-out vec4 final_color;
-
-void main() 
-{
-    vec4 color = texture( texture0, frag_tex_coords ) * diffuse * frag_color;
-
-    float gray = dot( color.rgb, vec3( .299f, .587f, .114f ) );
-    final_color = vec4( gray, gray, gray, color.a );
-}*/
+//  https://github.com/raysan5/raylib/blob/master/examples/shaders/resources/shaders/glsl330/grayscale.fs
 
 #version 330
 
