@@ -1,13 +1,13 @@
 #pragma once
 
-#include "team_structure.h"
+#include "../world_entity.h"
 
 #include "../ui/ui_button.hpp"
 
-class StructureNexus : public TeamStructure
+class StructureNexus : public WorldEntity
 {
 public:
-	StructureNexus( int x, int y, Map* _map ) : TeamStructure( x, y, 2, 2, _map )
+	StructureNexus( int x, int y, Map* _map ) : WorldEntity( x, y, 2, 2, _map )
 	{
 		texture = AssetsManager::get_or_load_texture( "assets/textures/buildings/nexus.png" );
 		quad = Rectangle { 0, 0, (float) texture.height, (float) texture.height };

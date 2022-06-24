@@ -1,6 +1,6 @@
 #include "ui_tile_cursor.h"
 
-#include "../structures/structure.h"
+#include "../world_entity.h"
 
 UITileCursor::UITileCursor( Map* _map ) : UIBase(), applied_pos( { 0, 0 } )
 {
@@ -54,7 +54,7 @@ void UITileCursor::update( float dt )
 
 		if ( map->has_structure_at( applied_pos.x, applied_pos.y ) )
 		{
-			Structure* structure = map->get_structure_at_pos( applied_pos.x, applied_pos.y );
+			WorldEntity* structure = map->get_structure_at_pos( applied_pos.x, applied_pos.y );
 			hovered_structure = structure;
 
 			//  apply structure info

@@ -1,12 +1,11 @@
 #pragma once
 
-#include "structure.h"
+#include "../world_entity.h"
 
-class StructureTree : public Structure
+class StructureTree : public WorldEntity
 {
-private:
 public:
-	StructureTree::StructureTree( int x, int y, Map* _map ) : Structure( x, y, _map )
+	StructureTree( int x, int y, Map* _map ) : WorldEntity( x, y, _map )
 	{
 		texture = AssetsManager::get_or_load_texture( "assets/textures/resources/tree.png" );
 	}

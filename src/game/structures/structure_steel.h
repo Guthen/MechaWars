@@ -1,11 +1,11 @@
 #pragma once
 
-#include "structure.h"
+#include "../world_entity.h"
 
-class StructureSteel : public Structure
+class StructureSteel : public WorldEntity
 {
 public:
-	StructureSteel::StructureSteel( int x, int y, Map* _map ) : Structure( x, y, _map )
+	StructureSteel( int x, int y, Map* _map ) : WorldEntity( x, y, _map )
 	{
 		texture = AssetsManager::get_or_load_texture( "assets/textures/resources/steel_ore.png" );
 	}

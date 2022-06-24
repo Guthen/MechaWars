@@ -8,11 +8,12 @@
 #include "libs/fast_noise_lite.h"
 #include "utility/math.h"
 
+#include <unordered_map>
+
 #include "assets_manager.h"
 #include "entity.h"
 #include "int2.h"
-#include <unordered_map>
-#include "game/structures/structure.fwd.h"
+#include "game/world_entity.fwd.h"
 
 class Map : public Entity
 {
@@ -21,7 +22,7 @@ private:
 	std::vector<Rectangle> quads;
 
 	std::vector<unsigned int> tiles;
-	std::unordered_map<Int2, Structure*, Int2> structures_reservations;
+	std::unordered_map<Int2, WorldEntity*, Int2> structures_reservations;
 
 	unsigned int seed;
 public:
@@ -63,8 +64,8 @@ public:
 
 	int get_seed() { return seed; }
 
-	Structure* get_structure_at_pos( const int x, const int y );
-	void reserve_structure_pos( const int x, const int y, Structure* structure );
+	WorldEntity* get_structure_at_pos( const int x, const int y );
+	void reserve_structure_pos( const int x, const int y, WorldEntity* structure );
 	void unreserve_structure_pos( const int x, const int y );
 	bool has_structure_at( const int x, const int y );
 };

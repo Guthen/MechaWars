@@ -28,4 +28,4 @@ const Color TEAM_COLORS[9] =
 	Color { 255, 82, 119, 255 }, //  pink
 };
 
-Color get_team_color( TEAM team_id ) { return TEAM_COLORS[team_id]; }
+inline Color get_team_color( TEAM team_id ) { return TEAM_COLORS[team_id]; }

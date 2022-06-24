@@ -26,9 +26,12 @@ private:
 
 	std::function<void()> callback;
 public:
+	static const int SIZE = 10;
+
 	UIButton( const char* icon_path ) : UIBase()
 	{
 		z_order = UI_BUTTON_Z_ORDER;
+		size.x = SIZE, size.y = SIZE;
 
 		quad = Rectangle { 0.0f, 0.0f, 8.0f, 8.0f };
 		disabled_shader.id = -1;
@@ -42,10 +45,8 @@ public:
 		is_disabled = disable;
 
 		if ( is_disabled && disabled_shader.id == -1 )
-		{
 			disabled_shader = AssetsManager::get_or_load_shader( "assets/shaders/grayscale.glsl" );
-			printf( "load, shader.id=%u\n", disabled_shader.id );
-		}
+			//printf( "load, shader.id=%u\n", disabled_shader.id );
 	}
 
 	void set_callback( std::function<void()> func ) { callback = func; }

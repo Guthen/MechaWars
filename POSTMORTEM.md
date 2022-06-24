@@ -20,7 +20,7 @@ Finding a New Game Design:
 21/06/2022: ~4h00 => Adding a GameScene & completing the Button & defered calls
 22/06/2022: ~1h30 => Creating Buttons in structures w/ Icons & Grayscale Shader for disabled button
 
-Total: ~45h30
+Total: ~55h30
 
 ## What I learned from this project?
 ### C++

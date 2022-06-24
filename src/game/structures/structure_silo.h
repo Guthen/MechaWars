@@ -1,11 +1,11 @@
 #pragma once
 
-#include "team_structure.h"
+#include "../world_entity.h"
 
-class StructureSilo : public TeamStructure
+class StructureSilo : public WorldEntity
 {
 public:
-	StructureSilo::StructureSilo( int x, int y, Map* _map ) : TeamStructure( x, y, _map )
+	StructureSilo( int x, int y, Map* _map ) : WorldEntity( x, y, _map )
 	{
 		texture = AssetsManager::get_or_load_texture( "assets/textures/buildings/missile_silo.png" );
 		team_quad = Rectangle { Map::TILE_SIZE, 0, Map::TILE_SIZE, Map::TILE_SIZE };

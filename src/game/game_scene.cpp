@@ -40,10 +40,10 @@ void GameScene::render_hud()
 	utility::draw_shadow_text( TextFormat( "SEED: %d", map->get_seed() ), 20, 60, 12, RAYWHITE );
 	utility::draw_shadow_text( TextFormat( "ZOOM: %f%%", camera.get_zoom() * 100 ), 20, 80, 12, RAYWHITE );
 
-	camera.push();
+	/*camera.push();
 	Int2 pos = tile_cursor->get_pos();
 	Int2 render_pos = Int2 { pos } *Map::TILE_SIZE;
 	utility::draw_shadow_text( TextFormat( "Tile: %d", map->get_tile_at_pos( pos.x, pos.y ) ), render_pos.x, render_pos.y - 20, 12, RAYWHITE );
 	utility::draw_shadow_text( TextFormat( "TileID: %d", map->get_tile_id( pos.x, pos.y ) ), render_pos.x, render_pos.y - 30, 12, RAYWHITE );
-	camera.pop();
+	camera.pop();*/
 }

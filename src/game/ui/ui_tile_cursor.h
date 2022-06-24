@@ -17,8 +17,8 @@ private:
 
 	Int2 applied_pos {}; //  position variable to avoid updating hovering +2x2 structures
 
-	Structure* hovered_structure = nullptr;
-	Structure* selected_structure = nullptr;
+	WorldEntity* hovered_structure = nullptr;
+	WorldEntity* selected_structure = nullptr;
 public:
 	UITileCursor( Map* _map );
 

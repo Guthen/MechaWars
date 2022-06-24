@@ -333,12 +333,12 @@
     <ClCompile Include="src\explosion.cpp" />
     <ClCompile Include="src\assets_manager.cpp" />
     <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\game\world_entity.cpp" />
     <ClCompile Include="src\game_manager.cpp" />
     <ClCompile Include="src\game\game_camera.cpp" />
     <ClCompile Include="src\game\ui\ui_tile_cursor.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map.cpp" />
-    <ClCompile Include="src\game\structures\structure.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\build\raylib.vcxproj">
@@ -350,9 +350,8 @@
     <ClInclude Include="src\game\game_scene.h" />
     <ClInclude Include="src\scene.hpp" />
     <ClInclude Include="src\game\game_camera.h" />
-    <ClInclude Include="src\game\structures\structure.fwd.h" />
+    <ClInclude Include="src\game\world_entity.fwd.h" />
     <ClInclude Include="src\game\structures\structure_silo.h" />
-    <ClInclude Include="src\game\structures\team_structure.h" />
     <ClInclude Include="src\game\structures\structure_drill.h" />
     <ClInclude Include="src\game\structures\structure_generator.h" />
     <ClInclude Include="src\game\teams.h" />
@@ -378,7 +377,6 @@
     <ClInclude Include="src\utility\rect.h" />
     <ClInclude Include="src\utility\str_comp.h" />
     <ClInclude Include="src\utility\xml.h" />
-    <ClInclude Include="src\game\structures\structure.h" />
     <ClInclude Include="src\game\structures\structure_tree.h" />
     <ClInclude Include="src\game\structures\structure_steel.h" />
     <ClInclude Include="src\game\structures\structure_nexus.h" />

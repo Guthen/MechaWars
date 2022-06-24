@@ -7,7 +7,7 @@
 #include "../../entity.h"
 #include "../../map.h"
 
-class Structure : public Entity
+class WorldEntity : public Entity
 {
 protected:
 	Texture texture;
@@ -17,11 +17,11 @@ protected:
 
 	Map* map;
 public:
-	Structure( Map* _map ) : Structure( 0, 0, 1, 1, _map ) {};
-	Structure( int x, int y, Map* _map ) : Structure( x, y, 1, 1, _map ) {};
-	Structure( int x, int y, int w, int h, Map* _map );
+	WorldEntity( Map* _map ) : WorldEntity( 0, 0, 1, 1, _map ) {};
+	WorldEntity( int x, int y, Map* _map ) : WorldEntity( x, y, 1, 1, _map ) {};
+	WorldEntity( int x, int y, int w, int h, Map* _map );
 
-	~Structure() override;
+	~WorldEntity() override;
 
 	void render() override;
 

@@ -160,13 +160,15 @@ void Map::generate( const unsigned int _seed )
 		for ( unsigned int i = 0; i < players_ids.size(); i++ )
 		{
 			int id = players_ids[i];
-			//printf( "id for %d = %d\n", i, id );
+			TEAM team = (TEAM) ( i + 1 );
 
 			//  search for a valid nexus position
 			Int2 pos = find_nexus_position( get_start_position_for_player( id ));
 
 			//  create nexus
-			GameManager::create<StructureNexus>( pos.x, pos.y, this )->set_team( (TEAM) ( i + 1 ) );
+			GameManager::create<StructureNexus>( pos.x, pos.y, this )->set_team( team );
+			GameManager::create<StructureGenerator>( pos.x + 2, pos.y, this )->set_team( team );
+			GameManager::create<StructureDrill>( pos.x + 2, pos.y + 1, this )->set_team( team );
 			/*GameManager::create<StructureNexus>( 4 + team * 2, 5, this )->set_team( (TEAM) team );
 			GameManager::create<StructureGenerator>( 4 + team * 2, 7, this )->set_team( (TEAM) team );
 			GameManager::create<StructureDrill>( 5 + team * 2, 7, this )->set_team( (TEAM) team );
@@ -372,12 +374,12 @@ unsigned int Map::get_tile_at_pos( const int x, const int y )
 	return tiles[tile_id];
 }
 
-Structure* Map::get_structure_at_pos( const int x, const int y )
+WorldEntity* Map::get_structure_at_pos( const int x, const int y )
 {
 	return structures_reservations[Int2 { x, y }];
 }
 
-void Map::reserve_structure_pos( const int x, const int y, Structure* structure )
+void Map::reserve_structure_pos( const int x, const int y, WorldEntity* structure )
 {
 	structures_reservations[Int2 { x, y }] = structure;
 }
