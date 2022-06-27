@@ -19,9 +19,10 @@ Finding a New Game Design:
 08/06/2022: ~2h00 => UITileCursor managing Structure selection & UI Base & Button
 21/06/2022: ~4h00 => Adding a GameScene & completing the Button & defered calls
 22/06/2022: ~1h30 => Creating Buttons in structures w/ Icons & Grayscale Shader for disabled button
+24/06/2022: ~1h30 => Bug fix w/ `AssetsManager::get_or_load_shader` & WorldEntity now inherited by Structures & (future) Units
 27/06/2022: ~1h00 => Rider & VK-2 Units code base w/ a Sprite Animator
 
-Total: ~56h30
+Total: ~58h00
 
 ## What I learned from this project?
 ### C++
