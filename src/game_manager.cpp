@@ -4,6 +4,8 @@
 
 Scene* GameManager::current_scene;
 
+float GameManager::time;
+
 std::vector<lambda> GameManager::defereds;
 
 std::vector<std::shared_ptr<Entity>> GameManager::awaiting_queue;
@@ -127,9 +129,10 @@ void GameManager::handle_input()
 
 void GameManager::call_update( float dt )
 {
-	size_t size = awaiting_queue.size();
+	time += dt;
 
 	//  update awaiting queue
+	size_t size = awaiting_queue.size();
 	if ( size > 0 )
 	{
 		for ( const std::shared_ptr<Entity>& ent : awaiting_queue )

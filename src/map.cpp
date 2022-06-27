@@ -7,6 +7,8 @@
 #include "game/structures/structure_generator.h"
 #include "game/structures/structure_drill.h"
 #include "game/structures/structure_silo.h"
+#include "game/units/unit_vk2.h"
+#include "game/units/unit_rider.h"
 
 #include <algorithm>
 #include <random>
@@ -169,6 +171,8 @@ void Map::generate( const unsigned int _seed )
 			GameManager::create<StructureNexus>( pos.x, pos.y, this )->set_team( team );
 			GameManager::create<StructureGenerator>( pos.x + 2, pos.y, this )->set_team( team );
 			GameManager::create<StructureDrill>( pos.x + 2, pos.y + 1, this )->set_team( team );
+			GameManager::create<UnitVK2>( pos.x, pos.y + 2, this )->set_team( team );
+			GameManager::create<UnitRider>( pos.x + 1, pos.y + 2, this )->set_team( team );
 			/*GameManager::create<StructureNexus>( 4 + team * 2, 5, this )->set_team( (TEAM) team );
 			GameManager::create<StructureGenerator>( 4 + team * 2, 7, this )->set_team( (TEAM) team );
 			GameManager::create<StructureDrill>( 5 + team * 2, 7, this )->set_team( (TEAM) team );

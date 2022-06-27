@@ -339,6 +339,7 @@
     <ClCompile Include="src\game\ui\ui_tile_cursor.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map.cpp" />
+    <ClCompile Include="src\game\units\unit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\build\raylib.vcxproj">
@@ -346,6 +347,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\units\unit_rider.h" />
+    <ClInclude Include="src\game\units\unit_vk2.h" />
+    <ClInclude Include="src\animator.hpp" />
     <ClInclude Include="src\utility\defered_call.hpp" />
     <ClInclude Include="src\game\game_scene.h" />
     <ClInclude Include="src\scene.hpp" />
@@ -380,6 +384,7 @@
     <ClInclude Include="src\game\structures\structure_tree.h" />
     <ClInclude Include="src\game\structures\structure_steel.h" />
     <ClInclude Include="src\game\structures\structure_nexus.h" />
+    <ClInclude Include="src\game\units\unit.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />

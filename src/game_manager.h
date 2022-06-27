@@ -13,6 +13,8 @@ class GameManager
 private:
 	static Scene* current_scene;
 
+	static float time;
+
 	static std::vector<lambda> defereds;
 
 	//  std::shared_ptr is necessary to contain the values even after the creation & exiting current scope
@@ -59,6 +61,7 @@ public:
 
 	static bool is_clearing() { return _is_clearing; }
 	static std::vector<std::shared_ptr<Entity>> get_entities() { return entities; }
+	static float get_time() { return time; }
 };
 
 //#define DEFERED( code )  GameManager::call_defered( DeferedCall( [&]() { code } ) )  //  macro are awesome

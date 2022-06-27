@@ -20,6 +20,7 @@
     <ClCompile Include="src\game\game_camera.cpp" />
     <ClCompile Include="src\game\game_scene.cpp" />
     <ClCompile Include="src\game\world_entity.cpp" />
+    <ClCompile Include="src\game\units\unit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\map.h" />
@@ -38,7 +39,6 @@
     <ClInclude Include="src\utility\math.h" />
     <ClInclude Include="src\libs\perlin_noise.hpp" />
     <ClInclude Include="src\libs\fast_noise_lite.h" />
-    <ClInclude Include="src\game\world_entity.h" />
     <ClInclude Include="src\utility\draw.h" />
     <ClInclude Include="src\game\game_camera.h" />
     <ClInclude Include="src\game\structures\structure_tree.h" />
@@ -57,6 +57,10 @@
     <ClInclude Include="src\scene.hpp" />
     <ClInclude Include="src\game\game_scene.h" />
     <ClInclude Include="src\utility\defered_call.hpp" />
+    <ClInclude Include="src\game\units\unit_vk2.h" />
+    <ClInclude Include="src\animator.hpp" />
+    <ClInclude Include="src\game\units\unit_rider.h" />
+    <ClInclude Include="src\game\units\unit.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />

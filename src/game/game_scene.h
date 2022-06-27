@@ -19,7 +19,7 @@ private:
 
 	unsigned int seed;
 public:
-	GameScene( unsigned int seed = 1353857574 );
+	GameScene( unsigned int seed = 1353857574 ) : seed( seed ) {};
 
 	void init() override;
 

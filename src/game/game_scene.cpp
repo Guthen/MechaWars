@@ -1,11 +1,9 @@
 #include "game_scene.h"
 
-GameScene::GameScene( unsigned int seed ) : seed( seed ) {}
-
 void GameScene::init()
 {
 	//  game init
-		//GameManager::add_entity( std::make_shared<EntityMap>( EntityMap( 16, 16 ) ) );
+	//GameManager::add_entity( std::make_shared<EntityMap>( EntityMap( 16, 16 ) ) );
 	map = GameManager::create<Map>( 64, 64 );
 	map->generate( seed );
 	//GameMap->generate( std::chrono::system_clock::now().time_since_epoch().count() );

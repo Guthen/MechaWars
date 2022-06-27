@@ -1,6 +1,7 @@
 #include "ui_tile_cursor.h"
 
 #include "../world_entity.h"
+#include "../../game_manager.h"
 
 UITileCursor::UITileCursor( Map* _map ) : UIBase(), applied_pos( { 0, 0 } )
 {
@@ -84,9 +85,15 @@ void UITileCursor::update( float dt )
 	should_update_pos = false;
 }
 
-const int offset = 1;
+const int OFFSET = 1;
 void UITileCursor::render()
 {
+	float offset = OFFSET;
+	if ( selected_structure )
+		offset += 1 + abs( sin( GameManager::get_time() * 3.0f ) ) * .5f;
+	else if ( hovered_structure )
+		offset += 1;
+
 	//  top-left
 	DrawTextureEx( texture, Vector2 { (float) pos.x * Map::TILE_SIZE - offset, (float) pos.y * Map::TILE_SIZE - offset }, 0.0f, 1.0f, color );
 	//  top-right
