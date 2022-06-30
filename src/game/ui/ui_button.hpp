@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../../utility/defered_call.hpp"
 #include "ui_base.hpp"
 
 #include <functional>
@@ -28,13 +29,15 @@ private:
 public:
 	static const int SIZE = 10;
 
-	UIButton( const char* icon_path ) : UIBase()
+	UIButton( const char* icon_path, lambda call ) : UIBase()
 	{
 		z_order = UI_BUTTON_Z_ORDER;
 		size.x = SIZE, size.y = SIZE;
 
 		quad = Rectangle { 0.0f, 0.0f, 8.0f, 8.0f };
 		disabled_shader.id = -1;
+
+		set_callback( call );
 		
 		background_texture = AssetsManager::get_or_load_texture( "assets/textures/ui/background_icon.png" );
 		icon_texture = AssetsManager::get_or_load_texture( icon_path );

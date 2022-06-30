@@ -16,9 +16,8 @@ public:
 
 	void on_selected() override
 	{
-		create_button( "assets/textures/ui/icon_missile.png" )->set_disabled( true );
-		create_button( "assets/textures/ui/icon_bomb.png" );
-		create_button( "assets/textures/ui/icon_refuse.png" );
+		create_button( "assets/textures/ui/icons/missile.png", [&]() {} )->set_disabled( true );
+		create_button( "assets/textures/ui/icons/bomb.png", [&]() { safe_destroy(); } );
 
 		perform_layout();
 	}
