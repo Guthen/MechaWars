@@ -5,6 +5,8 @@
 namespace utility
 {
 	static float lerp( float a, float b, float t ) { return ( 1 - t ) * a + b * t; }
+	static float get_direction_angle( Vector2 dir )
+	{ return atan2( dir.y, dir.x ) * RAD2DEG; }
 
 	static float distance( float a_x, float a_y, float b_x, float b_y ) 
 	{ return sqrt( pow( a_x - b_x, 2 ) + pow( a_y - b_y, 2 ) ); }
