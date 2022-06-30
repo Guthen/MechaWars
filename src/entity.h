@@ -31,9 +31,6 @@ protected:
 public:
 	static unsigned int global_id;
 
-	//  TODO: remove, not used anymore
-	bool is_clearable = true; //  can the entity be deleted by GameManager::clear()
-
 	Entity();
 	virtual ~Entity();
 

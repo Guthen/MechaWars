@@ -5,10 +5,7 @@
 class Scene : public Entity
 {
 public:
-	Scene()
-	{
-		//is_clearable = false;
-	}
+	Scene() {}
 
 	virtual void init() {};
 };

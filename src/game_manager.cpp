@@ -52,18 +52,8 @@ void GameManager::clear()
 	Entity::global_id = 0;
 	_is_clearing = true;
 
-	int count = 0;
-	std::vector<std::shared_ptr<Entity>>::iterator i = entities.begin();
-	while ( !( i == entities.end() ) )
-	{
-		if ( ( *i )->is_clearable )
-		{
-			i = entities.erase( i );
-			count++;
-		}
-		else
-			i++;
-	}
+	size_t count = entities.size();
+	entities.clear();
 
 	printf( "GameManager: clear, %d entities removed\n", count );
 	_is_clearing = false;
