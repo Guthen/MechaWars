@@ -1,0 +1,18 @@
+#pragma once
+
+#include "unit_state.fwd.h"
+#include "../unit.fwd.h"
+
+#include <string>
+
+class UnitState
+{
+protected:
+	Unit* unit;
+public:
+	UnitState( Unit* unit );
+
+	virtual void update( float dt ) {};
+
+	virtual std::string str() const { return "UnitState_Base"; };
+};

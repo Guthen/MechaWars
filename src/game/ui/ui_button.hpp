@@ -81,7 +81,7 @@ public:
 	{
 		Vector2 mouse_pos = GameCamera::get_current()->get_mouse_pos();
 
-		if ( is_colliding( mouse_pos.x, mouse_pos.y ) )
+		if ( is_colliding( (int) mouse_pos.x, (int) mouse_pos.y ) )
 		{
 			if ( IsMouseButtonDown( MOUSE_BUTTON_LEFT ) )
 				state = BUTTON_STATE::CLICKED;

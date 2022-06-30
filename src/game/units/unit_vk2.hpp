@@ -14,4 +14,13 @@ public:
 
 		team_quad = Rectangle { 16, 0, 8, 8 };
 	}
+
+	void on_selected() override
+	{
+		create_button( "assets/textures/ui/icons/cancel.png", [&]() {
+
+		} );
+
+		perform_layout();
+	}
 };

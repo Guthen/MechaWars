@@ -29,19 +29,19 @@ void unload()
 void update( float dt )
 {
 	//  update entities
-	GameManager::call_update( dt );
+	GameManager::update( dt );
 }
 
 void render()
 {
 	//  render entities
-	GameManager::call_render();
+	GameManager::render();
 }
 
 void render_hud()
 {
 	//  render entities
-	GameManager::call_render_hud();
+	GameManager::render_hud();
 	
 	//  debug show grid
 	/*Int2 size = GameMap->get_size();

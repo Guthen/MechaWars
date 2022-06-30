@@ -71,7 +71,7 @@ void Explosion::render()
 	//  update color
 	float max_time = LIFE_TIME - UNRESERVE_TIME;
 	if ( life_time <= max_time )
-		color.a = utility::ease_in_cubic( life_time / max_time ) * 255.0f;
+		color.a = (unsigned char) ( utility::ease_in_cubic( life_time / max_time ) * 255.0f );
 
 	DrawTexturePro( texture, src, dest, Vector2 { (float) texture.width / 4, (float) texture.height / 4 }, rotation, color );
 	//DrawRectangle( draw_pos.x, draw_pos.y, size.x, size.y, WHITE );

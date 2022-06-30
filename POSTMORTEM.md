@@ -21,6 +21,7 @@ Finding a New Game Design:
 22/06/2022: ~1h30 => Creating Buttons in structures w/ Icons & Grayscale Shader for disabled button
 24/06/2022: ~1h30 => Bug fix w/ `AssetsManager::get_or_load_shader` & WorldEntity now inherited by Structures & (future) Units
 27/06/2022: ~1h00 => Rider & VK-2 Units code base w/ a Sprite Animator
+30/06/2022: ~5h00 => Bullet, Unit State Machine (Idle, Shoot), Timers, Debug Text & Clean Up
 
 Total: ~58h00
 
@@ -31,7 +32,7 @@ Total: ~58h00
 + use of `std::shared_ptr`/`std::unique_ptr` for handling value & allocation of a dynamic object
 + pointers have to be used to avoid object slicing (truncating a derived class to its parent class)
 + cyclic references: use forward declaration (+pointers) & include headers in .cpp's
-+ basic differences between a `r-value` & a `l-value` 
++ basic differences between a `r-value` (~values) & a `l-value` (~variables)
 + basically no-differences between a `.h` & a `.hpp` header files
 + must return a pointer in order to return an array of values from a function
 + `#pragma region` similar to `#region` from C# (specific to Visual Studio though)

@@ -22,7 +22,7 @@ protected:
 
 	Map* map;
 
-	const int MARGIN = 2;
+	const int MARGIN = 3;
 public:
 	WorldEntity( Map* _map ) : WorldEntity( 0, 0, 1, 1, _map ) {};
 	WorldEntity( int x, int y, Map* _map ) : WorldEntity( x, y, 1, 1, _map ) {};
@@ -39,6 +39,7 @@ public:
 
 	virtual void on_selected() {};
 	virtual void on_unselected();
+	virtual void on_right_click_selected() {};
 
 	void set_team( TEAM id )
 	{

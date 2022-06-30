@@ -36,7 +36,7 @@ public:
 
 	bool operator==( Entity &a );
 
-	virtual bool unhandled_mouse_click( int mouse_button, bool is_pressed ) { return false;  };
+	virtual bool unhandled_mouse_click( int mouse_button, bool is_pressed ) { return false; };
 
 	virtual void update( const float dt ) {};
 	virtual void render() {};

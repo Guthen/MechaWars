@@ -7,6 +7,9 @@
 #include "entity.h"
 
 #include "utility/defered_call.hpp"
+#include "utility/draw.h"
+
+#define DRAW_DEBUG( text )  GameManager::debug_text( text )
 
 class GameManager
 {
@@ -16,6 +19,8 @@ private:
 	static float time;
 
 	static std::vector<lambda> defereds;
+	static std::vector<Timer> timers;
+	static std::vector<std::string> debug_texts;
 
 	//  std::shared_ptr is necessary to contain the values even after the creation & exiting current scope
 	//  it also manages the deallocation of the Entity by itself (since I use the 'new' keyword which allocates on the heap)
@@ -33,17 +38,30 @@ public:
 	static T* create( Args... args )
 	{
 		auto instance = new T( args... );
+		if ( !instance )
+		{
+			printf( "Error: OUT OF MEMORY!" );
+			exit( 1 );
+		}
+
 		std::shared_ptr<T> ptr = std::shared_ptr<T>( instance );
 		add_entity( ptr );
-		return ptr.get();
+		return instance;
 	}
+
+	static void reset();
 
 	template <typename T, typename... Args>
 	static void change_scene( Args... args ) 
 	{ change_scene_to( create<T>( args... ) ); }
 	static void change_scene_to( Scene* scene );
 
-	static void call_defered( lambda call );
+	static void defered_call( lambda call )
+	{ defereds.push_back( call ); }
+	static void timed_call( float time, lambda call )
+	{ timers.push_back( Timer( time, call ) ); }
+	static void debug_text( std::string text )
+	{ debug_texts.push_back( text ); }
 
 	static void add_entity( std::shared_ptr<Entity> entity );
 	static void remove_entity( Entity* entity );
@@ -55,9 +73,9 @@ public:
 
 	static void handle_input();
 
-	static void call_update( float dt );
-	static void call_render();
-	static void call_render_hud();
+	static void update( float dt );
+	static void render();
+	static void render_hud();
 
 	static bool is_clearing() { return _is_clearing; }
 	static std::vector<std::shared_ptr<Entity>> get_entities() { return entities; }

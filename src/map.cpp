@@ -7,8 +7,8 @@
 #include "game/structures/structure_generator.h"
 #include "game/structures/structure_drill.h"
 #include "game/structures/structure_silo.h"
-#include "game/units/unit_vk2.h"
-#include "game/units/unit_rider.h"
+#include "game/units/unit_vk2.hpp"
+#include "game/units/unit_rider.hpp"
 
 #include <algorithm>
 #include <random>
@@ -148,7 +148,7 @@ void Map::generate( const unsigned int _seed )
 	#pragma endregion
 
 	#pragma region PlayersGeneration
-		int n_players = 2;
+		int n_players = 4;
 
 		//  create a list of players ids
 		std::vector<int> players_ids( n_players );
@@ -379,14 +379,10 @@ unsigned int Map::get_tile_at_pos( const int x, const int y )
 }
 
 WorldEntity* Map::get_structure_at_pos( const int x, const int y )
-{
-	return structures_reservations[Int2 { x, y }];
-}
+{ return structures_reservations[Int2 { x, y }]; }
 
 void Map::reserve_structure_pos( const int x, const int y, WorldEntity* structure )
-{
-	structures_reservations[Int2 { x, y }] = structure;
-}
+{ structures_reservations[Int2 { x, y }] = structure; }
 
 void Map::unreserve_structure_pos( const int x, const int y )
 {
@@ -397,7 +393,5 @@ void Map::unreserve_structure_pos( const int x, const int y )
 }
 
 bool Map::has_structure_at( const int x, const int y )
-{
-	return !( structures_reservations.find( Int2 { x, y } ) == structures_reservations.end() );
-}
+{ return !( structures_reservations.find( Int2 { x, y } ) == structures_reservations.end() ); }
 

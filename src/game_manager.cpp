@@ -7,6 +7,8 @@ Scene* GameManager::current_scene;
 float GameManager::time;
 
 std::vector<lambda> GameManager::defereds;
+std::vector<Timer> GameManager::timers;
+std::vector<std::string> GameManager::debug_texts;
 
 std::vector<std::shared_ptr<Entity>> GameManager::awaiting_queue;
 std::vector<std::shared_ptr<Entity>> GameManager::entities;
@@ -25,9 +27,6 @@ void GameManager::change_scene_to( Scene* scene )
 	printf( "GameManager: scene changed!\n" );
 }
 
-void GameManager::call_defered( lambda call )
-{ defereds.push_back( call ); }
-
 void GameManager::add_entity( std::shared_ptr<Entity> entity ) 
 { awaiting_queue.push_back( entity ); }
 
@@ -43,20 +42,23 @@ void GameManager::remove_entity( Entity* entity )
 }
 
 void GameManager::queue_entity_to_deletion( Entity* entity )
-{
-	deletion_queue.push_back( entity );
-}
+{ deletion_queue.push_back( entity ); }
 
 void GameManager::clear()
 {
-	Entity::global_id = 0;
-	_is_clearing = true;
+	//  clear queues
+	
 
+	//  reset global id
+	Entity::global_id = 0;
+
+	//  clear entities
+	_is_clearing = true;
 	size_t count = entities.size();
 	entities.clear();
+	_is_clearing = false;
 
 	printf( "GameManager: clear, %d entities removed\n", count );
-	_is_clearing = false;
 }
 
 void GameManager::free()
@@ -117,7 +119,7 @@ void GameManager::handle_input()
 		}
 }
 
-void GameManager::call_update( float dt )
+void GameManager::update( float dt )
 {
 	time += dt;
 
@@ -169,16 +171,49 @@ void GameManager::call_update( float dt )
 		
 		printf( "GameManager: called %d defered!\n", size );
 	}
+
+	//  timers
+	size = timers.size();
+	if ( size > 0 )
+	{
+		std::vector<Timer>::iterator it = timers.begin();
+		while ( !( it == timers.end() ) )
+		{
+			it->time -= dt;
+			if ( it->time <= 0 )
+			{
+				it->call();
+				it = timers.erase( it );
+				//printf( "GameManager: a timer has been deleted!\n" );
+			}
+			else
+				it++;
+		}
+	}
 }
 
-void GameManager::call_render()
+void GameManager::render()
 {
 	for ( const std::shared_ptr<Entity>& ent : entities )
 		ent->render();
 }
 
-void GameManager::call_render_hud()
+void GameManager::render_hud()
 {
 	for ( const std::shared_ptr<Entity>& ent : entities )
 		ent->render_hud();
+
+	//  draw debug
+	if ( !debug_texts.empty() )
+	{
+		Int2 text_pos { 20, 110 };
+		for ( std::string text : debug_texts )
+		{
+			utility::draw_shadow_text( text.c_str(), text_pos.x, text_pos.y, 12, RAYWHITE);
+			text_pos.y += 20;
+		}
+
+		debug_texts.clear();
+	}
+
 }

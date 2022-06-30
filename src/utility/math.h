@@ -1,23 +1,42 @@
 #pragma once
 
+#include "int2.h"
 #include <cmath>
 
 namespace utility
 {
-	static float lerp( float a, float b, float t ) { return ( 1 - t ) * a + b * t; }
+	static float lerp( float a, float b, float t ) 
+	{ return ( 1 - t ) * a + b * t; }
+
+	static float approach( float current, float target, float delta )
+	{
+		delta = abs( delta );
+
+		if ( current < target )
+			return fmin( current + delta, target );
+		else if ( current > target )
+			return fmax( current - delta, target );
+		
+		return target;
+	}
+
 	static float get_direction_angle( Vector2 dir )
 	{ return atan2( dir.y, dir.x ) * RAD2DEG; }
 
 	static float distance( float a_x, float a_y, float b_x, float b_y ) 
-	{ return sqrt( pow( a_x - b_x, 2 ) + pow( a_y - b_y, 2 ) ); }
+	{ return sqrtf( powf( a_x - b_x, 2 ) + powf( a_y - b_y, 2 ) ); }
+	static float distance( Int2 a, Int2 b ) 
+	{ return distance( (float) a.x, (float) a.y, (float) b.x, (float) b.y ); }
+
 	static float clamp( float value, float min, float max ) 
 	{ return value < min ? min : value > max ? max : value; }
+
 	static float remap_11_to_01( float value ) 
 	{ return ( value + 1.0f ) / 2.0f; }
 
-	static float round( float value, int decimals = 2 )
+	static float round( float value, float decimals = 2.0f )
 	{
-		float mul = pow( 10, decimals );
+		float mul = powf( 10, decimals );
 		return ceil( value * mul ) / mul;
 	}
 

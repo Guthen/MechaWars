@@ -21,10 +21,12 @@
     <ClCompile Include="src\game\game_scene.cpp" />
     <ClCompile Include="src\game\world_entity.cpp" />
     <ClCompile Include="src\game\units\unit.cpp" />
+    <ClCompile Include="src\game\effects\bullet.cpp" />
+    <ClCompile Include="src\game\units\states\unit_state.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\map.h" />
-    <ClInclude Include="src\int2.h" />
+    <ClInclude Include="src\utility\int2.h" />
     <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\game_manager.h" />
     <ClInclude Include="src\assets_manager.h" />
@@ -57,10 +59,16 @@
     <ClInclude Include="src\scene.hpp" />
     <ClInclude Include="src\game\game_scene.h" />
     <ClInclude Include="src\utility\defered_call.hpp" />
-    <ClInclude Include="src\game\units\unit_vk2.h" />
+    <ClInclude Include="src\game\units\unit_vk2.hpp" />
     <ClInclude Include="src\animator.hpp" />
-    <ClInclude Include="src\game\units\unit_rider.h" />
+    <ClInclude Include="src\game\units\unit_rider.hpp" />
     <ClInclude Include="src\game\units\unit.h" />
+    <ClInclude Include="src\game\effects\bullet.h" />
+    <ClInclude Include="src\game\units\states\unit_state.h" />
+    <ClInclude Include="src\game\units\unit.fwd.h" />
+    <ClInclude Include="src\game\units\states\unit_state.fwd.h" />
+    <ClInclude Include="src\game\units\states\unit_state_idle.hpp" />
+    <ClInclude Include="src\game\units\states\unit_state_shoot.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />

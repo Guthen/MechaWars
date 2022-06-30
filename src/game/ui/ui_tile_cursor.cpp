@@ -13,31 +13,40 @@ UITileCursor::UITileCursor( Map* _map ) : UIBase(), applied_pos( { 0, 0 } )
 
 bool UITileCursor::unhandled_mouse_click( int mouse_button, bool is_pressed )
 {
-	//  selection
-	if ( mouse_button == MOUSE_BUTTON_LEFT && is_pressed )
-	{
-		if ( hovered_structure )
-		{
-			if ( !( hovered_structure == selected_structure ) )
-			{
-				if ( selected_structure )
-					selected_structure->on_unselected();
+	if ( !is_pressed ) return false;
 
-				selected_structure = hovered_structure;
-				selected_structure->on_selected();
-				//printf( "%d selected\n", hovered_structure->get_id() );
+	switch ( mouse_button )
+	{
+		//  left click: select/unselect structure
+		case MOUSE_BUTTON_LEFT:
+			if ( hovered_structure )
+			{
+				if ( !( hovered_structure == selected_structure ) )
+				{
+					if ( selected_structure )
+						selected_structure->on_unselected();
+
+					selected_structure = hovered_structure;
+					selected_structure->on_selected();
+					//printf( "%d selected\n", hovered_structure->get_id() );
+
+					should_update_pos = true;
+				}
+			}
+			else if ( selected_structure )
+			{
+				selected_structure->on_unselected();
+				selected_structure = nullptr;
+				//printf( "unselected structure!\n" );
 
 				should_update_pos = true;
 			}
-		}
-		else if ( selected_structure )
-		{
-			selected_structure->on_unselected();
-			selected_structure = nullptr;
-			//printf( "unselected structure!\n" );
-
-			should_update_pos = true;
-		}
+			break;
+		//  right click: custom behaviour
+		case MOUSE_BUTTON_RIGHT:
+			if ( selected_structure )
+				selected_structure->on_right_click_selected();
+			break;
 	}
 	
 	//printf( "UITileCursor: %d, %d\n", mouse_button, is_pressed );
