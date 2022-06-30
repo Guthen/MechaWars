@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "int2.h"
+#include "utility/int2.h"
 
 constexpr unsigned int UI_BUTTON_Z_ORDER = 90;
 constexpr unsigned int UI_Z_ORDER = 100;

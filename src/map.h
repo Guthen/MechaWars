@@ -7,12 +7,12 @@
 //#include "libs/perlin_noise.hpp"
 #include "libs/fast_noise_lite.h"
 #include "utility/math.h"
+#include "utility/int2.h"
 
 #include <unordered_map>
 
 #include "assets_manager.h"
 #include "entity.h"
-#include "int2.h"
 #include "game/world_entity.fwd.h"
 
 class Map : public Entity
