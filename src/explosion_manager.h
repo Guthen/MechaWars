@@ -1,6 +1,6 @@
 #pragma once
 
-#include "int2.h"
+#include "utility/int2.h"
 
 #include "map.h"
 #include "explosion.h"
