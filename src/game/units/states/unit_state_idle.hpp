@@ -30,10 +30,11 @@ public:
 			target_dist = dist;
 		}
 
+		//  shoot target
 		if ( target )
 		{
 			Int2 target_pos = target->get_pos();
-			printf( "%p found potential target %p at %d, %d from %d, %d\n", unit, target, target_pos.x, target_pos.y, pos.x, pos.y );
+			//printf( "%p found potential target %p at %d, %d from %d, %d\n", unit, target, target_pos.x, target_pos.y, pos.x, pos.y );
 			unit->change_state<UnitState_Shoot>( target );
 		}
 	}

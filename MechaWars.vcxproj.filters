@@ -13,8 +13,6 @@
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\game_manager.cpp" />
     <ClCompile Include="src\assets_manager.cpp" />
-    <ClCompile Include="src\explosion.cpp" />
-    <ClCompile Include="src\explosion_manager.cpp" />
     <ClCompile Include="src\game\world_entity.cpp" />
     <ClCompile Include="src\game\ui\ui_tile_cursor.cpp" />
     <ClCompile Include="src\game\game_camera.cpp" />
@@ -35,8 +33,6 @@
     <ClInclude Include="src\utility\color.h" />
     <ClInclude Include="src\cardinal.h" />
     <ClInclude Include="src\utility\str_comp.h" />
-    <ClInclude Include="src\explosion.h" />
-    <ClInclude Include="src\explosion_manager.h" />
     <ClInclude Include="src\cardinal_utils.h" />
     <ClInclude Include="src\utility\math.h" />
     <ClInclude Include="src\libs\perlin_noise.hpp" />
@@ -69,6 +65,7 @@
     <ClInclude Include="src\game\units\states\unit_state.fwd.h" />
     <ClInclude Include="src\game\units\states\unit_state_idle.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_shoot.hpp" />
+    <ClInclude Include="src\game\world_entity.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />

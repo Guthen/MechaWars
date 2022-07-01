@@ -5,7 +5,7 @@
 class StructureSteel : public WorldEntity
 {
 public:
-	StructureSteel( int x, int y, Map* _map ) : WorldEntity( x, y, _map )
+	StructureSteel( int x, int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, map )
 	{
 		texture = AssetsManager::get_or_load_texture( "assets/textures/resources/steel_ore.png" );
 	}

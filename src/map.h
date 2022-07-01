@@ -22,7 +22,7 @@ private:
 	std::vector<Rectangle> quads;
 
 	std::vector<unsigned int> tiles;
-	std::unordered_map<Int2, WorldEntity*, Int2> structures_reservations;
+	std::unordered_map<Int2, std::weak_ptr<WorldEntity>, Int2> structures_reservations;
 
 	unsigned int seed;
 public:
@@ -64,8 +64,8 @@ public:
 
 	int get_seed() { return seed; }
 
-	WorldEntity* get_structure_at_pos( const int x, const int y );
-	void reserve_structure_pos( const int x, const int y, WorldEntity* structure );
+	std::weak_ptr<WorldEntity> get_structure_at_pos( const int x, const int y );
+	void reserve_structure_pos( const int x, const int y, std::weak_ptr<WorldEntity> );
 	void unreserve_structure_pos( const int x, const int y );
 	bool has_structure_at( const int x, const int y );
 };

@@ -7,7 +7,6 @@
 
 #include "assets_manager.h"
 #include "game_manager.h"
-#include "explosion_manager.h"
 #include "game/game_camera.h"
 #include "map.h"
 #include "game/ui/ui_tile_cursor.h"

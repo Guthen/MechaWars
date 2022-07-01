@@ -7,7 +7,7 @@
 class StructureNexus : public WorldEntity
 {
 public:
-	StructureNexus( int x, int y, Map* _map ) : WorldEntity( x, y, 2, 2, _map )
+	StructureNexus( int x, int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, 2, 2, map )
 	{
 		texture = AssetsManager::get_or_load_texture( "assets/textures/buildings/nexus.png" );
 		quad = Rectangle { 0, 0, (float) texture.height, (float) texture.height };
@@ -16,15 +16,10 @@ public:
 
 	void on_selected() override
 	{
-		create_button( "assets/textures/ui/icons/missile.png", [&]() {} )->set_disabled( true );
+		create_button( "assets/textures/ui/icons/missile.png", []() {} )->set_disabled( true );
 		create_button( "assets/textures/ui/icons/bomb.png", [&]() { safe_destroy(); } );
 
 		perform_layout();
 	}
-	/*void on_unselected() override
-	{
-		if ( button )
-			GameManager::queue_entity_to_deletion( button );
-	}*/
 };
 

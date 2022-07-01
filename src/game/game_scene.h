@@ -14,20 +14,17 @@ class GameScene : public Scene
 {
 private:
 	GameCamera camera;
-	Map* map = nullptr;
-	UITileCursor* tile_cursor = nullptr;
+	std::weak_ptr<Map> map;
+	std::weak_ptr<UITileCursor> tile_cursor;
 
 	unsigned int seed;
 public:
 	GameScene( unsigned int seed = 1353857574 ) : seed( seed ) {};
 
 	void init() override;
-
 	void update( float dt ) override;
-
 	void render_hud() override;
 
-
-	Map* get_map() { return map; }
+	std::weak_ptr<Map> get_map() { return map; }
 };
 

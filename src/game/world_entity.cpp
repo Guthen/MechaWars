@@ -13,7 +13,7 @@ void WorldEntity::_update_dest_rect()
 	};
 }
 
-WorldEntity::WorldEntity( const int x, const int y, const int w, const int h, Map* _map )
+WorldEntity::WorldEntity( const int x, const int y, const int w, const int h, std::weak_ptr<Map> map ) : map( map )
 {
 	pos.x = x, pos.y = y;
 	size.x = w, size.y = h;
@@ -21,18 +21,7 @@ WorldEntity::WorldEntity( const int x, const int y, const int w, const int h, Ma
 
 	quad = Rectangle { 0, 0, Map::TILE_SIZE, Map::TILE_SIZE };
 	team_id = TEAM_NONE;
-
-	map = _map;
-	reserve_pos();
-}
-
-WorldEntity::~WorldEntity()
-{
-	if ( !GameManager::is_clearing() )  //  avoid calling to Map (unreserve_pos) when it's clear time
-	{
-		unreserve_pos();
-		on_unselected();
-	}
+	//reserve_pos(); //  can't call `reserve_pos()` in the ctor since it use `shared_from_this()`
 }
 
 void WorldEntity::render()
@@ -47,24 +36,55 @@ void WorldEntity::render()
 	DrawTexturePro( texture, team_quad, dest, Vector2 {}, 0.0f, color );
 }
 
+void WorldEntity::safe_destroy()
+{
+	Entity::safe_destroy();
+	clear_buttons();
+
+	unreserve_pos();
+}
+
 void WorldEntity::reserve_pos()
 {
+	auto map_tmp = map.lock();
+	if ( !map_tmp )
+	{
+		printf( "Error: WorldEntity::reserve_pos(): Couldn't lock Map pointer!\n" );
+		return;
+	}
+
+	std::weak_ptr<WorldEntity> weak_ptr( _get_shared_from_this<WorldEntity>() ); 
 	for ( int y = 0; y < size.y; y++ )
 		for ( int x = 0; x < size.x; x++ )
-			map->reserve_structure_pos( pos.x + x, pos.y + y, this );
+			map_tmp->reserve_structure_pos( pos.x + x, pos.y + y, weak_ptr );
 }
 
 void WorldEntity::unreserve_pos()
 {
+	auto map_tmp = map.lock();
+	if ( !map_tmp )
+	{
+		printf( "Error: WorldEntity::unreserve_pos(): Couldn't lock Map pointer!\n" );
+		return;
+	}
+
 	for ( int y = 0; y < size.y; y++ )
 		for ( int x = 0; x < size.x; x++ )
-			map->unreserve_structure_pos( pos.x + x, pos.y + y );
+			map_tmp->unreserve_structure_pos( pos.x + x, pos.y + y );
 }
 
 void WorldEntity::on_unselected()
+{ clear_buttons(); }
+
+void WorldEntity::clear_buttons()
 {
-	for ( UIButton* button : buttons )
-		GameManager::queue_entity_to_deletion( button );
+	for ( auto button : buttons )
+	{
+		if ( auto button_tmp = button.lock() )
+			button_tmp->safe_destroy();
+		else
+			printf( "Error: WorldEntity::clear_buttons(): Button is not valid anymore!\n" );
+	}
 
 	buttons.clear();
 }
@@ -76,9 +96,14 @@ void WorldEntity::perform_layout()
 		( pos.y + size.y / 2 ) * Map::TILE_SIZE - UIButton::SIZE / 2
 	};
 
-	for ( UIButton* button : buttons )
+	for ( auto button : buttons )
 	{
-		button->set_pos( _pos );
-		_pos.x += MARGIN + UIButton::SIZE;
+		if ( auto button_tmp = button.lock() )
+		{
+			button_tmp->set_pos( _pos );
+			_pos.x += MARGIN + UIButton::SIZE;
+		}
+		else
+			printf( "Error: WorldEntity::perform_layout(): Button is not valid anymore!\n" );
 	}
 }

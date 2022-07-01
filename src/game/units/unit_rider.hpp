@@ -5,7 +5,7 @@
 class UnitRider : public Unit
 {
 public:
-	UnitRider( const int x, const int y, Map* map ) : Unit( x, y, map )
+	UnitRider( const int x, const int y, std::weak_ptr<Map> map ) : Unit( x, y, map )
 	{
 		texture = AssetsManager::get_or_load_texture( "assets/textures/units/rider.png" );
 

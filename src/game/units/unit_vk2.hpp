@@ -5,7 +5,7 @@
 class UnitVK2 : public Unit
 {
 public:
-	UnitVK2( const int x, const int y, Map* map ) : Unit( x, y, map )
+	UnitVK2( const int x, const int y, std::weak_ptr<Map> map ) : Unit( x, y, map )
 	{
 		texture = AssetsManager::get_or_load_texture( "assets/textures/units/vk2.png" );
 

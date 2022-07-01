@@ -18,19 +18,19 @@ protected:
 	TEAM team_id;
 	Rectangle team_quad;
 
-	std::vector<UIButton*> buttons;
+	std::vector<std::weak_ptr<UIButton>> buttons;
 
-	Map* map;
+	std::weak_ptr<Map> map;
 
 	const int MARGIN = 3;
 public:
-	WorldEntity( Map* _map ) : WorldEntity( 0, 0, 1, 1, _map ) {};
-	WorldEntity( int x, int y, Map* _map ) : WorldEntity( x, y, 1, 1, _map ) {};
-	WorldEntity( int x, int y, int w, int h, Map* _map );
-
-	~WorldEntity() override;
+	WorldEntity( std::weak_ptr<Map> map ) : WorldEntity( 0, 0, 1, 1, map ) {};
+	WorldEntity( int x, int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, 1, 1, map ) {};
+	WorldEntity( int x, int y, int w, int h, std::weak_ptr<Map> map );
 
 	void render() override;
+
+	void safe_destroy() override;
 
 	Color get_color() { return color; }
 
@@ -49,17 +49,17 @@ public:
 	TEAM get_team() { return team_id; }
 
 	template <typename... Args>
-	UIButton* create_button( Args... args )
+	std::shared_ptr<UIButton> create_button( Args... args )
 	{
-		UIButton* button = GameManager::create<UIButton>( args... );
-		buttons.push_back( button );
+		auto button = GameManager::create<UIButton>( args... );
 
 		//button->set_size( button_size, button_size );
 		button->set_color( color );
 
+		buttons.push_back( button );
 		return button;
 	}
-
+	void clear_buttons();
 	void perform_layout();
 };
 

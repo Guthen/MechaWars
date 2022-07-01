@@ -7,7 +7,7 @@
 std::vector<Unit*> Unit::units;
 
 
-Unit::Unit( const int x, const int y, Map* map ) : WorldEntity( x, y, map )
+Unit::Unit( const int x, const int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, map )
 {
 	change_state<UnitState_Idle>();
 	render_pos = ( pos * Map::TILE_SIZE ).to_v2();
@@ -61,23 +61,29 @@ void Unit::update( float dt )
 
 void Unit::on_right_click_selected()
 {
+	auto map_tmp = map.lock();
+	if ( !map_tmp ) return;
+
 	Int2 tile_mouse_pos = GameCamera::get_current()->get_tile_mouse_pos();
-	if ( map->has_structure_at( tile_mouse_pos.x, tile_mouse_pos.y ) )
+	if ( map_tmp->has_structure_at( tile_mouse_pos.x, tile_mouse_pos.y ) )
 	{
-		WorldEntity* target = map->get_structure_at_pos( tile_mouse_pos.x, tile_mouse_pos.y );
+		std::weak_ptr<WorldEntity> target = map_tmp->get_structure_at_pos( tile_mouse_pos.x, tile_mouse_pos.y );
+		if ( auto target_tmp = target.lock() )
+		{
+			TEAM target_team = target_tmp->get_team();
+			if ( target_team == TEAM_NONE || target_team == get_team() )
+				return;
 
-		TEAM target_team = target->get_team();
-		if ( target_team == TEAM_NONE || target_team == get_team() )
-			return;
+			shoot_target( target_tmp.get() );
+		}
 
-		//  change target
-		shoot_target( target );
 	}
 }
 
 void Unit::shoot_target( WorldEntity* target )
 {
 	UnitState_Shoot* shoot_state = nullptr;
+	//  change target if we are already shooting
 	if ( ( shoot_state = dynamic_cast<UnitState_Shoot*>( state ) ) )
 		shoot_state->set_target( target );
 	//  start to shoot

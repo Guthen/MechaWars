@@ -14,7 +14,7 @@
 class GameManager
 {
 private:
-	static Scene* current_scene;
+	static std::shared_ptr<Scene> current_scene;
 
 	static float time;
 
@@ -24,9 +24,10 @@ private:
 
 	//  std::shared_ptr is necessary to contain the values even after the creation & exiting current scope
 	//  it also manages the deallocation of the Entity by itself (since I use the 'new' keyword which allocates on the heap)
+	//  it also a good way to prevent dangling pointers with the use of std::weak_ptr
 	static std::vector<std::shared_ptr<Entity>> awaiting_queue;
 	static std::vector<std::shared_ptr<Entity>> entities;
-	static std::vector<Entity*> deletion_queue;
+	static std::vector<std::shared_ptr<Entity>> deletion_queue;
 
 	static bool is_queued_sorting;
 	static int sorting_frames_delay;
@@ -35,18 +36,17 @@ public:
 	GameManager() = delete;
 
 	template <typename T, typename... Args> 
-	static T* create( Args... args )
+	static std::shared_ptr<T> create( Args... args )
 	{
-		auto instance = new T( args... );
-		if ( !instance )
+		std::shared_ptr<T> ptr( new T( args... ) );
+		if ( !ptr )
 		{
 			printf( "Error: OUT OF MEMORY!" );
 			exit( 1 );
 		}
 
-		std::shared_ptr<T> ptr = std::shared_ptr<T>( instance );
 		add_entity( ptr );
-		return instance;
+		return ptr;
 	}
 
 	static void reset();
@@ -54,7 +54,7 @@ public:
 	template <typename T, typename... Args>
 	static void change_scene( Args... args ) 
 	{ change_scene_to( create<T>( args... ) ); }
-	static void change_scene_to( Scene* scene );
+	static void change_scene_to( std::shared_ptr<Scene> scene );
 
 	static void defered_call( lambda call )
 	{ defereds.push_back( call ); }
@@ -64,8 +64,8 @@ public:
 	{ debug_texts.push_back( text ); }
 
 	static void add_entity( std::shared_ptr<Entity> entity );
-	static void remove_entity( Entity* entity );
-	static void queue_entity_to_deletion( Entity* entity );
+	static void remove_entity( std::shared_ptr<Entity>& entity );
+	static void queue_entity_to_deletion( std::shared_ptr<Entity> entity );
 
 	static void clear();
 	static void free();

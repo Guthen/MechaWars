@@ -74,6 +74,8 @@ void Map::generate_tiles( FastNoiseLite gen_fnl, FastNoiseLite warp_fnl, float r
 
 void Map::generate_trees( FastNoiseLite fnl, float threshold )
 {
+	std::weak_ptr<Map> weak_ptr( _get_shared_from_this<Map>() );
+
 	for ( int y = 0; y < size.y; y++ )
 		for ( int x = 0; x < size.x; x++ )
 		{
@@ -82,12 +84,14 @@ void Map::generate_trees( FastNoiseLite fnl, float threshold )
 
 			float noise = utility::remap_11_to_01( fnl.GetNoise( (float) x, (float) y ) );
 			if ( noise >= threshold )
-				GameManager::create<StructureTree>( x, y, this );
+				GameManager::create<StructureTree>( x, y, weak_ptr )->reserve_pos();
 		}
 }
 
 void Map::generate_ores( FastNoiseLite fnl, float threshold )
 {
+	std::weak_ptr<Map> weak_ptr( _get_shared_from_this<Map>() );
+
 	for ( int y = 0; y < size.y; y++ )
 		for ( int x = 0; x < size.x; x++ )
 		{
@@ -96,7 +100,7 @@ void Map::generate_ores( FastNoiseLite fnl, float threshold )
 
 			float noise = utility::remap_11_to_01( fnl.GetNoise( (float) x, (float) y ) );
 			if ( noise >= threshold )
-				GameManager::create<StructureSteel>( x, y, this );
+				GameManager::create<StructureSteel>( x, y, weak_ptr )->reserve_pos();
 		}
 }
 
@@ -167,12 +171,28 @@ void Map::generate( const unsigned int _seed )
 			//  search for a valid nexus position
 			Int2 pos = find_nexus_position( get_start_position_for_player( id ));
 
+			//  prepare our weak pointer to map
+			std::weak_ptr<Map> weak_ptr( _get_shared_from_this<Map>() );
+
 			//  create nexus
-			GameManager::create<StructureNexus>( pos.x, pos.y, this )->set_team( team );
-			GameManager::create<StructureGenerator>( pos.x + 2, pos.y, this )->set_team( team );
-			GameManager::create<StructureDrill>( pos.x + 2, pos.y + 1, this )->set_team( team );
-			GameManager::create<UnitVK2>( pos.x, pos.y + 2, this )->set_team( team );
-			GameManager::create<UnitRider>( pos.x + 1, pos.y + 2, this )->set_team( team );
+			auto nexus = GameManager::create<StructureNexus>( pos.x, pos.y, weak_ptr );
+			nexus->set_team( team );
+			nexus->reserve_pos();
+
+			//  create generator
+			auto generator = GameManager::create<StructureGenerator>( pos.x + 2, pos.y, weak_ptr );
+			generator->set_team( team );
+			generator->reserve_pos();
+
+			//  create units
+			auto vk2 = GameManager::create<UnitVK2>( pos.x, pos.y + 2, weak_ptr );
+			vk2->set_team( team );
+			vk2->reserve_pos();
+
+			auto rider = GameManager::create<UnitRider>( pos.x + 1, pos.y + 2, weak_ptr );
+			rider->set_team( team );
+			rider->reserve_pos();
+			//GameManager::create<StructureDrill>( pos.x + 2, pos.y + 1, weak_ptr )->set_team( team );
 			/*GameManager::create<StructureNexus>( 4 + team * 2, 5, this )->set_team( (TEAM) team );
 			GameManager::create<StructureGenerator>( 4 + team * 2, 7, this )->set_team( (TEAM) team );
 			GameManager::create<StructureDrill>( 5 + team * 2, 7, this )->set_team( (TEAM) team );
@@ -378,10 +398,10 @@ unsigned int Map::get_tile_at_pos( const int x, const int y )
 	return tiles[tile_id];
 }
 
-WorldEntity* Map::get_structure_at_pos( const int x, const int y )
+std::weak_ptr<WorldEntity> Map::get_structure_at_pos( const int x, const int y )
 { return structures_reservations[Int2 { x, y }]; }
 
-void Map::reserve_structure_pos( const int x, const int y, WorldEntity* structure )
+void Map::reserve_structure_pos( const int x, const int y, std::weak_ptr<WorldEntity> structure )
 { structures_reservations[Int2 { x, y }] = structure; }
 
 void Map::unreserve_structure_pos( const int x, const int y )

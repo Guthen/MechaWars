@@ -15,5 +15,5 @@ bool Entity::operator==( Entity& a ) { return a.id == id; }
 
 void Entity::safe_destroy()
 {
-	GameManager::queue_entity_to_deletion( this );
+	GameManager::queue_entity_to_deletion( shared_from_this() );
 }

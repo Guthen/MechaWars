@@ -11,16 +11,17 @@ private:
 	Texture texture;
 	Rectangle quad;
 
-	Map* map;
+	std::weak_ptr<Map> map;
 
 	bool should_update_pos = false;
+	bool is_selecting = false;
 
 	Int2 applied_pos {}; //  position variable to avoid updating hovering +2x2 structures
 
-	WorldEntity* hovered_structure = nullptr;
-	WorldEntity* selected_structure = nullptr;
+	std::weak_ptr<WorldEntity> hovered_structure;
+	std::weak_ptr<WorldEntity> selected_structure;
 public:
-	UITileCursor( Map* _map );
+	UITileCursor( std::weak_ptr<Map> map );
 
 	bool unhandled_mouse_click( int mouse_button, bool is_pressed ) override;
 

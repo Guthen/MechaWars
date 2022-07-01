@@ -330,8 +330,6 @@
   <ItemGroup>
     <ClCompile Include="src\game\effects\bullet.cpp" />
     <ClCompile Include="src\game\game_scene.cpp" />
-    <ClCompile Include="src\explosion_manager.cpp" />
-    <ClCompile Include="src\explosion.cpp" />
     <ClCompile Include="src\assets_manager.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\game\units\states\unit_state.cpp" />
@@ -358,6 +356,7 @@
     <ClInclude Include="src\game\units\unit_rider.hpp" />
     <ClInclude Include="src\game\units\unit_vk2.hpp" />
     <ClInclude Include="src\animator.hpp" />
+    <ClInclude Include="src\game\world_entity.h" />
     <ClInclude Include="src\utility\defered_call.hpp" />
     <ClInclude Include="src\game\game_scene.h" />
     <ClInclude Include="src\scene.hpp" />
@@ -374,8 +373,6 @@
     <ClInclude Include="src\libs\fast_noise_lite.h" />
     <ClInclude Include="src\libs\perlin_noise.hpp" />
     <ClInclude Include="src\cardinal_utils.h" />
-    <ClInclude Include="src\explosion_manager.h" />
-    <ClInclude Include="src\explosion.h" />
     <ClInclude Include="src\cardinal.h" />
     <ClInclude Include="src\assets_manager.h" />
     <ClInclude Include="src\entity.h" />

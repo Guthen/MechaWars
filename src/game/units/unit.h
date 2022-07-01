@@ -36,7 +36,7 @@ protected:
 public:
 	static std::vector<Unit*> get_units() { return units; }
 	
-	Unit( const int x, const int y, Map* map );
+	Unit( const int x, const int y, std::weak_ptr<Map> map );
 	virtual ~Unit();
 
 	void update( float dt ) override;

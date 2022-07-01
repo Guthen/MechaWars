@@ -6,7 +6,7 @@
 constexpr unsigned int UI_BUTTON_Z_ORDER = 90;
 constexpr unsigned int UI_Z_ORDER = 100;
 
-class Entity
+class Entity : public std::enable_shared_from_this<Entity>
 {
 protected:
 	virtual void _update_dest_rect()
@@ -18,6 +18,10 @@ protected:
 			(float) size.y
 		};
 	}
+
+	template <typename T>
+	std::shared_ptr<T> _get_shared_from_this() 
+	{ return std::static_pointer_cast<T>( shared_from_this() ); }
 
 	unsigned int id;
 
@@ -37,7 +41,6 @@ public:
 	bool operator==( Entity &a );
 
 	virtual bool unhandled_mouse_click( int mouse_button, bool is_pressed ) { return false; };
-
 	virtual void update( const float dt ) {};
 	virtual void render() {};
 	virtual void render_hud() {};
@@ -61,6 +64,6 @@ public:
 	unsigned int get_id() { return id; }
 	unsigned int get_z_order() { return z_order; }
 
-	void safe_destroy();
+	virtual void safe_destroy();
 };
 

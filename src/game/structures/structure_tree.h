@@ -5,7 +5,7 @@
 class StructureTree : public WorldEntity
 {
 public:
-	StructureTree( int x, int y, Map* _map ) : WorldEntity( x, y, _map )
+	StructureTree( int x, int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, map )
 	{
 		texture = AssetsManager::get_or_load_texture( "assets/textures/resources/tree.png" );
 	}

@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-Scene* GameManager::current_scene;
+std::shared_ptr<Scene> GameManager::current_scene;
 
 float GameManager::time;
 
@@ -12,13 +12,13 @@ std::vector<std::string> GameManager::debug_texts;
 
 std::vector<std::shared_ptr<Entity>> GameManager::awaiting_queue;
 std::vector<std::shared_ptr<Entity>> GameManager::entities;
-std::vector<Entity*> GameManager::deletion_queue;
+std::vector<std::shared_ptr<Entity>> GameManager::deletion_queue;
 
 bool GameManager::is_queued_sorting;
 int GameManager::sorting_frames_delay;
 bool GameManager::_is_clearing;
 
-void GameManager::change_scene_to( Scene* scene )
+void GameManager::change_scene_to( std::shared_ptr<Scene> scene )
 {
 	clear();
 
@@ -30,25 +30,21 @@ void GameManager::change_scene_to( Scene* scene )
 void GameManager::add_entity( std::shared_ptr<Entity> entity ) 
 { awaiting_queue.push_back( entity ); }
 
-void GameManager::remove_entity( Entity* entity )
+void GameManager::remove_entity( std::shared_ptr<Entity>& entity )
 {
-	auto iterator = std::find_if( entities.begin(), entities.end(), [&]( std::shared_ptr<Entity> c ) { return c.get() == entity; });
+	auto iterator = std::find_if( entities.begin(), entities.end(), [&]( std::shared_ptr<Entity>& c ) { return c == entity; });
 	if ( iterator == entities.end() ) throw std::exception( "Attempt to remove an invalid entity!" ); //  tried to remove an invalid entity
 
 	//const unsigned int id = entity->get_id();
 	entities.erase( iterator );
-
 	//printf( "GameManager: Entity[%d] has been removed!\n", id );
 }
 
-void GameManager::queue_entity_to_deletion( Entity* entity )
+void GameManager::queue_entity_to_deletion( std::shared_ptr<Entity> entity )
 { deletion_queue.push_back( entity ); }
 
 void GameManager::clear()
 {
-	//  clear queues
-	
-
 	//  reset global id
 	Entity::global_id = 0;
 
@@ -127,8 +123,10 @@ void GameManager::update( float dt )
 	size_t size = awaiting_queue.size();
 	if ( size > 0 )
 	{
+		//  add to entities list
 		for ( const std::shared_ptr<Entity>& ent : awaiting_queue )
 			entities.push_back( ent );
+
 		awaiting_queue.clear();
 
 		printf( "GameManager: awaiting queue cleared (%d added)!\n", size );
@@ -146,7 +144,7 @@ void GameManager::update( float dt )
 	size = deletion_queue.size();
 	if ( size > 0 )
 	{
-		for ( Entity* ent : deletion_queue )
+		for ( std::shared_ptr<Entity>& ent : deletion_queue )
 			remove_entity( ent );
 		deletion_queue.clear();
 
