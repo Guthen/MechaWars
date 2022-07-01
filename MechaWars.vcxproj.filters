@@ -29,13 +29,10 @@
     <ClInclude Include="src\game_manager.h" />
     <ClInclude Include="src\assets_manager.h" />
     <ClInclude Include="src\utility\file.h" />
-    <ClInclude Include="src\utility\xml.h" />
-    <ClInclude Include="src\utility\color.h" />
     <ClInclude Include="src\cardinal.h" />
     <ClInclude Include="src\utility\str_comp.h" />
     <ClInclude Include="src\cardinal_utils.h" />
     <ClInclude Include="src\utility\math.h" />
-    <ClInclude Include="src\libs\perlin_noise.hpp" />
     <ClInclude Include="src\libs\fast_noise_lite.h" />
     <ClInclude Include="src\utility\draw.h" />
     <ClInclude Include="src\game\game_camera.h" />
@@ -49,7 +46,6 @@
     <ClInclude Include="src\game\structures\structure_drill.h" />
     <ClInclude Include="src\game\structures\structure_silo.h" />
     <ClInclude Include="src\game\world_entity.fwd.h" />
-    <ClInclude Include="src\utility\rect.h" />
     <ClInclude Include="src\game\ui\ui_base.hpp" />
     <ClInclude Include="src\game\ui\ui_button.hpp" />
     <ClInclude Include="src\scene.hpp" />
