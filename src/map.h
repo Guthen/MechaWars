@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <unordered_map>
 
 #include "raylib.h"
 #include "raymath.h"
@@ -8,8 +9,7 @@
 #include "libs/fast_noise_lite.h"
 #include "utility/math.h"
 #include "utility/int2.h"
-
-#include <unordered_map>
+#include "game/pathfinder.h"
 
 #include "assets_manager.h"
 #include "entity.h"

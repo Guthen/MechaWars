@@ -35,6 +35,12 @@ void GameScene::render_hud()
 
 	utility::draw_shadow_text( TextFormat( "ZOOM: %f%%", camera.get_zoom() * 100.0f ), 20, 80, 12, RAYWHITE );
 
+	//  pathfinder
+	GameCamera* camera = GameCamera::get_current();
+	camera->push();
+	Pathfinder::render();
+	camera->pop();
+
 	/*camera.push();
 	Int2 pos = tile_cursor->get_pos();
 	Int2 render_pos = Int2 { pos } *Map::TILE_SIZE;

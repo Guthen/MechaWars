@@ -23,8 +23,13 @@ namespace utility
 	static float get_direction_angle( Vector2 dir )
 	{ return atan2( dir.y, dir.x ) * RAD2DEG; }
 
+	static float distance_to_sqr( float a_x, float a_y, float b_x, float b_y ) 
+	{ return powf( a_x - b_x, 2 ) + powf( a_y - b_y, 2 ); }
+	static float distance_to_sqr( Int2 a, Int2 b )
+	{ return distance_to_sqr( (float) a.x, (float) a.y, (float) b.x, (float) b.y ); }
+
 	static float distance( float a_x, float a_y, float b_x, float b_y ) 
-	{ return sqrtf( powf( a_x - b_x, 2 ) + powf( a_y - b_y, 2 ) ); }
+	{ return sqrtf( distance_to_sqr( a_x, a_y, b_x, b_y ) ); }
 	static float distance( Int2 a, Int2 b ) 
 	{ return distance( (float) a.x, (float) a.y, (float) b.x, (float) b.y ); }
 

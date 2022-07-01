@@ -332,6 +332,7 @@
     <ClCompile Include="src\game\game_scene.cpp" />
     <ClCompile Include="src\assets_manager.cpp" />
     <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\game\pathfinder.cpp" />
     <ClCompile Include="src\game\units\states\unit_state.cpp" />
     <ClCompile Include="src\game\world_entity.cpp" />
     <ClCompile Include="src\game_manager.cpp" />
@@ -347,6 +348,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\pathfinder.h" />
+    <ClInclude Include="src\game\units\states\unit_state_move.hpp" />
+    <ClInclude Include="src\utility\astar2.hpp" />
     <ClInclude Include="src\game\effects\bullet.h" />
     <ClInclude Include="src\game\units\states\unit_state.fwd.h" />
     <ClInclude Include="src\game\units\states\unit_state.h" />

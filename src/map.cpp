@@ -20,6 +20,7 @@ Map::Map( int w, int h )
 	quads = AssetsManager::slice_texture( texture, TILE_SIZE, TILE_SIZE );
 	set_size( w, h );
 
+	Pathfinder::init( w, h );
 	//fill( 0, 0, w, h, 0 );
 }
 
@@ -28,6 +29,7 @@ void Map::render()
 {
 	Rectangle dest { 0, 0, TILE_SIZE, TILE_SIZE };
 
+	//  tiles
 	for ( int y = 0; y < size.y; y++ )
 		for ( int x = 0; x < size.x; x++ )
 		{
@@ -402,14 +404,21 @@ std::weak_ptr<WorldEntity> Map::get_structure_at_pos( const int x, const int y )
 { return structures_reservations[Int2 { x, y }]; }
 
 void Map::reserve_structure_pos( const int x, const int y, std::weak_ptr<WorldEntity> structure )
-{ structures_reservations[Int2 { x, y }] = structure; }
+{ 
+	structures_reservations[Int2 { x, y }] = structure;
+	Pathfinder::set_pos_disabled( Int2 { x, y }, true );
+}
 
 void Map::unreserve_structure_pos( const int x, const int y )
 {
 	if ( structures_reservations.size() <= 0 ) return;
 
 	if ( has_structure_at( x, y ) )
-		structures_reservations.erase( Int2 { x, y } );
+	{
+		Int2 pos { x, y };
+		structures_reservations.erase( pos );
+		Pathfinder::set_pos_disabled( pos, false );
+	}
 }
 
 bool Map::has_structure_at( const int x, const int y )
