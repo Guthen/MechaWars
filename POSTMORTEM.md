@@ -22,7 +22,7 @@ Finding a New Game Design:
 + 24/06/2022: **~1h30** => Bug fix w/ `AssetsManager::get_or_load_shader` & WorldEntity now inherited by Structures & (future) Units
 + 27/06/2022: **~1h00** => Rider & VK-2 Units code base w/ a Sprite Animator
 + 30/06/2022: **~5h00** => Bullet, Unit State Machine (Idle, Shoot), Timers, Debug Text & Clean Up
-+ 31/06/2022: **~4h00** => Rewrite Entity references to use `std::weak_ptr` instead of raw pointers
++ 01/07/2022: **~4h00** => Rewrite Entity references to use `std::weak_ptr` instead of raw pointers
 
 **Total: ~67h00**
 
