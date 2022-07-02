@@ -16,7 +16,7 @@ private:
 public:
 	UnitState_Move( Unit* unit, Int2 goal ) : UnitState( unit ) 
 	{
-		path = Pathfinder::find_path( unit->get_pos(), goal );
+		set_target( goal );
 		unit->set_should_update_render_pos( true );
 	};
 
@@ -53,7 +53,7 @@ public:
 		if ( path.empty() ) return;
 
 		//  draw path
-		Vector2 last_render_pos;
+		Vector2 last_render_pos { 0.0f, 0.0f };
 		auto first_it = path.begin();
 		for ( auto it = first_it; !( it == path.end() ); it++ )
 		{
@@ -73,6 +73,8 @@ public:
 		//  draw end
 		DrawCircle( (int) last_render_pos.x, (int) last_render_pos.y, 3.0f, PATHFINDING_COLOR);
 	}
+
+	void set_target( Int2 goal ) { path = Pathfinder::find_path( unit->get_pos(), goal ); }
 
 	std::string str() const override { return "UnitState_Move"; }
 };

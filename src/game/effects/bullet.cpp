@@ -2,7 +2,9 @@
 
 Bullet::Bullet( Vector2 pos, Vector2 dir, float dist )
 {
-	render_pos = pos;
+	dest.x = pos.x, dest.y = pos.y;
+	dest.width = size.x * Map::TILE_SIZE, dest.height = size.y * Map::TILE_SIZE;
+
 	set_move_dir( dir );
 	dist_to_move = dist;
 
@@ -13,9 +15,8 @@ Bullet::Bullet( Vector2 pos, Vector2 dir, float dist )
 void Bullet::update( float dt )
 {
 	//  movement
-	render_pos.x += move_dir.x * move_speed * dt;
-	render_pos.y += move_dir.y * move_speed * dt;
-	_update_dest_rect();
+	dest.x += move_dir.x * move_speed * dt;
+	dest.y += move_dir.y * move_speed * dt;
 	
 	//  distance
 	dist_to_move -= move_speed * dt;
@@ -32,8 +33,8 @@ void Bullet::render()
 
 	//  debug: destination
 	Int2 dest_pos { 
-		(int) ( render_pos.x + move_dir.x * dist_to_move ),
-		(int) ( render_pos.y + move_dir.y * dist_to_move )
+		(int) ( dest.x + move_dir.x * dist_to_move ),
+		(int) ( dest.y + move_dir.y * dist_to_move )
 	};
 	DrawCircleLines( dest_pos.x, dest_pos.y, 2.0f, RED );
 }

@@ -9,14 +9,13 @@ class UITileCursor : public UIBase
 {
 private:
 	Texture texture;
-	Rectangle quad;
 
 	std::weak_ptr<Map> map;
 
 	bool should_update_pos = false;
 	bool is_selecting = false;
 
-	Int2 applied_pos {}; //  position variable to avoid updating hovering +2x2 structures
+	Int2 applied_pos { 0, 0 }; //  position variable to avoid updating hovering +2x2 structures
 
 	std::weak_ptr<WorldEntity> hovered_structure;
 	std::weak_ptr<WorldEntity> selected_structure;

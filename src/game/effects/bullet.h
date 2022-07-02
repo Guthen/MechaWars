@@ -9,17 +9,6 @@
 class Bullet : public Entity
 {
 protected:
-	void _update_dest_rect() override
-	{
-		dest = Rectangle {
-			render_pos.x,
-			render_pos.y,
-			(float) size.x * Map::TILE_SIZE,
-			(float) size.y * Map::TILE_SIZE
-		};
-	}
-
-	Vector2 render_pos;
 	Vector2 move_dir;
 	float move_speed = 150.0f;
 

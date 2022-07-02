@@ -8,10 +8,14 @@
 std::vector<Unit*> Unit::units;
 
 
+void Unit::_update_dest_rect() {}  //  I take control over that
+
 Unit::Unit( const int x, const int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, map )
 {
 	change_state<UnitState_Idle>();
-	render_pos = ( pos * Map::TILE_SIZE ).to_v2();
+
+	dest.x = x * Map::TILE_SIZE, dest.y = y * Map::TILE_SIZE;
+	dest.width = size.x * Map::TILE_SIZE, dest.height = size.y * Map::TILE_SIZE;
 
 	units.push_back( this );
 }
@@ -41,9 +45,8 @@ void Unit::update( float dt )
 	//  render pos
 	if ( should_update_render_pos )
 	{
-		render_pos.x = utility::approach( render_pos.x, (float) pos.x * Map::TILE_SIZE, dt * move_speed );
-		render_pos.y = utility::approach( render_pos.y, (float) pos.y * Map::TILE_SIZE, dt * move_speed );
-		_update_dest_rect();
+		dest.x = utility::approach( dest.x, (float) pos.x * Map::TILE_SIZE, dt * move_speed );
+		dest.y = utility::approach( dest.y, (float) pos.y * Map::TILE_SIZE, dt * move_speed );
 	}
 
 	//  animator
@@ -89,21 +92,30 @@ void Unit::on_right_click_selected()
 		}
 	}
 	else
-	{
-		//  pathfinding move towards
-		change_state<UnitState_Move>( tile_mouse_pos );
-	}
+		//  move towards
+		move_to( tile_mouse_pos );
 }
 
 void Unit::shoot_target( WorldEntity* target )
 {
 	UnitState_Shoot* shoot_state = nullptr;
 	//  change target if we are already shooting
-	if ( ( shoot_state = dynamic_cast<UnitState_Shoot*>( state ) ) )
+	if ( shoot_state = dynamic_cast<UnitState_Shoot*>( state ) )
 		shoot_state->set_target( target );
 	//  start to shoot
 	else
 		change_state<UnitState_Shoot>( target );
+}
+
+void Unit::move_to( Int2 goal )
+{
+	UnitState_Move* move_state = nullptr;
+	//  change goal if we are already moving
+	if ( move_state = dynamic_cast<UnitState_Move*>( state ) )
+		move_state->set_target( goal );
+	//  move!
+	else
+		change_state<UnitState_Move>( goal );
 }
 
 void Unit::shoot_to( Int2 shoot_target )
@@ -123,9 +135,8 @@ void Unit::shoot_to( Int2 shoot_target )
 	#pragma endregion
 
 	//  knockback
-	render_pos.x -= move_dir.x * 5.0f;
-	render_pos.y -= move_dir.y * 5.0f;
-	_update_dest_rect();
+	dest.x -= move_dir.x * 5.0f;
+	dest.y -= move_dir.y * 5.0f;
 
 	//  wait effect
 	should_update_render_pos = false;

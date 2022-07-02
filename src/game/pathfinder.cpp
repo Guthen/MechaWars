@@ -6,7 +6,7 @@
 * 
  * Since it's a debug tool, it's not that useful and we should not upscale this value too much:
  * 1 looks very well with the pixel art style, but it can hide more informations we could add to the renderer (e.g. text)
- * It's fine for now..
+ * 2 is better
  */
 #define RT_QUALITY  2
 

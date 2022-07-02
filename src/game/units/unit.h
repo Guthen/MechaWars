@@ -16,17 +16,8 @@ class Unit : public WorldEntity
 private:
 	static std::vector<Unit*> units;
 protected:
-	void _update_dest_rect() override
-	{
-		dest = Rectangle {
-			render_pos.x,
-			render_pos.y,
-			(float) size.x * Map::TILE_SIZE,
-			(float) size.y * Map::TILE_SIZE
-		};
-	}
+	void _update_dest_rect() override;
 
-	Vector2 render_pos;
 	float move_speed = 16.0f;
 	bool should_update_render_pos = false;
 
@@ -56,6 +47,8 @@ public:
 		//  create and assign the new
 		state = new T( this, args... );
 	}
+
+	void move_to( Int2 goal );
 	void shoot_target( WorldEntity* target );
 	void shoot_to( Int2 shoot_target );
 

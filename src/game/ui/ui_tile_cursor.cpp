@@ -6,7 +6,6 @@
 UITileCursor::UITileCursor( std::weak_ptr<Map> map ) : UIBase(), map( map ), applied_pos( { 0, 0 } )
 {
 	texture = AssetsManager::get_or_load_texture( "assets/textures/ui/tile_cursor.png" );
-	quad = Rectangle { 0, 0, (float) texture.width, (float) texture.height };
 }
 
 bool UITileCursor::unhandled_mouse_click( int mouse_button, bool is_pressed )
@@ -61,11 +60,21 @@ void UITileCursor::update( float dt )
 	auto map_tmp = map.lock();
 	if ( !map_tmp ) return;
 
-	//  check for invalid selection
-	if ( is_selecting && selected_structure.expired() )
+	//  selection behaviour
+	if ( is_selecting )
 	{
-		is_selecting = false;
-		should_update_pos = true;
+		//  update pos of selected unit
+		if ( auto selected_tmp = selected_structure.lock() )
+		{
+			Rectangle& selected_dest = selected_tmp->get_dest_rect();
+			dest.x = selected_dest.x, dest.y = selected_dest.y;
+		}
+		//  unselect if selection is invalid
+		else
+		{
+			is_selecting = false;
+			should_update_pos = true;
+		}
 	}
 
 	//  update mouse pos
@@ -86,6 +95,8 @@ void UITileCursor::update( float dt )
 					pos = hovered_tmp->get_pos();
 					size = hovered_tmp->get_size();
 					color = hovered_tmp->get_color();
+
+					dest.x = (float) pos.x * Map::TILE_SIZE, dest.y = (float) pos.y * Map::TILE_SIZE;
 				}
 			}
 		}
@@ -94,6 +105,7 @@ void UITileCursor::update( float dt )
 			if ( should_update_pos || selected_structure.expired() )
 			{
 				pos = applied_pos;
+				dest.x = (float) pos.x * Map::TILE_SIZE, dest.y = (float) pos.y * Map::TILE_SIZE;
 
 				size.x = 1;
 				size.y = 1;
@@ -116,11 +128,11 @@ void UITileCursor::render()
 		offset += 1;
 
 	//  top-left
-	DrawTextureEx( texture, Vector2 { (float) pos.x * Map::TILE_SIZE - offset, (float) pos.y * Map::TILE_SIZE - offset }, 0.0f, 1.0f, color );
+	DrawTextureEx( texture, Vector2 { dest.x - offset, dest.y - offset }, 0.0f, 1.0f, color );
 	//  top-right
-	DrawTextureEx( texture, Vector2 { (float) ( pos.x + size.x ) * Map::TILE_SIZE + offset, (float) pos.y * Map::TILE_SIZE - offset }, 90.0f, 1.0f, color );
+	DrawTextureEx( texture, Vector2 { dest.x + size.x * Map::TILE_SIZE + offset, dest.y - offset }, 90.0f, 1.0f, color );
 	//  bottom-left
-	DrawTextureEx( texture, Vector2 { (float) pos.x * Map::TILE_SIZE - offset, (float) ( pos.y + size.y ) * Map::TILE_SIZE + offset }, 270.0f, 1.0f, color );
+	DrawTextureEx( texture, Vector2 { dest.x - offset, dest.y + size.y * Map::TILE_SIZE + offset }, 270.0f, 1.0f, color );
 	//  bottom-right
-	DrawTextureEx( texture, Vector2 { (float) ( pos.x + size.x ) * Map::TILE_SIZE + offset, (float) ( pos.y + size.y ) * Map::TILE_SIZE + offset }, 180.0f, 1.0f, color );
+	DrawTextureEx( texture, Vector2 { dest.x + size.x * Map::TILE_SIZE + offset, dest.y + size.y * Map::TILE_SIZE + offset }, 180.0f, 1.0f, color );
 }

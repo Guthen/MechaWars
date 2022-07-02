@@ -17,10 +17,10 @@ public:
 
 	void on_selected() override
 	{
-		create_button( "assets/textures/ui/icons/cancel.png", [&]() {
+		/*create_button( "assets/textures/ui/icons/cancel.png", [&]() {
 
 		} );
 
-		perform_layout();
+		perform_layout();*/
 	}
 };

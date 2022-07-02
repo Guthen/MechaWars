@@ -30,8 +30,8 @@ protected:
 	Int2 pos;
 	Int2 size;
 
-	Rectangle quad;
-	Rectangle dest;
+	Rectangle quad;  //  source rectangle
+	Rectangle dest;  //  render rectangle
 public:
 	static unsigned int global_id;
 
@@ -63,6 +63,8 @@ public:
 
 	unsigned int get_id() { return id; }
 	unsigned int get_z_order() { return z_order; }
+
+	Rectangle& get_dest_rect() { return dest; };
 
 	virtual void safe_destroy();
 };
