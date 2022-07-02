@@ -13,6 +13,7 @@ public:
 	UnitState( Unit* unit );
 
 	virtual void update( float dt ) {};
+	virtual void render() {};
 
 	virtual std::string str() const { return "UnitState_Base"; };
 };

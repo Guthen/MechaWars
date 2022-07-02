@@ -15,8 +15,7 @@ public:
 
 	void update( float dt ) override
 	{
-		current_shoot_time -= dt;
-		if ( current_shoot_time <= 0.0f )
+		if ( ( current_shoot_time -= dt ) <= 0.0f )
 		{
 			current_shoot_time += shoot_time;
 			unit->shoot_to( target->get_pos() );

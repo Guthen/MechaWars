@@ -1,6 +1,7 @@
 #include "map.h"
 
 #include "game_manager.h"
+#include "game/pathfinder.h"
 #include "game/structures/structure_tree.h"
 #include "game/structures/structure_steel.h"
 #include "game/structures/structure_nexus.h"
@@ -38,6 +39,8 @@ void Map::render()
 
 			DrawTexturePro( texture, quads[tile_id - 1], dest, zero, 0, WHITE );
 		}
+
+	Pathfinder::render();
 }
 
 void Map::fill( const int x, const int y, const int w, const int h, const int tile_id )
@@ -65,7 +68,10 @@ void Map::generate_tiles( FastNoiseLite gen_fnl, FastNoiseLite warp_fnl, float r
 			//  assign tile
 			unsigned int tile_id = TILE_SNOW;
 			if ( noise >= river_threshold )
+			{
 				tile_id = TILE_ICE_FULL;
+				//Pathfinder::set_pos_weight( Int2 { x, y }, 1.5f );  //  kinda useless 
+			}
 			
 			//printf( "%d\n", get_tile_id( x, y ) );
 			tiles[get_tile_id( x, y )] = tile_id; //  WARNING: crash if !( size.x == size.y ) 

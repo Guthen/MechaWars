@@ -1,5 +1,7 @@
 #include "game_scene.h"
 
+#include "pathfinder.h"
+
 void GameScene::init()
 {
 	//  init map
@@ -24,8 +26,10 @@ void GameScene::update( float dt )
 	if ( IsKeyPressed( KEY_R ) )
 		DEFERED(
 			auto scene = GameManager::create<GameScene>( (unsigned int) time( NULL ) );
-			GameManager::change_scene_to( scene );
-		);
+	GameManager::change_scene_to( scene );
+	);
+	else if ( IsKeyPressed( KEY_COMMA ) )
+		GameManager::set_debug_state( (DEBUG_STATE) ( ( (int) GameManager::get_debug_state() + 1 ) % DEBUG_STATE_COUNT ) );
 }
 
 void GameScene::render_hud()
@@ -36,10 +40,10 @@ void GameScene::render_hud()
 	utility::draw_shadow_text( TextFormat( "ZOOM: %f%%", camera.get_zoom() * 100.0f ), 20, 80, 12, RAYWHITE );
 
 	//  pathfinder
-	GameCamera* camera = GameCamera::get_current();
+	/*GameCamera* camera = GameCamera::get_current();
 	camera->push();
 	Pathfinder::render();
-	camera->pop();
+	camera->pop();*/
 
 	/*camera.push();
 	Int2 pos = tile_cursor->get_pos();

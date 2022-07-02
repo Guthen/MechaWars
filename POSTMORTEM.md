@@ -25,6 +25,8 @@ Finding a New Game Design:
 + 01/07/2022:
 	+ **~4h00** => Rewrite Entity references to use `std::weak_ptr` instead of raw pointers
 	+ **~4h00** => Coding my own implementation of A* Pathfinding w/ debug rendering
++ 02/07/2022:
+	+ **~3h00** => Fixing A* Implementation, batching Pathfinder rendering into a RenderTexture, add Debug States & Unit Movement
 
 **Total: ~67h00**
 

@@ -5,11 +5,9 @@
 
 #include "raylib.h"
 #include "raymath.h"
-//#include "libs/perlin_noise.hpp"
 #include "libs/fast_noise_lite.h"
 #include "utility/math.h"
 #include "utility/int2.h"
-#include "game/pathfinder.h"
 
 #include "assets_manager.h"
 #include "entity.h"

@@ -11,12 +11,22 @@
 
 #define DRAW_DEBUG( text )  GameManager::debug_text( text )
 
+#define DEBUG_STATE_COUNT  2
+enum class DEBUG_STATE
+{
+	NONE,
+	PATHFINDING,
+};
+
+
 class GameManager
 {
 private:
 	static std::shared_ptr<Scene> current_scene;
 
 	static float time;
+
+	static DEBUG_STATE debug_state;
 
 	static std::vector<lambda> defereds;
 	static std::vector<Timer> timers;
@@ -80,6 +90,10 @@ public:
 	static bool is_clearing() { return _is_clearing; }
 	static std::vector<std::shared_ptr<Entity>> get_entities() { return entities; }
 	static float get_time() { return time; }
+
+	static void set_debug_state( DEBUG_STATE state ) { debug_state = state; }
+	static bool is_debug_state( DEBUG_STATE state ) { return debug_state == state; }
+	static DEBUG_STATE get_debug_state() { return debug_state; }
 };
 
 //#define DEFERED( code )  GameManager::call_defered( DeferedCall( [&]() { code } ) )  //  macro are awesome

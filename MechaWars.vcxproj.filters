@@ -22,6 +22,7 @@
     <ClCompile Include="src\game\effects\bullet.cpp" />
     <ClCompile Include="src\game\units\states\unit_state.cpp" />
     <ClCompile Include="src\game\pathfinder.cpp" />
+    <ClCompile Include="src\utility\astar2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\map.h" />
@@ -63,7 +64,7 @@
     <ClInclude Include="src\game\units\states\unit_state_idle.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_shoot.hpp" />
     <ClInclude Include="src\game\world_entity.h" />
-    <ClInclude Include="src\utility\astar2.hpp" />
+    <ClInclude Include="src\utility\astar2.h" />
     <ClInclude Include="src\game\pathfinder.h" />
     <ClInclude Include="src\game\units\states\unit_state_move.hpp" />
   </ItemGroup>

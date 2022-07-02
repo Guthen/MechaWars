@@ -6,6 +6,8 @@ std::shared_ptr<Scene> GameManager::current_scene;
 
 float GameManager::time;
 
+DEBUG_STATE GameManager::debug_state;
+
 std::vector<lambda> GameManager::defereds;
 std::vector<Timer> GameManager::timers;
 std::vector<std::string> GameManager::debug_texts;

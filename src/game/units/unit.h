@@ -27,7 +27,7 @@ protected:
 	}
 
 	Vector2 render_pos;
-	float move_speed = 5.0f;
+	float move_speed = 16.0f;
 	bool should_update_render_pos = false;
 
 	UnitState* state = nullptr;
@@ -40,8 +40,11 @@ public:
 	virtual ~Unit();
 
 	void update( float dt ) override;
+	void render() override;
 
 	void on_right_click_selected() override;
+
+	void set_should_update_render_pos( bool active ) { should_update_render_pos = active; }
 
 	template <typename T, typename... Args>
 	void change_state( Args... args )
@@ -55,5 +58,7 @@ public:
 	}
 	void shoot_target( WorldEntity* target );
 	void shoot_to( Int2 shoot_target );
+
+	float get_move_speed() { return move_speed; }
 };
 

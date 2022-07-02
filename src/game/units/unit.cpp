@@ -2,6 +2,7 @@
 
 #include "states/unit_state_idle.hpp"
 #include "states/unit_state_shoot.hpp"
+#include "states/unit_state_move.hpp"
 
 //  static
 std::vector<Unit*> Unit::units;
@@ -59,6 +60,15 @@ void Unit::update( float dt )
 		state->update( dt );
 }
 
+void Unit::render()
+{
+	WorldEntity::render();
+
+	//  TODO: add debug condition
+	if ( state )
+		state->render();
+}
+
 void Unit::on_right_click_selected()
 {
 	auto map_tmp = map.lock();
@@ -70,13 +80,18 @@ void Unit::on_right_click_selected()
 		std::weak_ptr<WorldEntity> target = map_tmp->get_structure_at_pos( tile_mouse_pos.x, tile_mouse_pos.y );
 		if ( auto target_tmp = target.lock() )
 		{
+			//  shoot hostile entity
 			TEAM target_team = target_tmp->get_team();
 			if ( target_team == TEAM_NONE || target_team == get_team() )
 				return;
 
 			shoot_target( target_tmp.get() );
 		}
-
+	}
+	else
+	{
+		//  pathfinding move towards
+		change_state<UnitState_Move>( tile_mouse_pos );
 	}
 }
 
