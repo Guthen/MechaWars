@@ -3,7 +3,7 @@
 #include "raylib.h"
 
 #include "world_entity.fwd.h"
-#include "../map.h"
+#include "map.h"
 #include "teams.h"
 #include "ui/ui_button.hpp"
 

@@ -4,7 +4,7 @@
 
 #include <chrono>
 
-#include "../map.h"
+#include "map.h"
 #include "game_camera.h"
 #include "ui/ui_tile_cursor.h"
 #include "../game_manager.h"

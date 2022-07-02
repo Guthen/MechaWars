@@ -3,7 +3,7 @@
 #include "raylib.h"
 
 #include "../../entity.h"
-#include "../../map.h"
+#include "../map.h"
 #include "../../assets_manager.h"
 
 class Bullet : public Entity

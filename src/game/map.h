@@ -3,15 +3,16 @@
 #include <vector>
 #include <unordered_map>
 
-#include "raylib.h"
-#include "raymath.h"
-#include "libs/fast_noise_lite.h"
-#include "utility/math.h"
-#include "utility/int2.h"
+#include <raylib.h>
+#include <raymath.h>
 
-#include "assets_manager.h"
-#include "entity.h"
-#include "game/world_entity.fwd.h"
+#include "../libs/fast_noise_lite.h"
+#include "../utility/math.h"
+#include "../utility/int2.h"
+
+#include "../assets_manager.h"
+#include "../entity.h"
+#include "world_entity.fwd.h"
 
 class Map : public Entity
 {

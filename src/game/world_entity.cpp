@@ -1,6 +1,6 @@
 #include "world_entity.h"
 
-#include "../map.h"
+#include "map.h"
 #include "../game_manager.h"
 
 void WorldEntity::_update_dest_rect()

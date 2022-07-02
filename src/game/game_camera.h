@@ -4,7 +4,7 @@
 #include "../utility/math.h"
 
 #include "../globals.h"
-#include "../map.h"
+#include "map.h"
 
 class GameCamera
 {

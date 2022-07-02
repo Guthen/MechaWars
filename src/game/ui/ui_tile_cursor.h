@@ -2,7 +2,7 @@
 
 #include "ui_base.hpp"
 
-#include "../../map.h"
+#include "../map.h"
 #include "../game_camera.h"
 
 class UITileCursor : public UIBase

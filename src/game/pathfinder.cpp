@@ -1,5 +1,5 @@
 #include "pathfinder.h"
-#include "../map.h"
+#include "map.h"
 
 /*
  * Define the Quality multiplier of the Render Texture

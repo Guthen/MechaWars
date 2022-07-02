@@ -1,15 +1,15 @@
 #include "map.h"
 
-#include "game_manager.h"
-#include "game/pathfinder.h"
-#include "game/structures/structure_tree.h"
-#include "game/structures/structure_steel.h"
-#include "game/structures/structure_nexus.h"
-#include "game/structures/structure_generator.h"
-#include "game/structures/structure_drill.h"
-#include "game/structures/structure_silo.h"
-#include "game/units/unit_vk2.hpp"
-#include "game/units/unit_rider.hpp"
+#include "../game_manager.h"
+#include "pathfinder.h"
+#include "structures/structure_tree.h"
+#include "structures/structure_steel.h"
+#include "structures/structure_nexus.h"
+#include "structures/structure_generator.h"
+#include "structures/structure_drill.h"
+#include "structures/structure_silo.h"
+#include "units/unit_vk2.hpp"
+#include "units/unit_rider.hpp"
 
 #include <algorithm>
 #include <random>
