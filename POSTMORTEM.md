@@ -27,8 +27,8 @@ Finding a New Game Design:
 	+ **~4h00** => Coding my own implementation of A* Pathfinding w/ debug rendering
 + 02/07/2022:
 	+ **~3h00** => Fixing A* Implementation, batching Pathfinder rendering into a RenderTexture, add Debug States & Unit Movement
-
-**Total: ~67h00**
+	+ **~0h30** => Using `dest` rectangle for custom render positions + GIF (see `gifs/04_astar_pathfinding.gif`)
+**Total: ~70h30**
 
 ## What I learned from this project?
 ### C++
