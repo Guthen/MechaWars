@@ -16,7 +16,11 @@
 class Map : public Entity
 {
 private:
-	Texture texture;
+	RenderTexture2D rt;  //  render texture used to batch the tilemap into one render call
+	void _rt_update();
+	bool should_update_rt;
+
+	Texture tileset_texture;
 	std::vector<Rectangle> quads;
 
 	std::vector<unsigned int> tiles;

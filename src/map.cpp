@@ -17,29 +17,52 @@
 
 Map::Map( int w, int h )
 {
-	texture = AssetsManager::get_or_load_texture( "assets/textures/tiles.png" );
-	quads = AssetsManager::slice_texture( texture, TILE_SIZE, TILE_SIZE );
+	tileset_texture = AssetsManager::get_or_load_texture( "assets/textures/tiles.png" );
+	quads = AssetsManager::slice_texture( tileset_texture, TILE_SIZE, TILE_SIZE );
 	set_size( w, h );
+
+	//  render texture
+	rt = LoadRenderTexture( w * TILE_SIZE, h * TILE_SIZE );
+	quad = Rectangle { 0, 0, (float) rt.texture.width, (float) -rt.texture.height };
+	should_update_rt = true;
 
 	Pathfinder::init( w, h );
 	//fill( 0, 0, w, h, 0 );
 }
 
-Vector2 zero;
-void Map::render() 
+void Map::_rt_update()
 {
+	BeginTextureMode( rt );
+	ClearBackground( BLACK );
+
 	Rectangle dest { 0, 0, TILE_SIZE, TILE_SIZE };
 
 	//  tiles
+	Vector2 zero { 0.0f, 0.0f };
 	for ( int y = 0; y < size.y; y++ )
 		for ( int x = 0; x < size.x; x++ )
 		{
 			unsigned int tile_id = get_tile_at_pos( x, y );
 			dest.x = (float) x * TILE_SIZE, dest.y = (float) y * TILE_SIZE;
 
-			DrawTexturePro( texture, quads[tile_id - 1], dest, zero, 0, WHITE );
+			DrawTexturePro( tileset_texture, quads[tile_id - 1], dest, zero, 0, WHITE );
 		}
+	EndTextureMode();
+}
 
+void Map::render() 
+{
+	//  update render texture
+	if ( should_update_rt )
+	{
+		_rt_update();
+		should_update_rt = false;
+	}
+
+	//  draw render texture
+	DrawTextureRec( rt.texture, quad, Vector2 { 0.0f, 0.0f }, WHITE );
+
+	//  draw pathfinder above it
 	Pathfinder::render();
 }
 
