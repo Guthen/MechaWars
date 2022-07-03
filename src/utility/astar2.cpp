@@ -14,7 +14,6 @@ int Astar2::_compute_cost( Node* from, Node* to )
 	//return utility::distance_to_sqr( from->pos, to->pos ); 
 }
 
-//  TODO: nodes seems to keep their informations of the last pathfinding, causing inconsistent & weird paths
 std::vector<Int2> Astar2::find_path( Node* start, Node* end )
 {
 	NodeComparator comparator;

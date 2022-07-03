@@ -20,6 +20,7 @@
  * - https://fr.wikipedia.org/wiki/Algorithme_A*  <--  '*' is in the URL
  * - https://en.wikipedia.org/wiki/A*_search_algorithm
  * - https://docs.godotengine.org/fr/stable/classes/class_astar2d.html
+ * - https://www.youtube.com/watch?v=-L-WgKMFuhE&list=PLFt_AvWsXl0cq5Umv3pMC9SPnKjfp9eGW&ab_channel=SebastianLague (videos 1, 3 & 4)
  * 
  * @Vyrkx (A.K.A. Guthen, A.K.A. Arthur CATHELAIN)
  * June 2022
@@ -44,12 +45,6 @@ public:
 		Node* parent = nullptr;
 
 		bool operator ==( const Node& n ) const { return id == n.id; }
-		bool operator <( const Node& n ) const 
-		{ 
-			return ( f < n.f || f == n.f ) 
-				&& h < n.f; 
-		}
-		bool operator >( const Node& n ) const { return n.f < f; }
 
 		//  hash for std::unordered_set
 		size_t operator()( const Node& n ) const { return std::hash<int>()( n.id ); }
