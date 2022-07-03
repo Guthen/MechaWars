@@ -4,6 +4,7 @@
 #include <queue>
 #include <unordered_map>
 #include <unordered_set>
+#include <set>
 
 #include "int2.h"
 #include "math.h"
@@ -34,23 +35,41 @@ public:
 		
 		int id = -1;
 		Int2 pos { -1, -1 };
-		float cost = 0.0f, heuristic = 0.0f, weight = 1.0f;
+		int g = 0;  //  distance from starting node
+		int h = 0;  //  distance from ending node
+		int f = 0;  //  sum of g & h
+		float weight = 1.0f;
 		bool disabled = false;
 		std::unordered_set<int> connections; //  set of neighboors IDs
 		Node* parent = nullptr;
 
 		bool operator ==( const Node& n ) const { return id == n.id; }
-		bool operator <( const Node& n ) const { return heuristic < n.heuristic; }
-		bool operator >( const Node& n ) const { return heuristic > n.heuristic; }
+		bool operator <( const Node& n ) const 
+		{ 
+			return ( f < n.f || f == n.f ) 
+				&& h < n.f; 
+		}
+		bool operator >( const Node& n ) const { return n.f < f; }
 
 		//  hash for std::unordered_set
 		size_t operator()( const Node& n ) const { return std::hash<int>()( n.id ); }
 		size_t operator()( const Node* n ) const { return std::hash<int>()( n->id ); }
 	};
+
+	struct NodeComparator
+	{
+		bool operator()( Node* a, Node* b ) const
+		{
+			if ( b->f == a->f )
+				return b->h < a->h;
+
+			return b->f < a->f;
+		}
+	};
 protected:
 	std::unordered_map<int, Node> nodes;
 
-	float _compute_cost( Node* from, Node* to );
+	int _compute_cost( Node* from, Node* to );
 public:
 	Astar2() {};
 

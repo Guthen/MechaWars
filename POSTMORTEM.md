@@ -29,6 +29,8 @@ Finding a New Game Design:
 	+ **~3h00** => Fixing A* Implementation, batching Pathfinder rendering into a RenderTexture, add Debug States & Unit Movement
 	+ **~0h30** => Using `dest` rectangle for custom render positions + GIF (see `gifs/04_astar_pathfinding.gif`)
 	+ **0h10** => Use a Render Texture for Map rendering & move Map files in `game` folder
++ 03/07/2022:
+	+ **~4h00** => Fixing my A* Implementation (again) resulting in weird paths (comparator issue)
 
 **Total: ~70h40**
 
