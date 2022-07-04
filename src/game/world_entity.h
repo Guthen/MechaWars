@@ -42,8 +42,11 @@ public:
 	void unset_selecting_cursor() { selecting_cursor.reset(); }
 	std::weak_ptr<UITileCursor> get_selecting_cursor() { return selecting_cursor; }
 
+	void select( std::weak_ptr<UITileCursor> cursor );
+	void unselect();
+
 	virtual void on_selected() {};
-	virtual void on_unselected();
+	virtual void on_unselected() {};
 	virtual void on_right_click_selected() {};
 
 	void set_team( TEAM id )

@@ -57,8 +57,8 @@ public:
 
 		//  draw path
 		Vector2 last_render_pos { 0.0f, 0.0f };
-		auto first_it = path.begin();
-		for ( auto it = first_it; !( it == path.end() ); it++ )
+		std::vector<Int2>::iterator first_it = path.begin();
+		for ( std::vector<Int2>::iterator it = first_it; !( it == path.end() ); it++ )
 		{
 			Int2 pos = *it;
 			Vector2 current_render_pos = Pathfinder::grid_to_world_pos( pos.x, pos.y ).to_v2();
@@ -77,7 +77,19 @@ public:
 		DrawCircle( (int) last_render_pos.x, (int) last_render_pos.y, 3.0f, pathfinding_color );
 	}
 
-	void set_target( Int2 goal ) { path = Pathfinder::find_path( unit->get_pos(), goal ); }
+	void set_target( Int2 goal ) 
+	{ 
+		//  unreserve last goal
+		if ( !path.empty() )
+			Pathfinder::set_pos_disabled( path.back(), false );
+
+		//  find new path
+		path = Pathfinder::find_path( unit->get_pos(), goal, true ); 
+		
+		//  reserve new goal
+		if ( !path.empty() )
+			Pathfinder::set_pos_disabled( path.back(), true );
+	}
 
 	std::string str() const override { return "UnitState_Move"; }
 };

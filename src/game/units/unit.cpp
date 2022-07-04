@@ -5,7 +5,7 @@
 #include "states/unit_state_move.hpp"
 
 //  static
-std::vector<Unit*> Unit::units;
+std::vector<std::weak_ptr<Unit>> Unit::units;
 
 
 void Unit::_update_dest_rect() {}  //  I take control over that
@@ -14,10 +14,10 @@ Unit::Unit( const int x, const int y, std::weak_ptr<Map> map ) : WorldEntity( x,
 {
 	change_state<UnitState_Idle>();
 
-	dest.x = x * Map::TILE_SIZE, dest.y = y * Map::TILE_SIZE;
-	dest.width = size.x * Map::TILE_SIZE, dest.height = size.y * Map::TILE_SIZE;
+	dest.x = (float) x * Map::TILE_SIZE, dest.y = (float) y * Map::TILE_SIZE;
+	dest.width = (float) size.x * Map::TILE_SIZE, dest.height = (float) size.y * Map::TILE_SIZE;
 
-	units.push_back( this );
+	DEFERED( units.push_back( _get_shared_from_this<Unit>() ); );
 }
 
 Unit::~Unit()
@@ -27,16 +27,24 @@ Unit::~Unit()
 		delete state;
 
 	//  remove from list
-	std::vector<Unit*>::iterator it = units.begin();
+	std::vector<std::weak_ptr<Unit>>::iterator it = units.begin();
 	while ( !( it == units.end() ) )
 	{
-		if ( *it == this )
+		std::weak_ptr<Unit> unit = *it;
+		if ( auto unit_tmp = unit.lock() )
 		{
-			units.erase( it );
-			printf( "%p erased!\n", this );
-			break;
+			//  remove self
+			if ( unit_tmp.get() == this )
+			{
+				units.erase( it );
+				break;
+			}
+
+			it++;
 		}
-		it++;
+		//  remove invalid pointer
+		else
+			it = units.erase( it );
 	}
 }
 
@@ -67,7 +75,6 @@ void Unit::render()
 {
 	WorldEntity::render();
 
-	//  TODO: add debug condition
 	if ( state )
 		state->render();
 }
@@ -85,10 +92,15 @@ void Unit::on_right_click_selected()
 		{
 			//  shoot hostile entity
 			TEAM target_team = target_tmp->get_team();
-			if ( target_team == TEAM_NONE || target_team == get_team() )
+			if ( target_team == TEAM_NONE )
+			{
+				move_to( tile_mouse_pos );  //  move near the resource
+				return;
+			}
+			if ( target_team == get_team() )
 				return;
 
-			shoot_target( target_tmp.get() );
+			shoot_target( target_tmp );
 		}
 	}
 	else
@@ -96,7 +108,7 @@ void Unit::on_right_click_selected()
 		move_to( tile_mouse_pos );
 }
 
-void Unit::shoot_target( WorldEntity* target )
+void Unit::shoot_target( std::weak_ptr<WorldEntity> target )
 {
 	UnitState_Shoot* shoot_state = nullptr;
 	//  change target if we are already shooting
@@ -135,10 +147,9 @@ void Unit::shoot_to( Int2 shoot_target )
 	#pragma endregion
 
 	//  knockback
-	dest.x -= move_dir.x * 5.0f;
-	dest.y -= move_dir.y * 5.0f;
-
-	//  wait effect
+	float knockback_amount = (float) Map::TILE_SIZE / 2;
+	dest.x -= move_dir.x * knockback_amount;
+	dest.y -= move_dir.y * knockback_amount;
 	should_update_render_pos = false;
 	TIMER( .1f, should_update_render_pos = true; );
 }

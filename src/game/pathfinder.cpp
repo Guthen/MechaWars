@@ -42,9 +42,9 @@ void Pathfinder::_rt_update()
 		{
 			for ( int id : node.connections )
 			{
-				auto& neigh = astar.get_node( id );
-				Vector2 neigh_pos = ( grid_to_world_pos( neigh.pos.x, neigh.pos.y ) * RT_QUALITY ).to_v2();
-				DrawLineEx( node_pos, neigh_pos, RT_QUALITY, ( neigh.disabled ) ? RED : GREEN );
+				Astar2::Node* neigh = astar.get_node( id );
+				Vector2 neigh_pos = ( grid_to_world_pos( neigh->pos.x, neigh->pos.y ) * RT_QUALITY ).to_v2();
+				DrawLineEx( node_pos, neigh_pos, RT_QUALITY, neigh->disabled ? RED : GREEN );
 			}
 		}
 	}
@@ -135,8 +135,9 @@ void Pathfinder::set_pos_disabled( Int2 pos, bool disabled )
 	should_update_rt = true;
 }
 
-std::vector<Int2> Pathfinder::find_path( Int2 start, Int2 end )
+std::vector<Int2> Pathfinder::find_path( Int2 start, Int2 end, bool find_end_nearest )
 {
+	//  check nodes validity
 	int start_id = get_pos_id( start.x, start.y );
 	if ( !astar.has_node( start_id ) )
 	{
@@ -149,6 +150,36 @@ std::vector<Int2> Pathfinder::find_path( Int2 start, Int2 end )
 	{
 		_error_invalid_id( "find_path( Int2 start, Int2 end )", end_id, end );
 		return std::vector<Int2>();
+	}
+
+	//  get nearest position if end node is disabled
+	if ( find_end_nearest )
+	{
+		//  check disabled
+		Astar2::Node* end_node = astar.get_node( end_id );
+		if ( end_node->disabled )
+		{
+			Astar2::Node* min_node = nullptr;
+			float min_dist = FLT_MAX;
+
+			//  find nearest node
+			for ( int id : end_node->connections )
+			{
+				Astar2::Node* neigh = astar.get_node( id );
+				if ( neigh->disabled )
+					continue;
+
+				float dist = utility::distance_to_sqr( neigh->pos, end_node->pos );
+				if ( dist < min_dist )
+				{
+					min_node = neigh;
+					min_dist = dist;
+				}
+			}
+
+			if ( min_node )
+				end_id = min_node->id;
+		}
 	}
 
 	return astar.find_path( start_id, end_id );

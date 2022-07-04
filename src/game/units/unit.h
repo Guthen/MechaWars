@@ -14,7 +14,7 @@
 class Unit : public WorldEntity
 {
 private:
-	static std::vector<Unit*> units;
+	static std::vector<std::weak_ptr<Unit>> units;
 protected:
 	void _update_dest_rect() override;
 
@@ -25,7 +25,7 @@ protected:
 
 	Animator animator;
 public:
-	static std::vector<Unit*> get_units() { return units; }
+	static std::vector<std::weak_ptr<Unit>> get_units() { return units; }
 	
 	Unit( const int x, const int y, std::weak_ptr<Map> map );
 	virtual ~Unit();
@@ -49,7 +49,7 @@ public:
 	}
 
 	void move_to( Int2 goal );
-	void shoot_target( WorldEntity* target );
+	void shoot_target( std::weak_ptr<WorldEntity> target );
 	void shoot_to( Int2 shoot_target );
 
 	float get_move_speed() { return move_speed; }

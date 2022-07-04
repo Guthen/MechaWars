@@ -24,7 +24,8 @@ public:
 
 	static void set_pos_weight( Int2 pos, float weight );
 	static void set_pos_disabled( Int2 pos, bool disabled );
-	static std::vector<Int2> find_path( Int2 start, Int2 end );
+
+	static std::vector<Int2> find_path( Int2 start, Int2 end, bool find_end_nearest = false );
 	
 	static int get_pos_id( int x, int y );
 	static Int2 grid_to_world_pos( int x, int y );

@@ -73,12 +73,24 @@ void WorldEntity::unreserve_pos()
 			map_tmp->unreserve_structure_pos( pos.x + x, pos.y + y );
 }
 
-void WorldEntity::on_unselected()
-{ clear_buttons(); }
+void WorldEntity::select( std::weak_ptr<UITileCursor> cursor )
+{
+	set_selecting_cursor( cursor );
+
+	on_selected();
+};
+
+void WorldEntity::unselect()
+{ 
+	unset_selecting_cursor();
+	clear_buttons();
+
+	on_unselected();
+}
 
 void WorldEntity::clear_buttons()
 {
-	for ( auto button : buttons )
+	for ( std::weak_ptr<UIButton> button : buttons )
 	{
 		if ( auto button_tmp = button.lock() )
 			button_tmp->safe_destroy();
@@ -96,7 +108,7 @@ void WorldEntity::perform_layout()
 		( pos.y + size.y / 2 ) * Map::TILE_SIZE - UIButton::SIZE / 2
 	};
 
-	for ( auto button : buttons )
+	for ( std::weak_ptr<UIButton> button : buttons )
 	{
 		if ( auto button_tmp = button.lock() )
 		{

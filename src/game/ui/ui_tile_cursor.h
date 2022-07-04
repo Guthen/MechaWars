@@ -19,6 +19,9 @@ private:
 
 	std::weak_ptr<WorldEntity> hovered_structure;
 	std::weak_ptr<WorldEntity> selected_structure;
+
+	void _select( std::shared_ptr<WorldEntity> old_selected_tmp, std::shared_ptr<WorldEntity> new_selected_tmp );
+	void _update_to_hovered();
 public:
 	UITileCursor( std::weak_ptr<Map> map );
 

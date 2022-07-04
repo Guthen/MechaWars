@@ -75,7 +75,7 @@ public:
 	bool has_node( int id ) { return !( nodes.find( id ) == nodes.end() ); }
 	void reserve_nodes( size_t size ) { nodes.reserve( size ); }
 	std::unordered_map<int, Node>& get_nodes() { return nodes; }
-	Node& get_node( int id ) { return nodes[id]; }
+	Node* get_node( int id ) { return &nodes[id]; }
 
 	//  setters
 	void set_node_disabled( int id, bool disabled ) { nodes[id].disabled = disabled; }

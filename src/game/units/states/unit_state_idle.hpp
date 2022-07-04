@@ -16,18 +16,21 @@ public:
 		Int2 pos = unit->get_pos();
 
 		//  search for target
-		Unit* target = nullptr;
+		std::shared_ptr<Unit> target = nullptr;
 		float target_dist = INFINITY;
-		for ( Unit* v : Unit::get_units() )
+		for ( std::weak_ptr<Unit> v : Unit::get_units() )
 		{
-			if ( v == unit ) continue;
-			if ( v->get_team() == team ) continue;
+			if ( auto v_tmp = v.lock() )
+			{
+				if ( v_tmp.get() == unit ) continue;
+				if ( v_tmp->get_team() == team ) continue;
 
-			float dist = utility::distance( v->get_pos(), pos );
-			if ( dist >= target_dist || dist > 16.0f ) continue;
+				float dist = utility::distance( v_tmp->get_pos(), pos );
+				if ( dist >= target_dist || dist > 16.0f ) continue;
 
-			target = v;
-			target_dist = dist;
+				target = v_tmp;
+				target_dist = dist;
+			}
 		}
 
 		//  shoot target

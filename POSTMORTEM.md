@@ -31,8 +31,10 @@ Finding a New Game Design:
 	+ **0h10** => Use a Render Texture for Map rendering & move Map files in `game` folder
 + 03/07/2022:
 	+ **~4h00** => Fixing my A* Implementation (again) resulting in weird paths (comparator issue)
++ 04/07/2022: 
+	+ **~1h00** => Fix selection of Units + Pathfinding helper finding nearest end node if disabled + Change usage of pointers in `UnitState_Idle` & `UnitState_Shoot` to `std::weak_ptr`
 
-**Total: ~70h40**
+**Total: ~75h40**
 
 ## What I learned from this project?
 ### C++
