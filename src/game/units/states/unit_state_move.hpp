@@ -24,6 +24,10 @@ public:
 
 	~UnitState_Move()
 	{
+		//  unreserve last goal
+		if ( !path.empty() )
+			Pathfinder::set_pos_disabled( path.back(), false );
+
 		unit->set_should_update_render_pos( false );
 	}
 

@@ -329,6 +329,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\game\effects\bullet.cpp" />
+    <ClCompile Include="src\game\effects\explosion.cpp" />
+    <ClCompile Include="src\game\effects\explosion_manager.cpp" />
     <ClCompile Include="src\game\game_scene.cpp" />
     <ClCompile Include="src\assets_manager.cpp" />
     <ClCompile Include="src\entity.cpp" />
@@ -349,6 +351,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\utility\cardinal.h" />
+    <ClInclude Include="src\game\effects\explosion.h" />
+    <ClInclude Include="src\game\effects\explosion_manager.h" />
     <ClInclude Include="src\game\pathfinder.h" />
     <ClInclude Include="src\game\units\states\unit_state_move.hpp" />
     <ClInclude Include="src\utility\astar2.h" />

@@ -47,6 +47,7 @@ Finding a New Game Design:
 + basic differences between a `r-value` (~values) & a `l-value` (~variables)
 + basically no-differences between a `.h` & a `.hpp` header files
 + must return a pointer in order to return an array of values from a function
++ declare a virtual destructor on the base class if you override the destructor (otherwise the destructor isn't called)
 + `#pragma region` similar to `#region` from C# (specific to Visual Studio though)
 + MACRO! awesome
 + *surely a lot of things I don't remember right now..*

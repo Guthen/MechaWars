@@ -11,6 +11,7 @@ protected:
 	Unit* unit;
 public:
 	UnitState( Unit* unit );
+	virtual ~UnitState() {};  //  virtual destructors are important
 
 	virtual void update( float dt ) {};
 	virtual void render() {};

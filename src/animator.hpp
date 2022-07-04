@@ -7,27 +7,47 @@ class Animator
 {
 private:
 	std::vector<Rectangle> frames;
-	int fps = 6;
+	float fps;
+
+	bool is_loop = true;
+	bool is_playing = true;
 
 	int current_frame_id = 0;
 	float next_frame_time = 0.0f;
 public:
-	Animator( const int fps = 8 ) : fps( fps ) 
+	Animator( const float fps = 8.0f ) : fps( fps ) 
 	{
 		next_frame_time = 1.0f / fps;
 	}
 
-	void update( float dt )
+	bool update( float dt )
 	{
-		next_frame_time -= dt;
-		if ( next_frame_time <= 0.0f )
+		if ( !is_playing )
+			return false;
+
+		if ( ( next_frame_time -= dt ) <= 0.0f )
 		{
 			next_frame_time += 1.0f / fps;
-			current_frame_id = ( current_frame_id + 1 ) % frames.size();
-			//printf( "next frame! %d/%d\n", current_frame_id, frames.size() );
+
+			//  next frame
+			int next_frame_id = ( current_frame_id + 1 ) % frames.size();
+			if ( next_frame_id == 0 && is_loop )
+				is_playing = false;
+			else
+				current_frame_id = next_frame_id;
+
+			return true;
 		}
+
+		return false;
 	}
+
+	void set_playing( bool play ) { is_playing = play; }
+	void set_loop( bool loop ) { is_loop = loop; }
+	void set_fps( float _fps ) { fps = _fps; }
+	void set_fps_to_time( float time ) { set_fps( ( frames.size() / time ) ); }
 
 	void add_frame( Rectangle quad ) { frames.push_back( quad ); }
 	Rectangle get_current_frame() { return frames[current_frame_id]; }
+	int get_frame_count() { return frames.size(); }
 };

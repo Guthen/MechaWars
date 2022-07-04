@@ -1,13 +1,21 @@
 #pragma once
 
-#include "cardinal.h"
+#include <cmath>
+#include <raylib.h>
 
-class CardinalUtils
+#include "int2.h"
+
+enum class Cardinal
 {
-public:
-	CardinalUtils() = delete;
+	SOUTH,
+	WEST,
+	NORTH,
+	EAST,
+};
 
-	static Cardinal get_dir( const Int2 from, const Int2 to )
+namespace utility
+{
+	static Cardinal get_cardinal( const Int2 from, const Int2 to )
 	{
 		float fourty_five = PI / 4;
 		float one_hundred_thirty_five = PI / 1.33333f;
@@ -23,7 +31,7 @@ public:
 		return Cardinal::NORTH;
 	}
 
-	static Int2 get_offset( const Cardinal dir )
+	static Int2 get_cardinal_offset( const Cardinal dir )
 	{
 		switch ( dir )
 		{

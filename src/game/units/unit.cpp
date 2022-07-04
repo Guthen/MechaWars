@@ -58,8 +58,8 @@ void Unit::update( float dt )
 	}
 
 	//  animator
-	animator.update( dt );
-	quad = animator.get_current_frame();
+	if ( animator.update( dt ) )
+		quad = animator.get_current_frame();
 
 	//  debug draw
 	DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
@@ -143,7 +143,7 @@ void Unit::shoot_to( Int2 shoot_target )
 		Vector2 bullet_pos = ( pos * Map::TILE_SIZE ).to_v2();
 		bullet_pos.x += (float) ( Map::TILE_SIZE / 2 );
 		bullet_pos.y += (float) ( Map::TILE_SIZE / 2 );
-		GameManager::create<Bullet>( bullet_pos, move_dir, dist_to_move );
+		GameManager::create<Bullet>( map, bullet_pos, move_dir, dist_to_move );
 	#pragma endregion
 
 	//  knockback
