@@ -20,7 +20,7 @@ bool Pathfinder::should_update_rt;
 
 void Pathfinder::_error_invalid_id( std::string signature, int node_id, Int2 pos )
 {
-	printf( "Error: Pathfinder::%s: Node[%d] at x=%d, y=%d doesn't exists!", signature.c_str(), node_id, pos.x, pos.y);
+	printf( "Error: Pathfinder::%s: Node[%d] at x=%d, y=%d doesn't exists!", signature.c_str(), node_id, pos.x, pos.y );
 }
 
 void Pathfinder::_rt_update()

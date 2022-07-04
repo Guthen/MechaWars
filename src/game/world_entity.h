@@ -6,6 +6,7 @@
 #include "map.h"
 #include "teams.h"
 #include "ui/ui_button.hpp"
+#include "ui/ui_tile_cursor.h"
 
 class WorldEntity : public Entity
 {
@@ -18,9 +19,9 @@ protected:
 	TEAM team_id;
 	Rectangle team_quad;
 
-	std::vector<std::weak_ptr<UIButton>> buttons;
-
 	std::weak_ptr<Map> map;
+	std::weak_ptr<UITileCursor> selecting_cursor; //  tile cursor which is currently selecting the world entity
+	std::vector<std::weak_ptr<UIButton>> buttons;
 
 	const int MARGIN = 3;
 public:
@@ -36,6 +37,10 @@ public:
 
 	void reserve_pos();
 	void unreserve_pos();
+
+	void set_selecting_cursor( std::weak_ptr<UITileCursor> cursor ) { selecting_cursor = cursor; }
+	void unset_selecting_cursor() { selecting_cursor.reset(); }
+	std::weak_ptr<UITileCursor> get_selecting_cursor() { return selecting_cursor; }
 
 	virtual void on_selected() {};
 	virtual void on_unselected();

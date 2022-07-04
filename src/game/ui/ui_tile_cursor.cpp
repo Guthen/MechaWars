@@ -26,6 +26,7 @@ bool UITileCursor::unhandled_mouse_click( int mouse_button, bool is_pressed )
 					if ( selected_tmp )
 						selected_tmp->on_unselected();
 
+					hovered_tmp->set_selecting_cursor( _get_shared_from_this<UITileCursor>() );
 					hovered_tmp->on_selected();
 					selected_structure = hovered_tmp;
 					//printf( "%d selected\n", hovered_structure->get_id() );
@@ -36,6 +37,7 @@ bool UITileCursor::unhandled_mouse_click( int mouse_button, bool is_pressed )
 			}
 			else if ( selected_tmp )
 			{
+				selected_tmp->unset_selecting_cursor();
 				selected_tmp->on_unselected();
 				selected_structure.reset();
 				//printf( "unselected structure!\n" );
@@ -79,8 +81,8 @@ void UITileCursor::update( float dt )
 
 	//  update mouse pos
 	Int2 tile_mouse_pos = GameCamera::get_current()->get_tile_mouse_pos();
-	if ( should_update_pos || !( tile_mouse_pos == applied_pos ) )
-	{
+	//if ( should_update_pos || !( tile_mouse_pos == applied_pos ) )
+	//{
 		//printf( "update (%d;%d)\n", tile_mouse_pos.x, tile_mouse_pos.y );
 		applied_pos = tile_mouse_pos;
 
@@ -96,7 +98,8 @@ void UITileCursor::update( float dt )
 					size = hovered_tmp->get_size();
 					color = hovered_tmp->get_color();
 
-					dest.x = (float) pos.x * Map::TILE_SIZE, dest.y = (float) pos.y * Map::TILE_SIZE;
+					Rectangle& hovered_dest = hovered_tmp->get_dest_rect();
+					dest.x = hovered_dest.x, dest.y = hovered_dest.y;
 				}
 			}
 		}
@@ -113,7 +116,7 @@ void UITileCursor::update( float dt )
 			}
 			hovered_structure.reset();
 		}
-	}
+	//}
 
 	should_update_pos = false;
 }

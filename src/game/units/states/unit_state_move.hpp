@@ -5,12 +5,12 @@
 #include "../../pathfinder.h"
 #include "unit_state_idle.hpp"
 
-const Color PATHFINDING_COLOR = YELLOW;
-
 class UnitState_Move : public UnitState
 {
 private:
 	float current_move_time = 0.0f;
+
+	Color pathfinding_color;
 
 	std::vector<Int2> path;
 public:
@@ -18,6 +18,8 @@ public:
 	{
 		set_target( goal );
 		unit->set_should_update_render_pos( true );
+
+		pathfinding_color = unit->get_color();
 	};
 
 	~UnitState_Move()
@@ -50,6 +52,7 @@ public:
 
 	void render() override
 	{
+		if ( unit->get_selecting_cursor().expired() ) return;
 		if ( path.empty() ) return;
 
 		//  draw path
@@ -62,16 +65,16 @@ public:
 
 			//  draw start
 			if ( it == first_it )
-				DrawCircle( (int) current_render_pos.x, (int) current_render_pos.y, 2.0f, PATHFINDING_COLOR );
+				DrawCircle( (int) current_render_pos.x, (int) current_render_pos.y, 2.0f, pathfinding_color );
 			//  draw positions
 			else
-				DrawLineEx( last_render_pos, current_render_pos, 2.0f, PATHFINDING_COLOR );
+				DrawLineEx( last_render_pos, current_render_pos, 2.0f, pathfinding_color );
 
 			last_render_pos = current_render_pos;
 		}
 
 		//  draw end
-		DrawCircle( (int) last_render_pos.x, (int) last_render_pos.y, 3.0f, PATHFINDING_COLOR);
+		DrawCircle( (int) last_render_pos.x, (int) last_render_pos.y, 3.0f, pathfinding_color );
 	}
 
 	void set_target( Int2 goal ) { path = Pathfinder::find_path( unit->get_pos(), goal ); }
