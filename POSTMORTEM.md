@@ -37,6 +37,7 @@ Finding a New Game Design:
 **Total: ~75h40**
 
 ## What I learned from this project?
+
 ### C++
 + `static` members (+`const float`) have to be initialized in the .cpp
 + functions declared in a header file must either be inlined or implemented in a cpp file
@@ -49,3 +50,11 @@ Finding a New Game Design:
 + `#pragma region` similar to `#region` from C# (specific to Visual Studio though)
 + MACRO! awesome
 + *surely a lot of things I don't remember right now..*
+
+### A*
+Actually, the algorithm is simpler that I thought, so it was quite fun to implement ([.h](https://github.com/Guthen/MechaWars/blob/main/src/utility/astar2.h) & [.cpp](https://github.com/Guthen/MechaWars/blob/main/src/utility/astar2.cpp)). 
+Got a hard time to iron out a bug with the heap sorting but eventually got it to work.
+
+![First Day: implementation](https://github.com/Guthen/MechaWars/blob/main/gifs/04_astar_pathfinding.gif?raw=true)
+![Second Day: fix](https://github.com/Guthen/MechaWars/blob/main/gifs/04_astar_pathfinding_fixed.gif?raw=true)
+![Second Day: visualizer](https://github.com/Guthen/MechaWars/blob/main/gifs/04_astar_pathfinding_visualizer.gif?raw=true)
