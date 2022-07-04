@@ -21,7 +21,7 @@ Finding a New Game Design:
 + 22/06/2022: **~1h30** => Creating Buttons in structures w/ Icons & Grayscale Shader for disabled button
 + 24/06/2022: **~1h30** => Bug fix w/ `AssetsManager::get_or_load_shader` & WorldEntity now inherited by Structures & (future) Units
 + 27/06/2022: **~1h00** => Rider & VK-2 Units code base w/ a Sprite Animator
-+ 30/06/2022: **~5h00** => Bullet, Unit State Machine (Idle, Shoot), Timers, Debug Text & Clean Up
++ 30/06/2022: **~5h00** => `Bullet`, Unit State Machine (Idle, Shoot), Timers, Debug Text & Clean Up
 + 01/07/2022:
 	+ **~4h00** => Rewrite Entity references to use `std::weak_ptr` instead of raw pointers
 	+ **~4h00** => Coding my own implementation of A* Pathfinding w/ debug rendering
@@ -33,8 +33,10 @@ Finding a New Game Design:
 	+ **~4h00** => Fixing my A* Implementation (again) resulting in weird paths (comparator issue)
 + 04/07/2022: 
 	+ **~1h00** => Fix selection of Units + Pathfinding helper finding nearest end node if disabled + Change usage of pointers in `UnitState_Idle` & `UnitState_Shoot` to `std::weak_ptr`
+	+ **~0h10** => Show debug messages in debug mode
+	+ **~2h00** => Explosions on `Bullet` impact w/ blast effect
 
-**Total: ~75h40**
+**Total: ~77h50**
 
 ## What I learned from this project?
 
