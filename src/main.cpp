@@ -45,10 +45,6 @@ void render_hud()
 	for ( int y = 0; y < size.y; y++ )
 		for ( int x = 0; x < size.x; x++ )
 			DrawRectangleLines( x * Map::TILE_SIZE, y * Map::TILE_SIZE, Map::TILE_SIZE, Map::TILE_SIZE, WHITE );*/
-
-	//  debug
-	utility::draw_shadow_text( TextFormat( "FPS: %d", GetFPS() ), 20, 20, 12, RAYWHITE );
-	utility::draw_shadow_text( TextFormat( "EC: %d", GameManager::get_entities().size() ), 20, 40, 12, RAYWHITE );
 }
 
 int main()

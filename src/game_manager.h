@@ -11,10 +11,11 @@
 
 #define DRAW_DEBUG( text )  GameManager::debug_text( text )
 
-#define DEBUG_STATE_COUNT  2
+#define DEBUG_STATE_COUNT  3
 enum class DEBUG_STATE
 {
 	NONE,
+	ENTITY,
 	PATHFINDING,
 };
 

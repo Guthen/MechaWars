@@ -206,7 +206,7 @@ void GameManager::render_hud()
 	//  draw debug
 	if ( !debug_texts.empty() )
 	{
-		Int2 text_pos { 20, 110 };
+		Int2 text_pos { 20, 130 };
 		for ( std::string text : debug_texts )
 		{
 			utility::draw_shadow_text( text.c_str(), text_pos.x, text_pos.y, 12, RAYWHITE);
@@ -215,5 +215,4 @@ void GameManager::render_hud()
 
 		debug_texts.clear();
 	}
-
 }

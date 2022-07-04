@@ -62,9 +62,12 @@ void Unit::update( float dt )
 		quad = animator.get_current_frame();
 
 	//  debug draw
-	DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
-	DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
-	DRAW_DEBUG( "STATE: " + state->str() );
+	if ( GameManager::is_debug_state( DEBUG_STATE::ENTITY ) && !selecting_cursor.expired() )
+	{
+		DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
+		DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
+		DRAW_DEBUG( "STATE: " + state->str() );
+	}
 
 	//  state
 	if ( state )

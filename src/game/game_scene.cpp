@@ -34,21 +34,17 @@ void GameScene::update( float dt )
 
 void GameScene::render_hud()
 {
+	DEBUG_STATE debug_state = GameManager::get_debug_state();
+	if ( debug_state == DEBUG_STATE::NONE )
+		return;
+
+	//  debug
+	utility::draw_shadow_text( TextFormat( "FPS: %d", GetFPS() ), 20, 20, 12, RAYWHITE );
+	utility::draw_shadow_text( TextFormat( "DEBUG: %d", debug_state ), 20, 40, 12, RAYWHITE );
+	utility::draw_shadow_text( TextFormat( "EC: %d", GameManager::get_entities().size() ), 20, 60, 12, RAYWHITE );
+
 	if ( auto map_tmp = map.lock() )
-		utility::draw_shadow_text( TextFormat( "SEED: %d", map_tmp->get_seed() ), 20, 60, 12, RAYWHITE );
+		utility::draw_shadow_text( TextFormat( "SEED: %d", map_tmp->get_seed() ), 20, 80, 12, RAYWHITE );
 
-	utility::draw_shadow_text( TextFormat( "ZOOM: %f%%", camera.get_zoom() * 100.0f ), 20, 80, 12, RAYWHITE );
-
-	//  pathfinder
-	/*GameCamera* camera = GameCamera::get_current();
-	camera->push();
-	Pathfinder::render();
-	camera->pop();*/
-
-	/*camera.push();
-	Int2 pos = tile_cursor->get_pos();
-	Int2 render_pos = Int2 { pos } *Map::TILE_SIZE;
-	utility::draw_shadow_text( TextFormat( "Tile: %d", map->get_tile_at_pos( pos.x, pos.y ) ), render_pos.x, render_pos.y - 20, 12, RAYWHITE );
-	utility::draw_shadow_text( TextFormat( "TileID: %d", map->get_tile_id( pos.x, pos.y ) ), render_pos.x, render_pos.y - 30, 12, RAYWHITE );
-	camera.pop();*/
+	utility::draw_shadow_text( TextFormat( "ZOOM: %f%%", camera.get_zoom() * 100.0f ), 20, 100, 12, RAYWHITE );
 }

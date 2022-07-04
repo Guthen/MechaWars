@@ -29,7 +29,8 @@ public:
 		}
 
 		//  debug draw
-		DRAW_DEBUG( TextFormat( "TARGET: %d", target_tmp->get_id() ) );
+		if ( GameManager::is_debug_state( DEBUG_STATE::ENTITY ) )
+			DRAW_DEBUG( TextFormat( "TARGET: %d", target_tmp->get_id() ) );
 	}
 
 	void set_target( std::weak_ptr<WorldEntity> _target ) { target = _target; }
