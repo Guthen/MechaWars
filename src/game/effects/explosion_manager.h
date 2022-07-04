@@ -13,7 +13,7 @@ class ExplosionManager
 private:
 	static std::unordered_set<Int2, Int2> reservations;
 public:
-	static std::shared_ptr<Explosion> create_explosion( std::shared_ptr<Map> map, const Int2& pos, const float power, const int expansion )
+	static std::shared_ptr<Explosion> create_explosion( std::shared_ptr<Map> map, const Int2& pos, float power, int expansion, bool is_epicenter = true )
 	{
 		if ( !map->is_in_bounds( pos.x, pos.y ) )
 			return NULL;
@@ -23,6 +23,7 @@ public:
 
 		auto explosion = GameManager::create<Explosion>( map, power, expansion );
 		explosion->set_pos( pos );
+		explosion->set_epicenter( is_epicenter );
 		return explosion;
 	}
 

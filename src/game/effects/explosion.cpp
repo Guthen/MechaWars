@@ -58,7 +58,7 @@ void Explosion::update( const float dt )
 			for ( const Cardinal dir : { Cardinal::SOUTH, Cardinal::WEST, Cardinal::NORTH, Cardinal::EAST } )
 			{
 				Int2 cell = pos + utility::get_cardinal_offset( dir );
-				ExplosionManager::create_explosion( map_tmp, cell, power, expansion - 1 );
+				ExplosionManager::create_explosion( map_tmp, cell, power, expansion - 1, false );
 			}
 
 		expansion_done = true;
@@ -77,11 +77,21 @@ void Explosion::update( const float dt )
 
 void Explosion::render()
 {
-	//  update color
-	/*float max_time = LIFE_TIME - UNRESERVE_TIME;
-	if ( life_time <= max_time )
-		color.a = (unsigned char) ( utility::ease_in_cubic( life_time / max_time ) * 255.0f );*/
+	//  draw blasts effects
+	if ( is_epicenter )
+	{
+		//  alpha
+		Color color = ColorAlpha( ORANGE, .25f );
+		float max_time = LIFE_TIME - UNRESERVE_TIME;
+		if ( life_time <= max_time )
+			color.a = (unsigned char) ( utility::ease_in_cubic( life_time / ( max_time - UNRESERVE_TIME ) ) * 255.0f );
 
-	DrawTexturePro( texture, quad, dest, Vector2 { (float) Map::TILE_SIZE / 2, (float) Map::TILE_SIZE / 2 }, rotation, color );
-	//DrawRectangle( draw_pos.x, draw_pos.y, size.x, size.y, WHITE );
+		//  blasts
+		_anim_expansion = 1.0f - utility::ease_in_expo( life_time / max_time ) * expansion + 1;
+		DrawCircle( (int) dest.x, (int) dest.y, _anim_expansion * Map::TILE_SIZE, color );
+		DrawCircleLines( (int) dest.x, (int) dest.y, ( _anim_expansion + 2 ) * Map::TILE_SIZE, color );
+	}
+
+	//  draw animated sprite
+	DrawTexturePro( texture, quad, dest, Vector2 { (float) Map::TILE_SIZE / 2, (float) Map::TILE_SIZE / 2 }, rotation, WHITE );
 }

@@ -39,12 +39,6 @@ void render_hud()
 {
 	//  render entities
 	GameManager::render_hud();
-	
-	//  debug show grid
-	/*Int2 size = GameMap->get_size();
-	for ( int y = 0; y < size.y; y++ )
-		for ( int x = 0; x < size.x; x++ )
-			DrawRectangleLines( x * Map::TILE_SIZE, y * Map::TILE_SIZE, Map::TILE_SIZE, Map::TILE_SIZE, WHITE );*/
 }
 
 int main()

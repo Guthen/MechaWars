@@ -25,18 +25,20 @@ private:
 	float power; //  power (damage)
 	bool damage_dealt = false;
 
+	bool is_epicenter = false;
 	bool has_unreserved = false;
 	float life_time;
-	Color color = WHITE;
 
 	int expansion; //  how many times can we expand again?
 	bool expansion_done = false;
 	float expansion_time;
 
 	float rotation = 0.0f;
-	std::weak_ptr<Map> map;
-	Texture texture;
+	float _anim_expansion = 0.0f;
 
+	std::weak_ptr<Map> map;
+
+	Texture texture;
 	Animator animator;
 public:
 	static const float LIFE_TIME;
@@ -48,5 +50,7 @@ public:
 
 	void update( const float dt ) override;
 	void render() override;
+
+	void set_epicenter( bool epicenter ) { is_epicenter = epicenter; }
 };
 
