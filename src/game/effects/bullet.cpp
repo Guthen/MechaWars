@@ -7,6 +7,8 @@ Bullet::Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist ) :
 
 	set_move_dir( dir );
 
+	particles = GameManager::create<PixelParticles>( Color { 245, 255, 232, 178 }, Color { 245, 255, 232, 0 } );
+
 	texture = AssetsManager::get_or_load_texture( "assets/textures/effects/bullet.png" );
 	quad = Rectangle { 0, 0, (float) texture.width, (float) texture.height };
 }
@@ -16,6 +18,18 @@ void Bullet::update( float dt )
 	//  movement
 	dest.x += move_dir.x * move_speed * dt;
 	dest.y += move_dir.y * move_speed * dt;
+
+	//  particles
+	if ( auto particles_tmp = particles.lock() )
+	{
+		for ( int y = 0; y < 2; y++ )
+			for ( int x = 0; x < 3; x++ )
+			{
+				Int2 particle_pos { (int) dest.x + x, (int) dest.y + y };
+
+				particles_tmp->emit( PixelParticles::Particle( particle_pos, 1.0f ) );
+			}
+	}
 	
 	//  distance
 	dist_to_move -= move_speed * dt;
@@ -49,6 +63,14 @@ void Bullet::impact()
 
 		ExplosionManager::create_explosion( map_tmp, dest_pos, 5.0f, 2 );
 	}
+}
+
+void Bullet::safe_destroy()
+{
+	Entity::safe_destroy();
+	
+	if ( auto particles_tmp = particles.lock() )
+		particles_tmp->set_auto_destroy( true );
 }
 
 void Bullet::set_move_dir( Vector2 dir )

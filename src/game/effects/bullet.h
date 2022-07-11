@@ -5,6 +5,7 @@
 #include "../../entity.h"
 #include "../map.h"
 #include "../../assets_manager.h"
+#include "pixel_particles.h"
 
 #include "explosion_manager.h"
 
@@ -18,6 +19,8 @@ protected:
 	float angle = 0.0f;
 
 	std::weak_ptr<Map> map;
+	std::weak_ptr<PixelParticles> particles;
+
 	Texture texture;
 public:
 	Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist );
@@ -26,6 +29,8 @@ public:
 	void render() override;
 
 	virtual void impact();
+
+	void safe_destroy() override;
 
 	void set_move_dir( Vector2 dir );
 };
