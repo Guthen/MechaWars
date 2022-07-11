@@ -351,6 +351,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\utility\color.h" />
+    <ClInclude Include="src\game\effects\pixel_particles.h" />
     <ClInclude Include="src\utility\cardinal.h" />
     <ClInclude Include="src\game\effects\explosion.h" />
     <ClInclude Include="src\game\effects\explosion_manager.h" />
