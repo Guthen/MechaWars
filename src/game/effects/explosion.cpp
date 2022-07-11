@@ -4,7 +4,7 @@
 //  rule: EXPANSION_TIME < UNRESERVE_TIME < LIFE_TIME
 const float Explosion::LIFE_TIME = .7f;  //  how much time the explosion stays on screen
 const float Explosion::UNRESERVE_TIME = .2f; //  how much time to wait before unreserving the position
-const float Explosion::EXPANSION_TIME = .075f;  //  how much time to wait before the explosion expand
+const float Explosion::EXPANSION_TIME = .05f;  //  how much time to wait before the explosion expand
 
 Explosion::Explosion( std::weak_ptr<Map> map, float power, int expansion ) :
 	map( map ), power( power ),
