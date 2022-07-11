@@ -35,8 +35,11 @@ Finding a New Game Design:
 	+ **~1h00** => Fix selection of Units + Pathfinding helper finding nearest end node if disabled + Change usage of pointers in `UnitState_Idle` & `UnitState_Shoot` to `std::weak_ptr`
 	+ **~0h10** => Show debug messages in debug mode
 	+ **~2h00** => Explosions on `Bullet` impact w/ blast effect
++ 11/07/2022:
+	+ **~0h10~** => Fix animator not playing in loop mode & Play Unit animation on move
+	+ **~1h00~** => Pixel Particles system & Bullet trail
 
-**Total: ~77h50**
+**Total: ~72h00**
 
 ## What I learned from this project?
 

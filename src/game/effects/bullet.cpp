@@ -7,7 +7,7 @@ Bullet::Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist ) :
 
 	set_move_dir( dir );
 
-	particles = GameManager::create<PixelParticles>( Color { 245, 255, 232, 178 }, Color { 245, 255, 232, 0 } );
+	particles = GameManager::create<PixelParticles>( Color { 255, 238, 131, 178 }, Color { 255, 238, 131, 0 } );
 
 	texture = AssetsManager::get_or_load_texture( "assets/textures/effects/bullet.png" );
 	quad = Rectangle { 0, 0, (float) texture.width, (float) texture.height };
