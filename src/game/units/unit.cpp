@@ -12,6 +12,7 @@ void Unit::_update_dest_rect() {}  //  I take control over that
 
 Unit::Unit( const int x, const int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, map )
 {
+	animator.set_playing( false );
 	change_state<UnitState_Idle>();
 
 	dest.x = (float) x * Map::TILE_SIZE, dest.y = (float) y * Map::TILE_SIZE;

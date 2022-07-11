@@ -18,6 +18,7 @@ public:
 	{
 		set_target( goal );
 		unit->set_should_update_render_pos( true );
+		unit->get_animator()->set_playing( true );
 
 		pathfinding_color = unit->get_color();
 	};
@@ -29,6 +30,7 @@ public:
 			Pathfinder::set_pos_disabled( path.back(), false );
 
 		unit->set_should_update_render_pos( false );
+		unit->get_animator()->set_playing( false );
 	}
 
 	void update( float dt ) override

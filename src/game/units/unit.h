@@ -53,5 +53,6 @@ public:
 	void shoot_to( Int2 shoot_target );
 
 	float get_move_speed() { return move_speed; }
+	Animator* get_animator() { return &animator; }
 };
 
