@@ -197,13 +197,8 @@ void Unit::fire_bullet( Int2 shoot_target )
 	#pragma region Bullet
 		float dist_to_move = Vector2Length( dir ) * Map::TILE_SIZE;
 
-		//  get bullet pos
-		Vector2 bullet_pos = ( pos * Map::TILE_SIZE ).to_v2();
-		bullet_pos.x += (float) ( Map::TILE_SIZE / 2 );
-		bullet_pos.y += (float) ( Map::TILE_SIZE / 2 );
-
 		//  spawn bullet
-		GameManager::create<Bullet>( map, bullet_pos, move_dir, dist_to_move );
+		GameManager::create<Bullet>( map, Vector2 { dest.x + dest.width / 2, dest.y + dest.height / 2 }, move_dir, dist_to_move );
 	#pragma endregion
 
 	//  knockback
