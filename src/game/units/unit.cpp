@@ -168,6 +168,13 @@ void Unit::shoot_to( std::weak_ptr<WorldEntity> target )
 
 void Unit::fire_bullet( Int2 shoot_target )
 {
+	//  apply spread
+	if ( data.shoot.spread > 0.0f )
+	{
+		shoot_target.x += GetRandomValue( -1.0f, 1.0f ) * data.shoot.spread;
+		shoot_target.y += GetRandomValue( -1.0f, 1.0f ) * data.shoot.spread;
+	}
+
 	Vector2 dir = ( shoot_target - pos ).to_v2();
 	Vector2 move_dir = Vector2Normalize( dir );
 
@@ -175,10 +182,12 @@ void Unit::fire_bullet( Int2 shoot_target )
 	#pragma region Bullet
 		float dist_to_move = Vector2Length( dir ) * Map::TILE_SIZE;
 
-		//  spawn bullet
+		//  get bullet pos
 		Vector2 bullet_pos = ( pos * Map::TILE_SIZE ).to_v2();
 		bullet_pos.x += (float) ( Map::TILE_SIZE / 2 );
 		bullet_pos.y += (float) ( Map::TILE_SIZE / 2 );
+
+		//  spawn bullet
 		GameManager::create<Bullet>( map, bullet_pos, move_dir, dist_to_move );
 	#pragma endregion
 
