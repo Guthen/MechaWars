@@ -34,7 +34,7 @@ void Pathfinder::_rt_update()
 
 		//  node
 		Vector2 node_pos = ( grid_to_world_pos( node.pos.x, node.pos.y ) * RT_QUALITY ).to_v2();
-		DrawCircle( node_pos.x, node_pos.y, RT_QUALITY, node.disabled ? RED : GREEN );
+		DrawCircle( (int) node_pos.x, (int) node_pos.y, RT_QUALITY, node.disabled ? RED : GREEN );
 		//DrawText( TextFormat( "%d", node.heuristic ), node_pos.x, node_pos.y, 0.1f, GRAY);
 
 		//  connections

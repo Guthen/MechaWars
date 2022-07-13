@@ -5,8 +5,8 @@
 
 namespace utility
 {
-	static float lerp( float a, float b, float t ) { return ( 1 - t ) * a + b * t; }
-	static unsigned char lerp( unsigned char a, unsigned char b, float t ) { return ( 1 - t ) * a + b * t; }
+	static float lerp( float a, float b, float t ) { return ( 1.0f - t ) * a + b * t; }
+	static unsigned char lerp( unsigned char a, unsigned char b, float t ) { return (unsigned char) ( ( 1.0f - t ) * a + b * t ); }
 
 	static float approach( float current, float target, float delta )
 	{

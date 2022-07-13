@@ -80,7 +80,7 @@ std::vector<Int2> Astar2::find_path( Node* start, Node* end )
 
 			//  update if cost is lower than the previous one
 			bool not_contained = std::find( open_list.begin(), open_list.end(), neigh ) == open_list.end();
-			int g = current->g + _compute_cost( current, neigh ) * neigh->weight;
+			int g = current->g + (int) ( _compute_cost(current, neigh) * neigh->weight );
 			if ( g < neigh->g || not_contained )
 			{
 				neigh->g = g;

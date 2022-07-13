@@ -17,25 +17,26 @@ struct UnitData
 	{
 		bool enabled = false;
 
-		float max_attack_range = 16.0f;
-		float min_attack_range = .0f;
-		float fire_delay = 1.5f;
-		float spread = 0.2f;
+		int max_attack_range = 16;  //  how many tiles can we shoot from target
+		int min_attack_range = 0;  //  how many tiles should we be distant from target in order to shoot
+		float fire_delay = 1.5f;  //  how many time between each fire
+		int spread = 2;  //  how many tiles can it spread around target
 
 		//  burst
-		int burst_count = 1;
-		float burst_delay = .25f;
+		int burst_count = 1;  //  how many bullet should we shoot when firing
+		float burst_delay = .25f;  //  how many time between each burst shot
 	};
 	struct Melee
 	{
 		bool enabled = false;
-		float attack_range = 1.0f;
+
+		int attack_range = 1;
 	};
 
 	Shoot shoot;
 	Melee melee;
 
-	float move_speed;
+	float move_speed = 8;
 };
 
 class Unit : public WorldEntity

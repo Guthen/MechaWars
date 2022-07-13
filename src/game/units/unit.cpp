@@ -171,8 +171,8 @@ void Unit::fire_bullet( Int2 shoot_target )
 	//  apply spread
 	if ( data.shoot.spread > 0.0f )
 	{
-		shoot_target.x += GetRandomValue( -1.0f, 1.0f ) * data.shoot.spread;
-		shoot_target.y += GetRandomValue( -1.0f, 1.0f ) * data.shoot.spread;
+		shoot_target.x += GetRandomValue( -data.shoot.spread, data.shoot.spread );
+		shoot_target.y += GetRandomValue( -data.shoot.spread, data.shoot.spread );
 	}
 
 	Vector2 dir = ( shoot_target - pos ).to_v2();
