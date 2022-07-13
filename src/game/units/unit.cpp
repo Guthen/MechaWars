@@ -168,11 +168,13 @@ void Unit::shoot_to( std::weak_ptr<WorldEntity> target )
 
 void Unit::fire_bullet( Int2 shoot_target )
 {
-	//  apply spread
-	if ( data.shoot.spread > 0.0f )
+	//  apply spread (circle shape)
+	if ( data.shoot.spread > 0 )
 	{
-		shoot_target.x += GetRandomValue( -data.shoot.spread, data.shoot.spread );
-		shoot_target.y += GetRandomValue( -data.shoot.spread, data.shoot.spread );
+		float angle = (float) GetRandomValue( 0, 359 ) / PI;
+		int radius = GetRandomValue( 0, data.shoot.spread );
+		shoot_target.x += (int) ( cos( angle ) * radius );
+		shoot_target.y += (int) ( sin( angle ) * radius );
 	}
 
 	Vector2 dir = ( shoot_target - pos ).to_v2();
