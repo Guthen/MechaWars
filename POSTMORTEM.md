@@ -36,10 +36,13 @@ Finding a New Game Design:
 	+ **~0h10** => Show debug messages in debug mode
 	+ **~2h00** => Explosions on `Bullet` impact w/ blast effect
 + 11/07/2022:
-	+ **~0h10~** => Fix animator not playing in loop mode & Play Unit animation on move
-	+ **~1h00~** => Pixel Particles system & Bullet trail
+	+ **~0h10** => Fix animator not playing in loop mode & Play Unit animation on move
+	+ **~1h00** => Pixel Particles system & Bullet trail
++ 13/07/2022:
+	+ **~0h30** => Add Unit Data
+	+ **~1h00** => Add Burst & Spread to Shoot
 
-**Total: ~72h00**
+**Total: ~73h30**
 
 ## What I learned from this project?
 
