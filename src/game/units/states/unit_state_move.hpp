@@ -58,7 +58,7 @@ public:
 
 	void render() override
 	{
-		if ( unit->get_selecting_cursor().expired() ) return;
+		if ( !unit->is_selected() ) return;
 		if ( path.empty() ) return;
 
 		//  draw path

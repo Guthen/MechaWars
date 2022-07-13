@@ -41,6 +41,7 @@ public:
 	void set_selecting_cursor( std::weak_ptr<UITileCursor> cursor ) { selecting_cursor = cursor; }
 	void unset_selecting_cursor() { selecting_cursor.reset(); }
 	std::weak_ptr<UITileCursor> get_selecting_cursor() { return selecting_cursor; }
+	bool is_selected() { return !selecting_cursor.expired(); }
 
 	void select( std::weak_ptr<UITileCursor> cursor );
 	void unselect();
