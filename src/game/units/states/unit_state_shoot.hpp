@@ -7,9 +7,6 @@ class UnitState_Shoot : public UnitState
 {
 private:
 	std::weak_ptr<WorldEntity> target;
-	
-	float current_shoot_time = 0.0f;
-	float shoot_time = 1.5f; //  TO MOVE: UNIT DATA
 public:
 	UnitState_Shoot( Unit* unit, std::weak_ptr<WorldEntity> target ) : UnitState( unit ), target( target ) {}
 
@@ -22,11 +19,9 @@ public:
 			return;
 		}
 
-		if ( ( current_shoot_time -= dt ) <= 0.0f )
-		{
-			current_shoot_time += shoot_time;
-			unit->shoot_to( target_tmp->get_pos() );
-		}
+		//  fire regularly towards target
+		if ( unit->can_fire() )
+			unit->shoot_to( target_tmp );
 
 		//  debug draw
 		if ( GameManager::is_debug_state( DEBUG_STATE::ENTITY ) )

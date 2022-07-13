@@ -50,6 +50,11 @@ protected:
 	UnitData data;
 	UnitState* state = nullptr;
 
+	int _firing_times = 0;
+	float _firing_timer = 0.0f;
+	float _next_fire_timer = 0.0f;
+	std::weak_ptr<WorldEntity> _firing_target;
+
 	Animator animator;
 public:
 	static std::vector<std::weak_ptr<Unit>> get_units() { return units; }
@@ -80,7 +85,10 @@ public:
 
 	//  fire
 	void shoot_target( std::weak_ptr<WorldEntity> target );
-	void shoot_to( Int2 shoot_target );
+	void shoot_to( std::weak_ptr<WorldEntity> target );
+	void fire_bullet( Int2 shoot_target );
+	bool is_firing();
+	bool can_fire();
 
 	UnitData get_data() { return data; }
 	Animator* get_animator() { return &animator; }

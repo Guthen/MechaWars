@@ -70,6 +70,30 @@ void Unit::update( float dt )
 		DRAW_DEBUG( "STATE: " + state->str() );
 	}
 
+	//  burst firing
+	if ( is_firing() )
+	{
+		//  target validity
+		std::shared_ptr<WorldEntity> target_tmp = _firing_target.lock();
+		if ( !target_tmp )
+		{
+			_firing_times = 0;
+			return;
+		}
+
+		//  timer & shoot
+		if ( ( _firing_timer -= dt ) <= 0.0f )
+		{
+			fire_bullet( target_tmp->get_pos() );
+
+			_firing_timer = data.shoot.burst_delay;
+			_firing_times--;
+		}
+	}
+	//  next fire delay
+	else if ( _next_fire_timer > 0.0f )
+		_next_fire_timer -= dt;
+
 	//  state
 	if ( state )
 		state->update( dt );
@@ -112,17 +136,6 @@ void Unit::on_right_click_selected()
 		move_to( tile_mouse_pos );
 }
 
-void Unit::shoot_target( std::weak_ptr<WorldEntity> target )
-{
-	UnitState_Shoot* shoot_state = nullptr;
-	//  change target if we are already shooting
-	if ( shoot_state = dynamic_cast<UnitState_Shoot*>( state ) )
-		shoot_state->set_target( target );
-	//  start to shoot
-	else
-		change_state<UnitState_Shoot>( target );
-}
-
 void Unit::move_to( Int2 goal )
 {
 	UnitState_Move* move_state = nullptr;
@@ -134,11 +147,30 @@ void Unit::move_to( Int2 goal )
 		change_state<UnitState_Move>( goal );
 }
 
-void Unit::shoot_to( Int2 shoot_target )
+void Unit::shoot_target( std::weak_ptr<WorldEntity> target )
+{
+	UnitState_Shoot* shoot_state = nullptr;
+	//  change target if we are already shooting
+	if ( shoot_state = dynamic_cast<UnitState_Shoot*>( state ) )
+		shoot_state->set_target( target );
+	//  start to shoot
+	else
+		change_state<UnitState_Shoot>( target );
+}
+
+void Unit::shoot_to( std::weak_ptr<WorldEntity> target )
+{
+	_firing_times = data.shoot.burst_count;
+	_firing_timer = 0.0f;
+	_firing_target = target;
+	_next_fire_timer = data.shoot.fire_delay;
+}
+
+void Unit::fire_bullet( Int2 shoot_target )
 {
 	Vector2 dir = ( shoot_target - pos ).to_v2();
 	Vector2 move_dir = Vector2Normalize( dir );
-	
+
 	//  bullet
 	#pragma region Bullet
 		float dist_to_move = Vector2Length( dir ) * Map::TILE_SIZE;
@@ -157,3 +189,6 @@ void Unit::shoot_to( Int2 shoot_target )
 	should_update_render_pos = false;
 	TIMER( .1f, should_update_render_pos = true; );
 }
+
+bool Unit::is_firing() { return _firing_times > 0; }
+bool Unit::can_fire() { return !is_firing() && _next_fire_timer <= 0.0f; }
