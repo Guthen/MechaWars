@@ -13,6 +13,13 @@ public:
 		animator.add_frame( Rectangle { 8, 0, 8, 8 } );
 
 		team_quad = Rectangle { 16, 0, 8, 8 };
+
+		//  data
+		data.move_speed = 8.0f;
+		data.shoot.enabled = true;
+		data.shoot.spread = 1.0f;
+		data.shoot.burst_count = 3;
+		data.shoot.burst_delay = .5f;
 	}
 
 	void on_selected() override

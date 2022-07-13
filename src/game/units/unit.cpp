@@ -54,8 +54,8 @@ void Unit::update( float dt )
 	//  render pos
 	if ( should_update_render_pos )
 	{
-		dest.x = utility::approach( dest.x, (float) pos.x * Map::TILE_SIZE, dt * move_speed );
-		dest.y = utility::approach( dest.y, (float) pos.y * Map::TILE_SIZE, dt * move_speed );
+		dest.x = utility::approach( dest.x, (float) pos.x * Map::TILE_SIZE, dt * data.move_speed );
+		dest.y = utility::approach( dest.y, (float) pos.y * Map::TILE_SIZE, dt * data.move_speed );
 	}
 
 	//  animator

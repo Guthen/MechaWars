@@ -11,6 +11,33 @@
 #include "../world_entity.h"
 #include "../effects/bullet.h"
 
+struct UnitData
+{
+	struct Shoot
+	{
+		bool enabled = false;
+
+		float max_attack_range = 16.0f;
+		float min_attack_range = .0f;
+		float fire_delay = 1.5f;
+		float spread = 0.2f;
+
+		//  burst
+		int burst_count = 1;
+		float burst_delay = .25f;
+	};
+	struct Melee
+	{
+		bool enabled = false;
+		float attack_range = 1.0f;
+	};
+
+	Shoot shoot;
+	Melee melee;
+
+	float move_speed;
+};
+
 class Unit : public WorldEntity
 {
 private:
@@ -18,9 +45,9 @@ private:
 protected:
 	void _update_dest_rect() override;
 
-	float move_speed = 16.0f;
 	bool should_update_render_pos = false;
 
+	UnitData data;
 	UnitState* state = nullptr;
 
 	Animator animator;
@@ -48,11 +75,14 @@ public:
 		state = new T( this, args... );
 	}
 
+	//  move
 	void move_to( Int2 goal );
+
+	//  fire
 	void shoot_target( std::weak_ptr<WorldEntity> target );
 	void shoot_to( Int2 shoot_target );
 
-	float get_move_speed() { return move_speed; }
+	UnitData get_data() { return data; }
 	Animator* get_animator() { return &animator; }
 };
 

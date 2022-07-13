@@ -13,5 +13,9 @@ public:
 		animator.add_frame( Rectangle { 8, 0, 8, 8 } );
 
 		team_quad = Rectangle { 16, 0, 8, 8 };
+
+		//  data
+		data.move_speed = 20.0f;
+		data.melee.enabled = true;
 	}
 };

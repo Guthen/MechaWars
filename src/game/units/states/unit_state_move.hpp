@@ -45,7 +45,7 @@ public:
 			}
 
 			//  delay next move
-			current_move_time += Map::TILE_SIZE / unit->get_move_speed();
+			current_move_time += Map::TILE_SIZE / unit->get_data().move_speed;
 			
 			//  move
 			unit->unreserve_pos();
