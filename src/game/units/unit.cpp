@@ -132,8 +132,21 @@ void Unit::on_right_click_selected()
 		}
 	}
 	else
+	{
+		//  DEBUG: instant move
+		if ( GameManager::is_debug_state( DEBUG_STATE::ENTITY ) && IsKeyDown( KEY_LEFT_CONTROL ) )
+		{
+			unreserve_pos();
+			set_pos( tile_mouse_pos );
+			dest.x = (float) pos.x * Map::TILE_SIZE, dest.y = (float) pos.y * Map::TILE_SIZE;
+			reserve_pos();
+			change_state<UnitState_Idle>();
+			return;
+		}
+
 		//  move towards
 		move_to( tile_mouse_pos );
+	}
 }
 
 void Unit::move_to( Int2 goal )
