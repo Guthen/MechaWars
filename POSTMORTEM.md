@@ -41,6 +41,8 @@ Finding a New Game Design:
 + 13/07/2022:
 	+ **~0h30** => Add Unit Data
 	+ **~1h00** => Add Burst & Spread to Shoot
++ 20/07/2022:
+	+ **~0h30** => Add Health & Damage from explosions
 
 **Total: ~73h30**
 

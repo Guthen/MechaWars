@@ -73,6 +73,19 @@ void WorldEntity::unreserve_pos()
 			map_tmp->unreserve_structure_pos( pos.x + x, pos.y + y );
 }
 
+void WorldEntity::take_damage( int damage )
+{
+	if ( health <= 0 )
+		return;
+
+	//  deal damage & check destroy
+	if ( ( health -= damage ) <= 0 )
+		safe_destroy();
+
+	//  event
+	on_take_damage( damage );
+}
+
 void WorldEntity::select( std::weak_ptr<UITileCursor> cursor )
 {
 	set_selecting_cursor( cursor );

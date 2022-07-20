@@ -18,12 +18,15 @@ protected:
 	float dist_to_move;
 	float angle = 0.0f;
 
+	int damage;
+	int explosion_radius;
+
 	std::weak_ptr<Map> map;
 	std::weak_ptr<PixelParticles> particles;
 
 	Texture texture;
 public:
-	Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist );
+	Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist, int damage, int explosion_radius );
 
 	void update( float dt ) override;
 	void render() override;

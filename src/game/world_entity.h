@@ -19,6 +19,9 @@ protected:
 	TEAM team_id;
 	Rectangle team_quad;
 
+	int max_health = 100;
+	int health = 100;
+
 	std::weak_ptr<Map> map;
 	std::weak_ptr<UITileCursor> selecting_cursor; //  tile cursor which is currently selecting the world entity
 	std::vector<std::weak_ptr<UIButton>> buttons;
@@ -37,6 +40,9 @@ public:
 
 	void reserve_pos();
 	void unreserve_pos();
+
+	void take_damage( int damage );
+	virtual void on_take_damage( int damage ) {};
 
 	void set_selecting_cursor( std::weak_ptr<UITileCursor> cursor ) { selecting_cursor = cursor; }
 	void unset_selecting_cursor() { selecting_cursor.reset(); }

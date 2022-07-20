@@ -4,6 +4,7 @@
 
 #include "../../utility/math.h"
 
+#include "../world_entity.h"
 #include "../map.h"
 #include "../../game_manager.h"
 #include "../../assets_manager.h"
@@ -22,7 +23,7 @@ private:
 		};
 	}
 
-	float power; //  power (damage)
+	int damage;
 	bool damage_dealt = false;
 
 	bool is_epicenter = false;
@@ -45,7 +46,7 @@ public:
 	static const float UNRESERVE_TIME;
 	static const float EXPANSION_TIME;
 
-	Explosion( std::weak_ptr<Map> map, float power, int expansion );
+	Explosion( std::weak_ptr<Map> map, int damage, int expansion );
 	~Explosion();
 
 	void update( const float dt ) override;

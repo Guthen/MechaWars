@@ -1,6 +1,8 @@
 #include "bullet.h"
 
-Bullet::Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist ) : map( map ), dist_to_move( dist )
+Bullet::Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist, int damage, int explosion_radius ) : 
+	map( map ), dist_to_move( dist ),
+	damage( damage ), explosion_radius( explosion_radius )
 {
 	dest.x = (float) pos.x, dest.y = (float) pos.y;
 	dest.width = (float) size.x * Map::TILE_SIZE, dest.height = (float) size.y * Map::TILE_SIZE;
@@ -54,15 +56,17 @@ void Bullet::render()
 
 void Bullet::impact()
 {
-	if ( auto map_tmp = map.lock() )
-	{
-		Int2 dest_pos {
-			(int) ( dest.x / Map::TILE_SIZE ),
-			(int) ( dest.y / Map::TILE_SIZE )
-		};
+	auto map_tmp = map.lock();
+	if ( !map_tmp )
+		return;
 
-		ExplosionManager::create_explosion( map_tmp, dest_pos, 5.0f, 2 );
-	}
+	Int2 dest_pos {
+		(int) ( dest.x / Map::TILE_SIZE ),
+		(int) ( dest.y / Map::TILE_SIZE )
+	};
+
+	//  TODO: implement none-explosion damage
+	ExplosionManager::create_explosion( map_tmp, dest_pos, damage, explosion_radius );
 }
 
 void Bullet::safe_destroy()

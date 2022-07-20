@@ -6,8 +6,8 @@ const float Explosion::LIFE_TIME = .7f;  //  how much time the explosion stays o
 const float Explosion::UNRESERVE_TIME = .2f; //  how much time to wait before unreserving the position
 const float Explosion::EXPANSION_TIME = .05f;  //  how much time to wait before the explosion expand
 
-Explosion::Explosion( std::weak_ptr<Map> map, float power, int expansion ) :
-	map( map ), power( power ),
+Explosion::Explosion( std::weak_ptr<Map> map, int damage, int expansion ) :
+	map( map ), damage( damage ),
 	expansion( expansion ), expansion_time( EXPANSION_TIME ), life_time( LIFE_TIME )
 {
 	//rotation = GetRandomValue( 1, 4 ) * 90.0f;
@@ -46,7 +46,13 @@ void Explosion::update( const float dt )
 	//  deal damage
 	if ( !damage_dealt )
 	{
-		//  TODO: deal damage
+		if ( auto map_tmp = map.lock() )
+			if ( map_tmp->has_structure_at( pos.x, pos.y ) )
+			{
+				auto ent = map_tmp->get_structure_at_pos( pos.x, pos.y );
+				if ( auto ent_tmp = ent.lock() )
+					ent_tmp->take_damage( damage );
+			}
 		damage_dealt = true;
 	}
 
@@ -58,7 +64,7 @@ void Explosion::update( const float dt )
 			for ( const Cardinal dir : { Cardinal::SOUTH, Cardinal::WEST, Cardinal::NORTH, Cardinal::EAST } )
 			{
 				Int2 cell = pos + utility::get_cardinal_offset( dir );
-				ExplosionManager::create_explosion( map_tmp, cell, power, expansion - 1, false );
+				ExplosionManager::create_explosion( map_tmp, cell, damage, expansion - 1, false );
 			}
 
 		expansion_done = true;

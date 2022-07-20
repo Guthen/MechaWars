@@ -20,6 +20,8 @@ public:
 		data.shoot.spread = 4;
 		data.shoot.burst_count = 3;
 		data.shoot.burst_delay = .5f;
+		data.shoot.damage = 20;
+		data.shoot.explosion_radius = 3;
 	}
 
 	void on_selected() override
