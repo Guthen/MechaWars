@@ -101,10 +101,10 @@ void Unit::update( float dt )
 
 void Unit::render()
 {
-	WorldEntity::render();
-
 	if ( state )
 		state->render();
+
+	WorldEntity::render();
 }
 
 void Unit::on_right_click_selected()

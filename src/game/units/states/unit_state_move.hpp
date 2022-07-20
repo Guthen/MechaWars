@@ -71,7 +71,11 @@ public:
 
 			//  draw start
 			if ( it == first_it )
-				DrawCircle( (int) current_render_pos.x, (int) current_render_pos.y, 2.0f, pathfinding_color );
+			{
+				Rectangle dest = unit->get_dest_rect();
+				DrawLineEx( Vector2 { dest.x + dest.width / 2, dest.y + dest.height / 2 }, current_render_pos, 2.0f, pathfinding_color );
+				//DrawCircle( (int) current_render_pos.x, (int) current_render_pos.y, 2.0f, pathfinding_color );
+			}
 			//  draw positions
 			else
 				DrawLineEx( last_render_pos, current_render_pos, 2.0f, pathfinding_color );
