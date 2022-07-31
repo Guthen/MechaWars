@@ -25,18 +25,21 @@ public:
 		{
 			if ( auto v_tmp = v.lock() )
 			{
+				//  check if is an enemy
 				if ( v_tmp.get() == unit ) continue;
 				if ( v_tmp->get_team() == team ) continue;
 
+				//  check distance
 				float dist = utility::distance( v_tmp->get_pos(), pos );
 				if ( dist >= target_dist ) continue;
 
+				//  nice, found a potential target..
 				target = v_tmp;
 				target_dist = dist;
 			}
 		}
 
-		//  shoot target
+		//  attack target
 		if ( target )
 		{
 			Int2 target_pos = target->get_pos();
