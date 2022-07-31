@@ -2,6 +2,7 @@
 
 #include "_unit_state_target.hpp"
 #include "unit_state_shoot.hpp"
+#include "unit_state_melee.hpp"
 #include "unit_state_move_to.hpp"
 
 #include <memory>
@@ -63,8 +64,8 @@ public:
 			{
 				//  melee
 				printf( "melee..\n" );
-				//unit->change_state<UnitState_Shoot>( true, target );
-				//unit->push_state( true, this );
+				unit->change_state( true, unit->new_state<UnitState_Melee>( target ) );
+				unit->push_state( true, this );
 			}
 		}
 	}
