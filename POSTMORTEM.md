@@ -43,6 +43,11 @@ Finding a New Game Design:
 	+ **~1h00** => Add Burst & Spread to Shoot
 + 20/07/2022:
 	+ **~0h30** => Add Health & Damage from explosions
++ ??/07/2022:
+	+ **5h00** => Add a Unit State queue to Units + `UnitState_MoveTo` + `UnitState_Attack`
++ 31/07/2022:
+	+ **~3h00** => Fix that godamn issue with the Unit State pointer deletion (why didn't I looked the compiler warnings earlier?)
+	+ **~2h00** => Add `LSHIFT` key to queue State + Unit State fixes
 
 **Total: ~73h30**
 
@@ -56,10 +61,11 @@ Finding a New Game Design:
 + cyclic references: use forward declaration (+pointers) & include headers in .cpp's
 + basic differences between a `r-value` (~values) & a `l-value` (~variables)
 + basically no-differences between a `.h` & a `.hpp` header files
-+ must return a pointer in order to return an array of values from a function
++ must return a pointer in order to return an array of values from a function (or use containers from `std`)
 + declare a virtual destructor on the base class if you override the destructor (otherwise the destructor isn't called)
 + `#pragma region` similar to `#region` from C# (specific to Visual Studio though)
 + MACRO! awesome
++ you must have the class definition in order to call its destructor with `delete` 
 + *surely a lot of things I don't remember right now..*
 
 ### A*
