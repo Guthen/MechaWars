@@ -72,6 +72,7 @@
     <ClInclude Include="src\utility\cardinal.h" />
     <ClInclude Include="src\game\effects\pixel_particles.h" />
     <ClInclude Include="src\utility\color.h" />
+    <ClInclude Include="src\game\units\states\unit_state_move_to.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />
