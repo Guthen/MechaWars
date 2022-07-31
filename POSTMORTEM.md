@@ -49,7 +49,7 @@ Finding a New Game Design:
 	+ **~3h00** => Fix that godamn issue with the Unit State pointer deletion (why didn't I looked the compiler warnings earlier?)
 	+ **~2h00** => Add `LSHIFT` key to queue State + Unit State fixes
 
-**Total: ~73h30**
+**Total: ~83h30**
 
 ## What I learned from this project?
 
