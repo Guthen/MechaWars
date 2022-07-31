@@ -80,26 +80,24 @@ public:
 	void set_should_update_render_pos( bool active ) { should_update_render_pos = active; }
 
 	template <typename T, typename... Args>
-	void change_state( bool no_delete, Args... args ) { change_state( no_delete, new T( this, args... ) ); }
+	UnitState* new_state( Args... args ) { return new T( this, args... ); }
 	void change_state( bool no_delete, UnitState* _state );
-	template <typename T, typename... Args>
-	void push_state( bool is_front, Args... args ) { push_state( is_front, new T( this, args... ) ); }
-	void push_state( bool is_front, UnitState* state ) 
+	void push_state( bool is_front, UnitState* _state ) 
 	{ 
 		if ( is_front )
-			states_queue.push_front( state );
+			states_queue.push_front( _state );
 		else
-			states_queue.push_back( state );
+			states_queue.push_back( _state );
 	}
 	void next_state();
 	void clear_states();
 	bool has_next_state() { return states_queue.size() > 0; }
 
 	//  move
-	void move_to( Int2 goal );
+	void move_to( bool is_queued, Int2 goal );
 
 	//  fire
-	void attack_target( std::weak_ptr<WorldEntity> target );
+	void attack_target( bool is_queued, std::weak_ptr<WorldEntity> target );
 	void shoot_to( std::weak_ptr<WorldEntity> target );
 	void fire_bullet( Int2 shoot_target );
 	bool is_firing();

@@ -37,14 +37,14 @@ public:
 			{
 				//  move in range
 				printf( "too far, move to target\n" );
-				unit->change_state<UnitState_MoveTo>( true, target, data.shoot.max_attack_range );
+				unit->change_state( true, unit->new_state<UnitState_MoveTo>( target, data.shoot.max_attack_range ) );
 				unit->push_state( true, this );
 			}
 			else
 			{
 				//  shoot
 				printf( "shooting..\n" );
-				unit->change_state<UnitState_Shoot>( true, target );
+				unit->change_state( true, unit->new_state<UnitState_Shoot>( target ) );
 				unit->push_state( true, this );
 			}
 		}
@@ -56,7 +56,7 @@ public:
 			{
 				//  move in range
 				printf( "too far, move to target\n" );
-				unit->change_state<UnitState_MoveTo>( true, target, data.melee.attack_range );
+				unit->change_state( true, unit->new_state<UnitState_MoveTo>( target, data.melee.attack_range ) );
 				unit->push_state( true, this );
 			}
 			else

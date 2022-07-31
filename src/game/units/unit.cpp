@@ -13,7 +13,7 @@ void Unit::_update_dest_rect() {}  //  I take control over that
 Unit::Unit( const int x, const int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, map )
 {
 	animator.set_playing( false );
-	change_state<UnitState_Idle>( true );
+	change_state( true, new_state<UnitState_Idle>() );
 
 	dest.x = (float) x * Map::TILE_SIZE, dest.y = (float) y * Map::TILE_SIZE;
 	dest.width = (float) size.x * Map::TILE_SIZE, dest.height = (float) size.y * Map::TILE_SIZE;
@@ -117,6 +117,9 @@ void Unit::on_right_click_selected()
 	auto map_tmp = map.lock();
 	if ( !map_tmp ) return;
 
+	//  should the future state be queued?
+	bool is_queued = IsKeyDown( KEY_LEFT_SHIFT );
+
 	Int2 tile_mouse_pos = GameCamera::get_current()->get_tile_mouse_pos();
 	if ( map_tmp->has_structure_at( tile_mouse_pos.x, tile_mouse_pos.y ) )
 	{
@@ -128,7 +131,7 @@ void Unit::on_right_click_selected()
 			if ( target_team == TEAM_NONE )
 			{
 				//  move near the resource
-				move_to( tile_mouse_pos );
+				move_to( is_queued, tile_mouse_pos );
 				return;
 			}
 			//  check if ally
@@ -136,7 +139,7 @@ void Unit::on_right_click_selected()
 				return;
 
 			//  attack hostile entity
-			attack_target( target_tmp );
+			attack_target( is_queued, target_tmp );
 		}
 	}
 	else
@@ -149,12 +152,12 @@ void Unit::on_right_click_selected()
 			dest.x = (float) pos.x * Map::TILE_SIZE, dest.y = (float) pos.y * Map::TILE_SIZE;
 			reserve_pos();
 
-			change_state<UnitState_Idle>( false );
+			change_state( false, new_state<UnitState_Idle>() );
 			return;
 		}
 
 		//  move towards
-		move_to( tile_mouse_pos );
+		move_to( is_queued, tile_mouse_pos );
 	}
 }
 
@@ -173,7 +176,7 @@ void Unit::next_state()
 	//  default to idle
 	if ( !has_next_state() )
 	{
-		change_state<UnitState_Idle>( false );
+		change_state( false, new_state<UnitState_Idle>() );
 		return;
 	}
 
@@ -191,26 +194,38 @@ void Unit::clear_states()
 	states_queue.clear();
 }
 
-void Unit::move_to( Int2 goal )
+void Unit::move_to( bool is_queued, Int2 goal )
 {
-	UnitState_Move* move_state = nullptr;
-	//  change goal if we are already moving
-	if ( move_state = dynamic_cast<UnitState_Move*>( state ) )
-		move_state->set_goal( goal );
-	//  move!
+	//  queue movement
+	if ( is_queued )
+		push_state( false, new_state<UnitState_Move>( goal ) );
 	else
-		change_state<UnitState_Move>( false, goal );
+	{
+		UnitState_Move* move_state = nullptr;
+		//  change goal if we are already moving
+		if ( move_state = dynamic_cast<UnitState_Move*>( state ) )
+			move_state->set_goal( goal );
+		//  move!
+		else
+			change_state( false, new_state<UnitState_Move>( goal ) );
+	}
 }
 
-void Unit::attack_target( std::weak_ptr<WorldEntity> target )
+void Unit::attack_target( bool is_queued, std::weak_ptr<WorldEntity> target )
 {
-	UnitState_Attack* attack_state = nullptr;
-	//  change target if we are already shooting
-	if ( attack_state = dynamic_cast<UnitState_Attack*>( state ) )
-		attack_state->set_target( target );
-	//  start attack
+	//  queue attack
+	if ( is_queued )
+		push_state( false, new_state<UnitState_Attack>( target ) );
 	else
-		change_state<UnitState_Attack>( false, target );
+	{
+		UnitState_Attack* attack_state = nullptr;
+		//  change target if we are already shooting
+		if ( attack_state = dynamic_cast<UnitState_Attack*>( state ) )
+			attack_state->set_target( target );
+		//  attack!
+		else
+			change_state( false, new_state<UnitState_Attack>( target ) );
+	}
 }
 
 void Unit::shoot_to( std::weak_ptr<WorldEntity> target )

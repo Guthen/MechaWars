@@ -43,7 +43,7 @@ public:
 		if ( target )
 		{
 			Int2 target_pos = target->get_pos();
-			unit->change_state<UnitState_Attack>( false, target );
+			unit->change_state( false, unit->new_state<UnitState_Attack>( target ) );
 		}
 	}
 
