@@ -1,5 +1,6 @@
 #include "unit.h"
 
+#include "states/_unit_state_target.hpp"
 #include "states/unit_state_idle.hpp"
 #include "states/unit_state_attack.hpp"
 #include "states/unit_state_move.hpp"
@@ -203,7 +204,7 @@ void Unit::move_to( bool is_queued, Int2 goal )
 	{
 		UnitState_Move* move_state = nullptr;
 		//  change goal if we are already moving
-		if ( move_state = dynamic_cast<UnitState_Move*>( state ) )
+		if ( ( move_state = dynamic_cast<UnitState_Move*>( state ) ) && move_state->can_change_goal )
 			move_state->set_goal( goal );
 		//  move!
 		else

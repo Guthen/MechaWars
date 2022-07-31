@@ -14,6 +14,8 @@ protected:
 
 	std::vector<Int2> path;
 public:
+	bool can_change_goal = true;
+
 	UnitState_Move( Unit* unit ) : UnitState( unit )
 	{
 		unit->set_should_update_render_pos( true );

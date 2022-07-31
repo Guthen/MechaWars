@@ -14,6 +14,9 @@ public:
 		if ( !target_tmp )
 			return;
 
+		//  avoid manually changing goal w/ Unit::move_to
+		can_change_goal = false;
+
 		set_goal( target_tmp->get_pos() );
 	};
 
