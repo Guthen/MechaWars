@@ -70,6 +70,15 @@ void Unit::update( float dt )
 		DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
 		DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
 		DRAW_DEBUG( "STATE: " + state->str() );
+
+		//  states queue
+		int queue_size = states_queue.size();
+		if ( queue_size > 0 )
+		{
+			DRAW_DEBUG( "STATES_QUEUE: " );
+			for ( int i = 0; i < queue_size; i++ )
+				DRAW_DEBUG( " " + std::to_string( i ) + ": " + states_queue[i]->str());
+		}
 	
 		//  DEBUG: destroy unit if pressing SUPPR
 		if ( IsKeyPressed( KEY_DELETE ) )
