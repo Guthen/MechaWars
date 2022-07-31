@@ -1,7 +1,7 @@
 #include "unit.h"
 
 #include "states/unit_state_idle.hpp"
-#include "states/unit_state_shoot.hpp"
+#include "states/unit_state_attack.hpp"
 #include "states/unit_state_move.hpp"
 
 //  static
@@ -13,7 +13,7 @@ void Unit::_update_dest_rect() {}  //  I take control over that
 Unit::Unit( const int x, const int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, map )
 {
 	animator.set_playing( false );
-	change_state<UnitState_Idle>();
+	change_state<UnitState_Idle>( true );
 
 	dest.x = (float) x * Map::TILE_SIZE, dest.y = (float) y * Map::TILE_SIZE;
 	dest.width = (float) size.x * Map::TILE_SIZE, dest.height = (float) size.y * Map::TILE_SIZE;
@@ -23,9 +23,10 @@ Unit::Unit( const int x, const int y, std::weak_ptr<Map> map ) : WorldEntity( x,
 
 Unit::~Unit()
 {
-	//  free state
+	//  free states
 	if ( state )
 		delete state;
+	clear_states();
 
 	//  remove from list
 	std::vector<std::weak_ptr<Unit>>::iterator it = units.begin();
@@ -68,6 +69,10 @@ void Unit::update( float dt )
 		DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
 		DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
 		DRAW_DEBUG( "STATE: " + state->str() );
+	
+		//  DEBUG: destroy unit if pressing SUPPR
+		if ( IsKeyPressed( KEY_DELETE ) )
+			safe_destroy();
 	}
 
 	//  burst firing
@@ -118,17 +123,20 @@ void Unit::on_right_click_selected()
 		std::weak_ptr<WorldEntity> target = map_tmp->get_structure_at_pos( tile_mouse_pos.x, tile_mouse_pos.y );
 		if ( auto target_tmp = target.lock() )
 		{
-			//  shoot hostile entity
+			//  check if resource
 			TEAM target_team = target_tmp->get_team();
 			if ( target_team == TEAM_NONE )
 			{
-				move_to( tile_mouse_pos );  //  move near the resource
+				//  move near the resource
+				move_to( tile_mouse_pos );
 				return;
 			}
+			//  check if ally
 			if ( target_team == get_team() )
 				return;
 
-			shoot_target( target_tmp );
+			//  attack hostile entity
+			attack_target( target_tmp );
 		}
 	}
 	else
@@ -140,13 +148,47 @@ void Unit::on_right_click_selected()
 			set_pos( tile_mouse_pos );
 			dest.x = (float) pos.x * Map::TILE_SIZE, dest.y = (float) pos.y * Map::TILE_SIZE;
 			reserve_pos();
-			change_state<UnitState_Idle>();
+
+			change_state<UnitState_Idle>( false );
 			return;
 		}
 
 		//  move towards
 		move_to( tile_mouse_pos );
 	}
+}
+
+void Unit::change_state( bool no_delete, UnitState* _state )
+{
+	//  delete old one
+	if ( !no_delete && state )
+		delete state;
+
+	//  apply next state
+	state = _state;
+}
+
+void Unit::next_state()
+{
+	//  default to idle
+	if ( !has_next_state() )
+	{
+		change_state<UnitState_Idle>( false );
+		return;
+	}
+
+	//  move to next state
+	change_state( false, states_queue.front() );
+	states_queue.pop_front();
+}
+
+void Unit::clear_states()
+{
+	//  free states queue
+	for ( UnitState* _state : states_queue )
+		delete _state;
+
+	states_queue.clear();
 }
 
 void Unit::move_to( Int2 goal )
@@ -157,18 +199,18 @@ void Unit::move_to( Int2 goal )
 		move_state->set_target( goal );
 	//  move!
 	else
-		change_state<UnitState_Move>( goal );
+		change_state<UnitState_Move>( false, goal );
 }
 
-void Unit::shoot_target( std::weak_ptr<WorldEntity> target )
+void Unit::attack_target( std::weak_ptr<WorldEntity> target )
 {
-	UnitState_Shoot* shoot_state = nullptr;
+	UnitState_Attack* attack_state = nullptr;
 	//  change target if we are already shooting
-	if ( shoot_state = dynamic_cast<UnitState_Shoot*>( state ) )
-		shoot_state->set_target( target );
-	//  start to shoot
+	if ( attack_state = dynamic_cast<UnitState_Attack*>( state ) )
+		attack_state->set_target( target );
+	//  start attack
 	else
-		change_state<UnitState_Shoot>( target );
+		change_state<UnitState_Attack>( false, target );
 }
 
 void Unit::shoot_to( std::weak_ptr<WorldEntity> target )

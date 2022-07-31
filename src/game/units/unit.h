@@ -11,14 +11,16 @@
 #include "../world_entity.h"
 #include "../effects/bullet.h"
 
+#include <deque>
+
 struct UnitData
 {
 	struct Shoot
 	{
 		bool enabled = false;
 
-		int max_attack_range = 16;  //  how many tiles can we shoot from target
-		int min_attack_range = 0;  //  how many tiles should we be distant from target in order to shoot
+		float max_attack_range = 16.0f;  //  how many tiles can we shoot from target
+		float min_attack_range = 0.0f;  //  how many tiles should we be distant from target in order to shoot
 		float fire_delay = 1.5f;  //  how many time between each fire
 		int spread = 2;  //  how many tiles can it spread around target
 		int damage = 10;  //  how many damage should we deal to the target
@@ -41,7 +43,8 @@ struct UnitData
 	Melee melee;
 
 	int health = 100;
-	float move_speed = 8;
+	float move_speed = 8.0f;  //  how many pixels per second can we move
+	float aggro_range = 16.0f;  //  how many tiles can we start self-attacking an enemy
 };
 
 class Unit : public WorldEntity
@@ -55,6 +58,7 @@ protected:
 
 	UnitData data;
 	UnitState* state = nullptr;
+	std::deque<UnitState*> states_queue;
 
 	int _firing_times = 0;
 	float _firing_timer = 0.0f;
@@ -76,21 +80,26 @@ public:
 	void set_should_update_render_pos( bool active ) { should_update_render_pos = active; }
 
 	template <typename T, typename... Args>
-	void change_state( Args... args )
-	{
-		//  delete old one
-		if ( state )
-			delete state;
-		
-		//  create and assign the new
-		state = new T( this, args... );
+	void change_state( bool no_delete, Args... args ) { change_state( no_delete, new T( this, args... ) ); }
+	void change_state( bool no_delete, UnitState* _state );
+	template <typename T, typename... Args>
+	void push_state( bool is_front, Args... args ) { push_state( is_front, new T( this, args... ) ); }
+	void push_state( bool is_front, UnitState* state ) 
+	{ 
+		if ( is_front )
+			states_queue.push_front( state );
+		else
+			states_queue.push_back( state );
 	}
+	void next_state();
+	void clear_states();
+	bool has_next_state() { return states_queue.size() > 0; }
 
 	//  move
 	void move_to( Int2 goal );
 
 	//  fire
-	void shoot_target( std::weak_ptr<WorldEntity> target );
+	void attack_target( std::weak_ptr<WorldEntity> target );
 	void shoot_to( std::weak_ptr<WorldEntity> target );
 	void fire_bullet( Int2 shoot_target );
 	bool is_firing();

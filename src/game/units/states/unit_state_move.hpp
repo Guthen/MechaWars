@@ -7,21 +7,21 @@
 
 class UnitState_Move : public UnitState
 {
-private:
+protected:
 	float current_move_time = 0.0f;
 
 	Color pathfinding_color;
 
 	std::vector<Int2> path;
 public:
-	UnitState_Move( Unit* unit, Int2 goal ) : UnitState( unit ) 
+	UnitState_Move( Unit* unit ) : UnitState( unit )
 	{
-		set_target( goal );
 		unit->set_should_update_render_pos( true );
 		unit->get_animator()->set_playing( true );
 
 		pathfinding_color = unit->get_color();
-	};
+	}
+	UnitState_Move( Unit* unit, Int2 goal ) : UnitState_Move( unit ) { set_target( goal ); };
 
 	~UnitState_Move()
 	{
@@ -40,7 +40,7 @@ public:
 			//  movement finished: go to Idle
 			if ( path.empty() )
 			{
-				unit->change_state<UnitState_Idle>();
+				unit->next_state();
 				return;
 			}
 

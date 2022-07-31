@@ -9,13 +9,24 @@ private:
 	std::weak_ptr<WorldEntity> target;
 public:
 	UnitState_Shoot( Unit* unit, std::weak_ptr<WorldEntity> target ) : UnitState( unit ), target( target ) {}
+	virtual ~UnitState_Shoot() {};
 
 	void update( float dt ) override
 	{
+		//  check target validity
 		auto target_tmp = target.lock();
 		if ( !target_tmp )
 		{
-			unit->change_state<UnitState_Idle>();
+			unit->next_state();
+			return;
+		}
+
+		//  check target distance
+		UnitData data = unit->get_data();
+		float dist = utility::distance( unit->get_pos(), target_tmp->get_pos() );
+		if ( dist < data.shoot.min_attack_range || dist > data.shoot.max_attack_range )
+		{
+			unit->next_state();
 			return;
 		}
 
