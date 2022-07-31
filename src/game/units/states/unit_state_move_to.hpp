@@ -20,6 +20,13 @@ public:
 			return;
 		}
 
+		//  rendering
+		unit->set_should_update_render_pos( true );
+		unit->get_animator()->set_playing( true );
+
+		//  pathfinding color
+		pathfinding_color = unit->get_color();
+
 		//  avoid manually changing goal w/ Unit::move_to
 		can_change_goal = false;
 
