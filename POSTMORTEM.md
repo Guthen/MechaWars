@@ -44,7 +44,7 @@ Finding a New Game Design:
 + 20/07/2022:
 	+ **~0h30** => Add Health & Damage from explosions
 + ??/07/2022:
-	+ **5h00** => Add a Unit State queue to Units + `UnitState_MoveTo` + `UnitState_Attack`
+	+ **5h00** => Add a Unit State queue to Units + `UnitState_MoveTo` + `UnitState_Attack` + tried to fix Unit State pointer deletion
 + 31/07/2022:
 	+ **~3h00** => Fix that godamn issue with the Unit State pointer deletion (why didn't I looked the compiler warnings earlier?)
 	+ **~2h00** => Add `LSHIFT` key to queue State + Unit State fixes
