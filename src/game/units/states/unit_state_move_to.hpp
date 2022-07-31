@@ -19,6 +19,13 @@ public:
 
 	void update( float dt ) override
 	{
+		//  check path
+		if ( path.empty() )
+		{
+			unit->next_state();
+			return;
+		}
+
 		//  check target validity
 		auto target_tmp = target.lock();
 		if ( !target_tmp )
