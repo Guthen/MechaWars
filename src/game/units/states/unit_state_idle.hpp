@@ -12,6 +12,13 @@ public:
 
 	void update( float dt ) override
 	{
+		//  give up if has next state
+		if ( unit->has_next_state() )
+		{
+			unit->next_state();
+			return;
+		}
+
 		TEAM team = unit->get_team();
 		Int2 pos = unit->get_pos();
 
