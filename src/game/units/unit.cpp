@@ -202,13 +202,16 @@ void Unit::move_to( bool is_queued, Int2 goal )
 		push_state( false, new_state<UnitState_Move>( goal ) );
 	else
 	{
+		//  change goal if we are already moving (not targeting someone)
 		UnitState_Move* move_state = nullptr;
-		//  change goal if we are already moving
 		if ( ( move_state = dynamic_cast<UnitState_Move*>( state ) ) && move_state->can_change_goal )
 			move_state->set_goal( goal );
 		//  move!
 		else
+		{
+			clear_states();
 			change_state( false, new_state<UnitState_Move>( goal ) );
+		}
 	}
 }
 
@@ -219,13 +222,16 @@ void Unit::attack_target( bool is_queued, std::weak_ptr<WorldEntity> target )
 		push_state( false, new_state<UnitState_Attack>( target ) );
 	else
 	{
-		UnitState_Attack* attack_state = nullptr;
 		//  change target if we are already shooting
+		UnitState_Attack* attack_state = nullptr;
 		if ( attack_state = dynamic_cast<UnitState_Attack*>( state ) )
 			attack_state->set_target( target );
 		//  attack!
 		else
+		{
+			clear_states();
 			change_state( false, new_state<UnitState_Attack>( target ) );
+		}
 	}
 }
 
