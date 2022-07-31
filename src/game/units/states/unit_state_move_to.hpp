@@ -22,13 +22,6 @@ public:
 
 	void update( float dt ) override
 	{
-		//  check path
-		if ( path.empty() )
-		{
-			unit->next_state();
-			return;
-		}
-
 		//  check target validity
 		auto target_tmp = target.lock();
 		if ( !target_tmp )
@@ -39,20 +32,31 @@ public:
 
 		Int2 target_pos = target_tmp->get_pos();
 
-		//  checking range
-		float dist = utility::distance( unit->get_pos(), target_pos );
-		if ( dist <= range )
+		//  some regular checks
+		if ( current_move_time - dt <= 0.0f )
 		{
-			unit->next_state();
-			return;
-		}
+			//  check path
+			if ( path.empty() )
+			{
+				unit->next_state();
+				return;
+			}
 
-		//  checking target distance from moving goal
-		dist = utility::distance( path.back(), target_pos );
-		if ( dist > range )
-		{
-			//  recompute path
-			set_goal( target_pos );
+			//  checking range
+			float dist = utility::distance( unit->get_pos(), target_pos );
+			if ( dist <= range )
+			{
+				unit->next_state();
+				return;
+			}
+
+			//  checking target distance from moving goal
+			dist = utility::distance( path.back(), target_pos );
+			if ( dist > range )
+			{
+				//  recompute path
+				set_goal( target_pos );
+			}
 		}
 
 		//  move towards target
