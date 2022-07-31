@@ -170,6 +170,7 @@ void Unit::change_state( bool no_delete, UnitState* _state )
 
 	//  apply next state
 	state = _state;
+	state->init();
 }
 
 void Unit::next_state()

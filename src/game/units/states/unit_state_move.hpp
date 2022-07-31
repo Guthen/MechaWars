@@ -13,17 +13,12 @@ protected:
 	Color pathfinding_color;
 
 	std::vector<Int2> path;
+	Int2 goal;
 public:
 	bool can_change_goal = true;
 
-	UnitState_Move( Unit* unit ) : UnitState( unit )
-	{
-		unit->set_should_update_render_pos( true );
-		unit->get_animator()->set_playing( true );
-
-		pathfinding_color = unit->get_color();
-	}
-	UnitState_Move( Unit* unit, Int2 goal ) : UnitState_Move( unit ) { set_goal( goal ); };
+	UnitState_Move( Unit* unit ) : UnitState( unit ) {}
+	UnitState_Move( Unit* unit, Int2 goal ) : UnitState( unit ), goal( goal ) {};
 
 	~UnitState_Move()
 	{
@@ -33,6 +28,17 @@ public:
 
 		unit->set_should_update_render_pos( false );
 		unit->get_animator()->set_playing( false );
+	}
+
+	void init() override
+	{
+		unit->set_should_update_render_pos( true );
+		unit->get_animator()->set_playing( true );
+
+		pathfinding_color = unit->get_color();
+
+		//  pathfinding to target
+		set_goal( goal );
 	}
 
 	void update( float dt ) override

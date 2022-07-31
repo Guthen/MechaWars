@@ -8,17 +8,24 @@ private:
 	std::weak_ptr<WorldEntity> target;
 	float range = 1.0f;
 public:
-	UnitState_MoveTo( Unit* unit, std::weak_ptr<WorldEntity> target, float range ) : UnitState_Move( unit ), target( target ), range( range )
+	UnitState_MoveTo( Unit* unit, std::weak_ptr<WorldEntity> target, float range ) : UnitState_Move( unit ), target( target ), range( range ) {};
+
+	void init() override
 	{
+		//  check target validity
 		auto target_tmp = target.lock();
 		if ( !target_tmp )
+		{
+			unit->next_state();
 			return;
+		}
 
 		//  avoid manually changing goal w/ Unit::move_to
 		can_change_goal = false;
 
+		//  pathfinding to target
 		set_goal( target_tmp->get_pos() );
-	};
+	}
 
 	void update( float dt ) override
 	{
