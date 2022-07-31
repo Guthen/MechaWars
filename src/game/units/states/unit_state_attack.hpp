@@ -1,17 +1,15 @@
 #pragma once
 
-#include "unit_state.h"
+#include "_unit_state_target.hpp"
 #include "unit_state_shoot.hpp"
 #include "unit_state_move_to.hpp"
 
 #include <memory>
 
-class UnitState_Attack : public UnitState
+class UnitState_Attack : public _UnitState_Target
 {
-private:
-	std::weak_ptr<WorldEntity> target;
 public:
-	UnitState_Attack( Unit* unit, std::weak_ptr<WorldEntity> target ) : UnitState( unit ), target( target ) {};
+	UnitState_Attack( Unit* unit, std::weak_ptr<WorldEntity> target ) : _UnitState_Target( unit, target ) {};
 
 	void update( float dt ) override
 	{
@@ -70,8 +68,6 @@ public:
 			}
 		}
 	}
-
-	void set_target( std::weak_ptr<WorldEntity> _target ) { target = _target; }
 
 	std::string str() const override { return "UnitState_Attack"; }
 };

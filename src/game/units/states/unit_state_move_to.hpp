@@ -14,7 +14,7 @@ public:
 		if ( !target_tmp )
 			return;
 
-		set_target( target_tmp->get_pos() );
+		set_goal( target_tmp->get_pos() );
 	};
 
 	void update( float dt ) override
@@ -42,7 +42,7 @@ public:
 		if ( dist > range )
 		{
 			//  recompute path
-			set_target( target_pos );
+			set_goal( target_pos );
 		}
 
 		//  move towards target

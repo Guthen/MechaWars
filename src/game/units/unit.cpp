@@ -196,7 +196,7 @@ void Unit::move_to( Int2 goal )
 	UnitState_Move* move_state = nullptr;
 	//  change goal if we are already moving
 	if ( move_state = dynamic_cast<UnitState_Move*>( state ) )
-		move_state->set_target( goal );
+		move_state->set_goal( goal );
 	//  move!
 	else
 		change_state<UnitState_Move>( false, goal );

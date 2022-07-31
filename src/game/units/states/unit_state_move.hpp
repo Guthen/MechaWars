@@ -21,7 +21,7 @@ public:
 
 		pathfinding_color = unit->get_color();
 	}
-	UnitState_Move( Unit* unit, Int2 goal ) : UnitState_Move( unit ) { set_target( goal ); };
+	UnitState_Move( Unit* unit, Int2 goal ) : UnitState_Move( unit ) { set_goal( goal ); };
 
 	~UnitState_Move()
 	{
@@ -87,7 +87,7 @@ public:
 		DrawCircle( (int) last_render_pos.x, (int) last_render_pos.y, 3.0f, pathfinding_color );
 	}
 
-	void set_target( Int2 goal ) 
+	void set_goal( Int2 goal ) 
 	{ 
 		//  unreserve last goal
 		if ( !path.empty() )
