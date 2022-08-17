@@ -1,5 +1,7 @@
 #include "world_entity.h"
 
+#include "../utility/color.h"
+
 #include "map.h"
 #include "../game_manager.h"
 
@@ -34,6 +36,35 @@ void WorldEntity::render()
 
 	DrawTexturePro( texture, quad, dest, Vector2 {}, 0.0f, WHITE );
 	DrawTexturePro( texture, team_quad, dest, Vector2 {}, 0.0f, color );
+}
+
+
+void WorldEntity::render_hud()
+{
+	//  draw health hud
+	if ( !is_selected() ) return;
+
+	GameCamera* camera = GameCamera::get_current();
+	camera->push();
+
+	//  background
+	Rectangle rect { dest.x - 1, dest.y - 6, dest.width + 2, 3 };
+	DrawRectangleRec( rect, utility::multiply_color( color, .6f ) );
+
+	//  active
+	rect.x++, rect.y++, rect.width = ( rect.width - 2 ) * ( (float) health / max_health ), rect.height -= 2;
+	DrawRectangleRec( rect, utility::multiply_color( color, .8f ) );
+
+	//  dither
+	int wide = rect.width;
+	rect.width = 1;
+	for ( int i = 0; i < wide; i += 2 )
+	{
+		DrawRectangleRec( rect, color );
+		rect.x += 2;
+	}
+
+	camera->pop();
 }
 
 void WorldEntity::safe_destroy()

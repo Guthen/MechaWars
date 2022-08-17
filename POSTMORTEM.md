@@ -48,6 +48,8 @@ Finding a New Game Design:
 + 31/07/2022:
 	+ **~3h00** => Fix that godamn issue with the Unit State pointer deletion (why didn't I looked the compiler warnings earlier?)
 	+ **~2h00** => Add `LSHIFT` key to queue State + Unit State fixes
++ 17/08/2022:
+	+ **~1h00** => Add World Entity Health HUD
 
 **Total: ~83h30**
 

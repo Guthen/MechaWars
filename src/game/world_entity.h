@@ -33,6 +33,7 @@ public:
 	WorldEntity( int x, int y, int w, int h, std::weak_ptr<Map> map );
 
 	void render() override;
+	void render_hud() override;
 
 	void safe_destroy() override;
 
