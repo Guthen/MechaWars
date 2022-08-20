@@ -70,6 +70,7 @@ void Unit::update( float dt )
 		DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
 		DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
 		DRAW_DEBUG( "STATE: " + state->str() );
+		DRAW_DEBUG( "SHOULD_UPDATE_RENDER_POS: " + std::to_string( should_update_render_pos ) );
 
 		//  states queue
 		int queue_size = states_queue.size();
