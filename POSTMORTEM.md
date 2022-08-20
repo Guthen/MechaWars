@@ -50,8 +50,11 @@ Finding a New Game Design:
 	+ **~2h00** => Add `LSHIFT` key to queue State + Unit State fixes
 + 17/08/2022:
 	+ **~1h00** => Add World Entity Health HUD
++ 20/08/2022:
+	+ **~0h10** => Removing Melee Combat & Agro Range
+	+ **~2h30** => Refactoring Shot Spread 
 
-**Total: ~83h30**
+**Total: ~87h10**
 
 ## What I learned from this project?
 
