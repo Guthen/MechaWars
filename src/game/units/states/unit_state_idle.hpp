@@ -27,7 +27,7 @@ public:
 
 		//  search for target
 		std::shared_ptr<Unit> target = nullptr;
-		float target_dist = data.aggro_range;
+		float target_dist = data.shoot.attack_range;
 		for ( std::weak_ptr<Unit> v : Unit::get_units() )
 		{
 			if ( auto v_tmp = v.lock() )

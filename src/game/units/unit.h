@@ -19,9 +19,10 @@ struct UnitData
 	{
 		bool enabled = false;
 
-		float max_attack_range = 16.0f;  //  how many tiles can we shoot from target
+		float attack_range = 16.0f;  //  how many tiles can we shoot from target
 		float fire_delay = 1.5f;  //  how many time between each fire
-		int spread = 2;  //  how many tiles can it spread around target
+		int spread = 10;  //  how much the bullet's direction angle can offset? (in degrees)
+		float accuracy = .8f; //  [0.0f; 1.0f] ranged value; how much are the unit's shots accurate?
 		int damage = 10;  //  how many damage should we deal to the target
 
 		//  burst
@@ -36,7 +37,6 @@ struct UnitData
 
 	int health = 100;
 	float move_speed = 8.0f;  //  how many pixels per second can we move
-	float aggro_range = 16.0f;  //  how many tiles can we start self-attacking an enemy
 };
 
 class Unit : public WorldEntity

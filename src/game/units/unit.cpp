@@ -256,25 +256,49 @@ void Unit::shoot_to( std::weak_ptr<WorldEntity> target )
 
 void Unit::fire_bullet( Int2 shoot_target )
 {
-	//  apply spread (circle shape)
-	if ( data.shoot.spread > 0 )
+	float dir_ang = Vector2Angle( pos.to_v2(), shoot_target.to_v2() );
+	Vector2 dir = ( shoot_target - pos ).to_v2();
+
+	//  accuracy (spread in a circle shape)
+	float angle = dir_ang;
+	float dist = sqrtf( 
+		( pos.x - shoot_target.x ) * ( pos.x - shoot_target.x ) 
+		   + ( pos.y - shoot_target.y ) * ( pos.y - shoot_target.y ) 
+	);
+
+	//  check accuracy
+	float accuracy = data.shoot.accuracy;
+	if ( accuracy > 0.0f )  //  avoid generating numbers when accuracy = 0.0f
+		accuracy = rand() / static_cast<float>( RAND_MAX );  //  random number in range: [0.0f; 1.0f]
+
+	if ( accuracy == 0.0f || accuracy > data.shoot.accuracy )
 	{
-		float angle = (float) GetRandomValue( 0, 359 ) / PI;
-		int radius = GetRandomValue( 0, data.shoot.spread );
-		shoot_target.x += (int) ( cos( angle ) * radius );
-		shoot_target.y += (int) ( sin( angle ) * radius );
+		//  get random spread in range [-data.shoot.spread; -1] & [1; data.shoot.spread] (avoid 0)
+		float spread = GetRandomValue( 1, data.shoot.spread );
+		if ( rand() % 2 == 0 )
+			spread *= -1.0f;
+
+		//  apply angle spread
+		angle += ( spread * dist / data.shoot.attack_range );
+
+		//  apply distance offset: spread_ratio * dist_ratio * offset
+		dist += ( spread / data.shoot.spread ) * ( dist / data.shoot.attack_range ) * ( data.shoot.spread / 6.0f );
 	}
 
-	Vector2 dir = ( shoot_target - pos ).to_v2();
-	Vector2 move_dir = Vector2Normalize( dir );
+	//  apply angle randomness
+	angle += GetRandomValue( -Map::TILE_SIZE, Map::TILE_SIZE ) / 2.0f;
+	//  convert angle to rad
+	angle *= DEG2RAD;
 
-	//  bullet
-	#pragma region Bullet
-		float dist_to_move = Vector2Length( dir ) * Map::TILE_SIZE;
+	//  compute new direction
+	dir.x = cosf( angle ) * dist;
+	dir.y = sinf( angle ) * dist;
 
-		//  spawn bullet
-		GameManager::create<Bullet>( map, Vector2 { dest.x + dest.width / 2, dest.y + dest.height / 2 }, move_dir, dist_to_move, data.shoot.damage, data.shoot.explosion_radius );
-	#pragma endregion
+	//  normalize direction
+	Vector2 move_dir = Vector2 { dir.x * 1.0f / dist, dir.y * 1.0f / dist };
+
+	//  spawn bullet
+	GameManager::create<Bullet>( map, Vector2 { dest.x + dest.width / 2, dest.y + dest.height / 2 }, move_dir, dist * Map::TILE_SIZE, data.shoot.damage, data.shoot.explosion_radius );
 
 	//  knockback
 	float knockback_amount = (float) Map::TILE_SIZE / 2;

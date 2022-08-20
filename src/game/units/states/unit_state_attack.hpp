@@ -25,11 +25,11 @@ public:
 		float dist = utility::distance( unit->get_pos(), target_tmp->get_pos() );
 
 		//  shooter
-		if ( dist > data.shoot.max_attack_range )
+		if ( dist > data.shoot.attack_range )
 		{
 			//  move in range
 			//printf( "too far, move to target\n" );
-			unit->change_state( true, unit->new_state<UnitState_MoveTo>( target, data.shoot.max_attack_range ) );
+			unit->change_state( true, unit->new_state<UnitState_MoveTo>( target, data.shoot.attack_range ) );
 			unit->push_state( true, this );
 		}
 		else
