@@ -2,7 +2,6 @@
 
 #include "_unit_state_target.hpp"
 #include "unit_state_shoot.hpp"
-#include "unit_state_melee.hpp"
 #include "unit_state_move_to.hpp"
 
 #include <memory>
@@ -26,47 +25,19 @@ public:
 		float dist = utility::distance( unit->get_pos(), target_tmp->get_pos() );
 
 		//  shooter
-		if ( data.shoot.enabled )
+		if ( dist > data.shoot.max_attack_range )
 		{
-			//  check target distance
-			if ( dist < data.shoot.min_attack_range )
-			{
-				printf( "too close, move away from target\n" );
-				//  TODO:..
-			}
-			else if ( dist > data.shoot.max_attack_range )
-			{
-				//  move in range
-				printf( "too far, move to target\n" );
-				unit->change_state( true, unit->new_state<UnitState_MoveTo>( target, data.shoot.max_attack_range ) );
-				unit->push_state( true, this );
-			}
-			else
-			{
-				//  shoot
-				printf( "shooting..\n" );
-				unit->change_state( true, unit->new_state<UnitState_Shoot>( target ) );
-				unit->push_state( true, this );
-			}
+			//  move in range
+			//printf( "too far, move to target\n" );
+			unit->change_state( true, unit->new_state<UnitState_MoveTo>( target, data.shoot.max_attack_range ) );
+			unit->push_state( true, this );
 		}
-		//  brawler
-		else if ( data.melee.enabled )
+		else
 		{
-			//  check target distance
-			if ( dist > data.melee.attack_range )
-			{
-				//  move in range
-				printf( "too far, move to target\n" );
-				unit->change_state( true, unit->new_state<UnitState_MoveTo>( target, data.melee.attack_range ) );
-				unit->push_state( true, this );
-			}
-			else
-			{
-				//  melee
-				printf( "melee..\n" );
-				unit->change_state( true, unit->new_state<UnitState_Melee>( target ) );
-				unit->push_state( true, this );
-			}
+			//  shoot
+			//printf( "shooting..\n" );
+			unit->change_state( true, unit->new_state<UnitState_Shoot>( target ) );
+			unit->push_state( true, this );
 		}
 	}
 

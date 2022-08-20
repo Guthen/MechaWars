@@ -20,7 +20,6 @@ struct UnitData
 		bool enabled = false;
 
 		float max_attack_range = 16.0f;  //  how many tiles can we shoot from target
-		float min_attack_range = 0.0f;  //  how many tiles should we be distant from target in order to shoot
 		float fire_delay = 1.5f;  //  how many time between each fire
 		int spread = 2;  //  how many tiles can it spread around target
 		int damage = 10;  //  how many damage should we deal to the target
@@ -32,15 +31,8 @@ struct UnitData
 		//  explosion
 		int explosion_radius = 0;  //  if >=1, bullet will create explosion with the given radius
 	};
-	struct Melee
-	{
-		bool enabled = false;
-
-		int attack_range = 1;
-	};
 
 	Shoot shoot;
-	Melee melee;
 
 	int health = 100;
 	float move_speed = 8.0f;  //  how many pixels per second can we move

@@ -21,7 +21,7 @@ public:
 		//  check target distance
 		UnitData data = unit->get_data();
 		float dist = utility::distance( unit->get_pos(), target_tmp->get_pos() );
-		if ( dist < data.shoot.min_attack_range || dist > data.shoot.max_attack_range )
+		if ( dist > data.shoot.max_attack_range )
 		{
 			unit->next_state();
 			return;

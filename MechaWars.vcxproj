@@ -352,7 +352,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\units\states\unit_state_attack.hpp" />
-    <ClInclude Include="src\game\units\states\unit_state_melee.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_move_to.hpp" />
     <ClInclude Include="src\game\units\states\_unit_state_target.hpp" />
     <ClInclude Include="src\utility\color.h" />
