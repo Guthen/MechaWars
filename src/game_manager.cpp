@@ -26,7 +26,7 @@ void GameManager::change_scene_to( std::shared_ptr<Scene> scene )
 
 	current_scene = scene;
 	current_scene->init();
-	printf( "GameManager: scene changed!\n" );
+	//printf( "GameManager: scene changed!\n" );
 }
 
 void GameManager::add_entity( std::shared_ptr<Entity> entity ) 
@@ -56,7 +56,7 @@ void GameManager::clear()
 	entities.clear();
 	_is_clearing = false;
 
-	printf( "GameManager: clear, %d entities removed\n", count );
+	//printf( "GameManager: clear, %d entities removed\n", count );
 }
 
 void GameManager::free()
@@ -78,7 +78,7 @@ void GameManager::sort( int frames_delay )
 		std::sort( entities.begin(), entities.end(), sort_z_order );
 
 		is_queued_sorting = false;
-		printf( "GameManager: sorted!\n" );
+		//printf( "GameManager: sorted!\n" );
 	}
 	else
 	{
@@ -131,7 +131,7 @@ void GameManager::update( float dt )
 
 		awaiting_queue.clear();
 
-		printf( "GameManager: awaiting queue cleared (%d added)!\n", size );
+		//printf( "GameManager: awaiting queue cleared (%d added)!\n", size );
 
 		//  sort
 		sort();
@@ -150,7 +150,7 @@ void GameManager::update( float dt )
 			remove_entity( ent );
 		deletion_queue.clear();
 
-		printf( "GameManager: deletion queue cleared (%d removed)!\n", size );
+		//printf( "GameManager: deletion queue cleared (%d removed)!\n", size );
 	}
 
 	//  sort
@@ -169,7 +169,7 @@ void GameManager::update( float dt )
 			call();
 		defereds.clear();
 		
-		printf( "GameManager: called %d defered!\n", size );
+		//printf( "GameManager: called %d defered!\n", size );
 	}
 
 	//  timers
