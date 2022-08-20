@@ -77,5 +77,7 @@ public:
 	}
 	void clear_buttons();
 	void perform_layout();
+
+	std::weak_ptr<Map> get_map() { return map; }
 };
 
