@@ -21,7 +21,6 @@ public:
 		}
 
 		//  rendering
-		unit->set_should_update_render_pos( true );
 		unit->get_animator()->set_playing( true );
 
 		//  pathfinding color

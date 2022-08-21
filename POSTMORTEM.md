@@ -56,6 +56,8 @@ Finding a New Game Design:
 + 21/08/2022:
 	+**~0h05** => Add non-explosion Bullet Damage
 	+**~0h30** => Fix bug preventing units from moving to a previously shot position 
+	+**~0h05** => Remove `Unit::should_update_render_pos`
+	+**~0h05** => Fix some compilation warnings
 
 **Total: ~87h10**
 

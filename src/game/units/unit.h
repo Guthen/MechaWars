@@ -46,8 +46,6 @@ private:
 protected:
 	void _update_dest_rect() override;
 
-	bool should_update_render_pos = false;
-
 	UnitData data;
 	UnitState* state = nullptr;
 	std::deque<UnitState*> states_queue;
@@ -68,8 +66,6 @@ public:
 	void render() override;
 
 	void on_right_click_selected() override;
-
-	void set_should_update_render_pos( bool active ) { should_update_render_pos = active; }
 
 	template <typename T, typename... Args>
 	UnitState* new_state( Args... args ) { return new T( this, args... ); }

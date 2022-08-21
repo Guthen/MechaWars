@@ -54,11 +54,8 @@ Unit::~Unit()
 void Unit::update( float dt )
 {
 	//  render pos
-	if ( should_update_render_pos )
-	{
-		dest.x = utility::approach( dest.x, (float) pos.x * Map::TILE_SIZE, dt * data.move_speed );
-		dest.y = utility::approach( dest.y, (float) pos.y * Map::TILE_SIZE, dt * data.move_speed );
-	}
+	dest.x = utility::approach( dest.x, (float) pos.x * Map::TILE_SIZE, dt * data.move_speed );
+	dest.y = utility::approach( dest.y, (float) pos.y * Map::TILE_SIZE, dt * data.move_speed );
 
 	//  animator
 	if ( animator.update( dt ) )
@@ -70,7 +67,6 @@ void Unit::update( float dt )
 		DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
 		DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
 		DRAW_DEBUG( "STATE: " + state->str() );
-		DRAW_DEBUG( "SHOULD_UPDATE_RENDER_POS: " + std::to_string( should_update_render_pos ) );
 
 		//  states queue
 		int queue_size = states_queue.size();
@@ -306,8 +302,6 @@ void Unit::fire_bullet( Int2 shoot_target )
 	float knockback_amount = (float) Map::TILE_SIZE / 2;
 	dest.x -= move_dir.x * knockback_amount;
 	dest.y -= move_dir.y * knockback_amount;
-	should_update_render_pos = false;
-	TIMER( .1f, should_update_render_pos = true; );
 }
 
 bool Unit::is_firing() { return _firing_times > 0; }

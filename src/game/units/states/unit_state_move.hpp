@@ -26,13 +26,11 @@ public:
 		if ( !path.empty() )
 			Pathfinder::set_pos_disabled( path.back(), false );
 
-		unit->set_should_update_render_pos( false );
 		unit->get_animator()->set_playing( false );
 	}
 
 	void init() override
 	{
-		unit->set_should_update_render_pos( true );
 		unit->get_animator()->set_playing( true );
 
 		pathfinding_color = unit->get_color();
