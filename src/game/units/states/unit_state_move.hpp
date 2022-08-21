@@ -10,10 +10,10 @@ class UnitState_Move : public UnitState
 protected:
 	float current_move_time = 0.0f;
 
-	Color pathfinding_color;
+	Color pathfinding_color = WHITE;
 
 	std::vector<Int2> path;
-	Int2 goal;
+	Int2 goal { 0, 0 };
 public:
 	bool can_change_goal = true;
 

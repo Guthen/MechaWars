@@ -262,8 +262,10 @@ void Unit::fire_bullet( Int2 shoot_target )
 	//  accuracy (spread in a circle shape)
 	float angle = dir_ang;
 	float dist = sqrtf( 
-		( pos.x - shoot_target.x ) * ( pos.x - shoot_target.x ) 
-		   + ( pos.y - shoot_target.y ) * ( pos.y - shoot_target.y ) 
+		(float) (
+			( pos.x - shoot_target.x ) * ( pos.x - shoot_target.x ) 
+			 + ( pos.y - shoot_target.y ) * ( pos.y - shoot_target.y ) 
+		)
 	);
 
 	//  check accuracy
@@ -274,7 +276,7 @@ void Unit::fire_bullet( Int2 shoot_target )
 	if ( accuracy == 0.0f || accuracy > data.shoot.accuracy )
 	{
 		//  get random spread in range [-data.shoot.spread; -1] & [1; data.shoot.spread] (avoid 0)
-		float spread = GetRandomValue( 1, data.shoot.spread );
+		float spread = (float) GetRandomValue( 1, data.shoot.spread );
 		if ( rand() % 2 == 0 )
 			spread *= -1.0f;
 
