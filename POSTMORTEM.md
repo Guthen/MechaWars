@@ -53,6 +53,8 @@ Finding a New Game Design:
 + 20/08/2022:
 	+ **~0h10** => Removing Melee Combat & Agro Range
 	+ **~2h30** => Refactoring Shot Spread 
++ 21/08/2022:
+	+**~0h05** => Add non-explosion Bullet Damage
 
 **Total: ~87h10**
 

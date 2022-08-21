@@ -60,13 +60,22 @@ void Bullet::impact()
 	if ( !map_tmp )
 		return;
 
+	//  transform pos to grid
 	Int2 dest_pos {
 		(int) ( dest.x / Map::TILE_SIZE ),
 		(int) ( dest.y / Map::TILE_SIZE )
 	};
 
-	//  TODO: implement none-explosion damage
-	ExplosionManager::create_explosion( map_tmp, dest_pos, damage, explosion_radius );
+	//  simple shot
+	if ( explosion_radius == 0 )
+	{
+		auto ent = map_tmp->get_structure_at_pos( dest_pos.x, dest_pos.y );
+		if ( auto ent_tmp = ent.lock() )
+			ent_tmp->take_damage( damage );
+	}
+	//  big bang, boom!
+	else
+		ExplosionManager::create_explosion( map_tmp, dest_pos, damage, explosion_radius );
 }
 
 void Bullet::safe_destroy()
