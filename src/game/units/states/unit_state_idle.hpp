@@ -3,7 +3,7 @@
 #include "unit_state.h"
 #include "../../../utility/math.h"
 
-#include "unit_state_shoot.hpp"
+#include "unit_state_attack.hpp"
 
 class UnitState_Idle : public UnitState
 {
@@ -12,33 +12,45 @@ public:
 
 	void update( float dt ) override
 	{
+		//  give up if has next state
+		if ( unit->has_next_state() )
+		{
+			unit->next_state();
+			return;
+		}
+
 		TEAM team = unit->get_team();
 		Int2 pos = unit->get_pos();
 
+		//  get unit data
+		UnitData data = unit->get_data();
+
 		//  search for target
 		std::shared_ptr<Unit> target = nullptr;
-		float target_dist = INFINITY;
+		float target_dist = data.shoot.attack_range;
 		for ( std::weak_ptr<Unit> v : Unit::get_units() )
 		{
 			if ( auto v_tmp = v.lock() )
 			{
+				//  check if is an enemy
 				if ( v_tmp.get() == unit ) continue;
 				if ( v_tmp->get_team() == team ) continue;
 
+				//  check distance
 				float dist = utility::distance( v_tmp->get_pos(), pos );
-				if ( dist >= target_dist || dist > 16.0f ) continue;
+				if ( dist >= target_dist ) continue;
 
+				//  nice, found a potential target..
 				target = v_tmp;
 				target_dist = dist;
 			}
 		}
 
-		//  shoot target
+		//  attack target
 		if ( target )
 		{
 			Int2 target_pos = target->get_pos();
-			//printf( "%p found potential target %p at %d, %d from %d, %d\n", unit, target, target_pos.x, target_pos.y, pos.x, pos.y );
-			unit->change_state<UnitState_Shoot>( target );
+			unit->change_state( false, unit->new_state<UnitState_Attack>( target ) );
 		}
 	}
 

@@ -7,21 +7,18 @@
 
 class UnitState_Move : public UnitState
 {
-private:
+protected:
 	float current_move_time = 0.0f;
 
 	Color pathfinding_color;
 
 	std::vector<Int2> path;
+	Int2 goal;
 public:
-	UnitState_Move( Unit* unit, Int2 goal ) : UnitState( unit ) 
-	{
-		set_target( goal );
-		unit->set_should_update_render_pos( true );
-		unit->get_animator()->set_playing( true );
+	bool can_change_goal = true;
 
-		pathfinding_color = unit->get_color();
-	};
+	UnitState_Move( Unit* unit ) : UnitState( unit ) {}
+	UnitState_Move( Unit* unit, Int2 goal ) : UnitState( unit ), goal( goal ) {};
 
 	~UnitState_Move()
 	{
@@ -33,6 +30,17 @@ public:
 		unit->get_animator()->set_playing( false );
 	}
 
+	void init() override
+	{
+		unit->set_should_update_render_pos( true );
+		unit->get_animator()->set_playing( true );
+
+		pathfinding_color = unit->get_color();
+
+		//  pathfinding to target
+		set_goal( goal );
+	}
+
 	void update( float dt ) override
 	{
 		if ( ( current_move_time -= dt ) <= 0.0f )
@@ -40,7 +48,7 @@ public:
 			//  movement finished: go to Idle
 			if ( path.empty() )
 			{
-				unit->change_state<UnitState_Idle>();
+				unit->next_state();
 				return;
 			}
 
@@ -71,7 +79,11 @@ public:
 
 			//  draw start
 			if ( it == first_it )
-				DrawCircle( (int) current_render_pos.x, (int) current_render_pos.y, 2.0f, pathfinding_color );
+			{
+				Rectangle dest = unit->get_dest_rect();
+				DrawLineEx( Vector2 { dest.x + dest.width / 2, dest.y + dest.height / 2 }, current_render_pos, 2.0f, pathfinding_color );
+				//DrawCircle( (int) current_render_pos.x, (int) current_render_pos.y, 2.0f, pathfinding_color );
+			}
 			//  draw positions
 			else
 				DrawLineEx( last_render_pos, current_render_pos, 2.0f, pathfinding_color );
@@ -83,7 +95,7 @@ public:
 		DrawCircle( (int) last_render_pos.x, (int) last_render_pos.y, 3.0f, pathfinding_color );
 	}
 
-	void set_target( Int2 goal ) 
+	void set_goal( Int2 goal ) 
 	{ 
 		//  unreserve last goal
 		if ( !path.empty() )

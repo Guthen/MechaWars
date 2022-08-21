@@ -16,8 +16,10 @@ public:
 
 		//  data
 		data.move_speed = 8.0f;
-		data.shoot.enabled = true;
-		data.shoot.spread = 4;
+		data.shoot.attack_range = 16.0f;
+		data.shoot.fire_delay = 7.0f;
+		data.shoot.spread = 30;
+		data.shoot.accuracy = 0.0f;
 		data.shoot.burst_count = 3;
 		data.shoot.burst_delay = .5f;
 		data.shoot.damage = 20;

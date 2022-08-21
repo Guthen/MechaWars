@@ -13,6 +13,8 @@ public:
 	UnitState( Unit* unit );
 	virtual ~UnitState() {};  //  virtual destructors are important
 
+	virtual void init() {};
+
 	virtual void update( float dt ) {};
 	virtual void render() {};
 

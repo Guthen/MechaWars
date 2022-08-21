@@ -1,7 +1,8 @@
 #include "unit.h"
 
+#include "states/_unit_state_target.hpp"
 #include "states/unit_state_idle.hpp"
-#include "states/unit_state_shoot.hpp"
+#include "states/unit_state_attack.hpp"
 #include "states/unit_state_move.hpp"
 
 //  static
@@ -13,7 +14,7 @@ void Unit::_update_dest_rect() {}  //  I take control over that
 Unit::Unit( const int x, const int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, map )
 {
 	animator.set_playing( false );
-	change_state<UnitState_Idle>();
+	change_state( true, new_state<UnitState_Idle>() );
 
 	dest.x = (float) x * Map::TILE_SIZE, dest.y = (float) y * Map::TILE_SIZE;
 	dest.width = (float) size.x * Map::TILE_SIZE, dest.height = (float) size.y * Map::TILE_SIZE;
@@ -23,9 +24,10 @@ Unit::Unit( const int x, const int y, std::weak_ptr<Map> map ) : WorldEntity( x,
 
 Unit::~Unit()
 {
-	//  free state
+	//  free states
 	if ( state )
 		delete state;
+	clear_states();
 
 	//  remove from list
 	std::vector<std::weak_ptr<Unit>>::iterator it = units.begin();
@@ -68,6 +70,20 @@ void Unit::update( float dt )
 		DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
 		DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
 		DRAW_DEBUG( "STATE: " + state->str() );
+		DRAW_DEBUG( "SHOULD_UPDATE_RENDER_POS: " + std::to_string( should_update_render_pos ) );
+
+		//  states queue
+		int queue_size = states_queue.size();
+		if ( queue_size > 0 )
+		{
+			DRAW_DEBUG( "STATES_QUEUE: " );
+			for ( int i = 0; i < queue_size; i++ )
+				DRAW_DEBUG( " " + std::to_string( i ) + ": " + states_queue[i]->str());
+		}
+	
+		//  DEBUG: destroy unit if pressing SUPPR
+		if ( IsKeyPressed( KEY_DELETE ) )
+			safe_destroy();
 	}
 
 	//  burst firing
@@ -101,10 +117,10 @@ void Unit::update( float dt )
 
 void Unit::render()
 {
-	WorldEntity::render();
-
 	if ( state )
 		state->render();
+
+	WorldEntity::render();
 }
 
 void Unit::on_right_click_selected()
@@ -112,23 +128,29 @@ void Unit::on_right_click_selected()
 	auto map_tmp = map.lock();
 	if ( !map_tmp ) return;
 
+	//  should the future state be queued?
+	bool is_queued = IsKeyDown( KEY_LEFT_SHIFT );
+
 	Int2 tile_mouse_pos = GameCamera::get_current()->get_tile_mouse_pos();
 	if ( map_tmp->has_structure_at( tile_mouse_pos.x, tile_mouse_pos.y ) )
 	{
 		std::weak_ptr<WorldEntity> target = map_tmp->get_structure_at_pos( tile_mouse_pos.x, tile_mouse_pos.y );
 		if ( auto target_tmp = target.lock() )
 		{
-			//  shoot hostile entity
+			//  check if resource
 			TEAM target_team = target_tmp->get_team();
 			if ( target_team == TEAM_NONE )
 			{
-				move_to( tile_mouse_pos );  //  move near the resource
+				//  move near the resource
+				move_to( is_queued, tile_mouse_pos );
 				return;
 			}
+			//  check if ally
 			if ( target_team == get_team() )
 				return;
 
-			shoot_target( target_tmp );
+			//  attack hostile entity
+			attack_target( is_queued, target_tmp );
 		}
 	}
 	else
@@ -140,35 +162,88 @@ void Unit::on_right_click_selected()
 			set_pos( tile_mouse_pos );
 			dest.x = (float) pos.x * Map::TILE_SIZE, dest.y = (float) pos.y * Map::TILE_SIZE;
 			reserve_pos();
-			change_state<UnitState_Idle>();
+
+			change_state( false, new_state<UnitState_Idle>() );
 			return;
 		}
 
 		//  move towards
-		move_to( tile_mouse_pos );
+		move_to( is_queued, tile_mouse_pos );
 	}
 }
 
-void Unit::move_to( Int2 goal )
+void Unit::change_state( bool no_delete, UnitState* _state )
 {
-	UnitState_Move* move_state = nullptr;
-	//  change goal if we are already moving
-	if ( move_state = dynamic_cast<UnitState_Move*>( state ) )
-		move_state->set_target( goal );
-	//  move!
-	else
-		change_state<UnitState_Move>( goal );
+	//  delete old one
+	if ( !no_delete && state )
+		delete state;
+
+	//  apply next state
+	state = _state;
+	state->init();
 }
 
-void Unit::shoot_target( std::weak_ptr<WorldEntity> target )
+void Unit::next_state()
 {
-	UnitState_Shoot* shoot_state = nullptr;
-	//  change target if we are already shooting
-	if ( shoot_state = dynamic_cast<UnitState_Shoot*>( state ) )
-		shoot_state->set_target( target );
-	//  start to shoot
+	//  default to idle
+	if ( !has_next_state() )
+	{
+		change_state( false, new_state<UnitState_Idle>() );
+		return;
+	}
+
+	//  move to next state
+	change_state( false, states_queue.front() );
+	states_queue.pop_front();
+}
+
+void Unit::clear_states()
+{
+	//  free states queue
+	for ( UnitState* _state : states_queue )
+		delete _state;
+
+	states_queue.clear();
+}
+
+void Unit::move_to( bool is_queued, Int2 goal )
+{
+	//  queue movement
+	if ( is_queued )
+		push_state( false, new_state<UnitState_Move>( goal ) );
 	else
-		change_state<UnitState_Shoot>( target );
+	{
+		//  change goal if we are already moving (not targeting someone)
+		UnitState_Move* move_state = nullptr;
+		if ( ( move_state = dynamic_cast<UnitState_Move*>( state ) ) && move_state->can_change_goal )
+			move_state->set_goal( goal );
+		//  move!
+		else
+		{
+			clear_states();
+			change_state( false, new_state<UnitState_Move>( goal ) );
+		}
+	}
+}
+
+void Unit::attack_target( bool is_queued, std::weak_ptr<WorldEntity> target )
+{
+	//  queue attack
+	if ( is_queued )
+		push_state( false, new_state<UnitState_Attack>( target ) );
+	else
+	{
+		//  change target if we are already shooting
+		UnitState_Attack* attack_state = nullptr;
+		if ( attack_state = dynamic_cast<UnitState_Attack*>( state ) )
+			attack_state->set_target( target );
+		//  attack!
+		else
+		{
+			clear_states();
+			change_state( false, new_state<UnitState_Attack>( target ) );
+		}
+	}
 }
 
 void Unit::shoot_to( std::weak_ptr<WorldEntity> target )
@@ -181,25 +256,49 @@ void Unit::shoot_to( std::weak_ptr<WorldEntity> target )
 
 void Unit::fire_bullet( Int2 shoot_target )
 {
-	//  apply spread (circle shape)
-	if ( data.shoot.spread > 0 )
+	float dir_ang = Vector2Angle( pos.to_v2(), shoot_target.to_v2() );
+	Vector2 dir = ( shoot_target - pos ).to_v2();
+
+	//  accuracy (spread in a circle shape)
+	float angle = dir_ang;
+	float dist = sqrtf( 
+		( pos.x - shoot_target.x ) * ( pos.x - shoot_target.x ) 
+		   + ( pos.y - shoot_target.y ) * ( pos.y - shoot_target.y ) 
+	);
+
+	//  check accuracy
+	float accuracy = data.shoot.accuracy;
+	if ( accuracy > 0.0f )  //  avoid generating numbers when accuracy = 0.0f
+		accuracy = rand() / static_cast<float>( RAND_MAX );  //  random number in range: [0.0f; 1.0f]
+
+	if ( accuracy == 0.0f || accuracy > data.shoot.accuracy )
 	{
-		float angle = (float) GetRandomValue( 0, 359 ) / PI;
-		int radius = GetRandomValue( 0, data.shoot.spread );
-		shoot_target.x += (int) ( cos( angle ) * radius );
-		shoot_target.y += (int) ( sin( angle ) * radius );
+		//  get random spread in range [-data.shoot.spread; -1] & [1; data.shoot.spread] (avoid 0)
+		float spread = GetRandomValue( 1, data.shoot.spread );
+		if ( rand() % 2 == 0 )
+			spread *= -1.0f;
+
+		//  apply angle spread
+		angle += ( spread * dist / data.shoot.attack_range );
+
+		//  apply distance offset: spread_ratio * dist_ratio * offset
+		dist += ( spread / data.shoot.spread ) * ( dist / data.shoot.attack_range ) * ( data.shoot.spread / 6.0f );
 	}
 
-	Vector2 dir = ( shoot_target - pos ).to_v2();
-	Vector2 move_dir = Vector2Normalize( dir );
+	//  apply angle randomness
+	angle += GetRandomValue( -Map::TILE_SIZE, Map::TILE_SIZE ) / 2.0f;
+	//  convert angle to rad
+	angle *= DEG2RAD;
 
-	//  bullet
-	#pragma region Bullet
-		float dist_to_move = Vector2Length( dir ) * Map::TILE_SIZE;
+	//  compute new direction
+	dir.x = cosf( angle ) * dist;
+	dir.y = sinf( angle ) * dist;
 
-		//  spawn bullet
-		GameManager::create<Bullet>( map, Vector2 { dest.x + dest.width / 2, dest.y + dest.height / 2 }, move_dir, dist_to_move, data.shoot.damage, data.shoot.explosion_radius );
-	#pragma endregion
+	//  normalize direction
+	Vector2 move_dir = Vector2 { dir.x * 1.0f / dist, dir.y * 1.0f / dist };
+
+	//  spawn bullet
+	GameManager::create<Bullet>( map, Vector2 { dest.x + dest.width / 2, dest.y + dest.height / 2 }, move_dir, dist * Map::TILE_SIZE, data.shoot.damage, data.shoot.explosion_radius );
 
 	//  knockback
 	float knockback_amount = (float) Map::TILE_SIZE / 2;
