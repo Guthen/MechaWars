@@ -23,19 +23,26 @@ WorldEntity::WorldEntity( const int x, const int y, const int w, const int h, st
 
 	quad = Rectangle { 0, 0, Map::TILE_SIZE, Map::TILE_SIZE };
 	team_id = TEAM_NONE;
+
+	hit_shader = AssetsManager::get_or_load_shader( "assets/shaders/hit.glsl" );
 	//reserve_pos(); //  can't call `reserve_pos()` in the ctor since it use `shared_from_this()`
 }
 
 void WorldEntity::render()
 {
-	if ( team_id == TEAM_NONE )
-	{
-		DrawTexturePro( texture, quad, dest, Vector2 {}, 0.0f, color );
-		return;
-	}
+	//  start hit shader
+	if ( is_currently_hit )
+		BeginShaderMode( hit_shader );
 
+	//  draw shape texture
 	DrawTexturePro( texture, quad, dest, Vector2 {}, 0.0f, WHITE );
-	DrawTexturePro( texture, team_quad, dest, Vector2 {}, 0.0f, color );
+	//  draw team texture
+	if ( team_id > TEAM_NONE )
+		DrawTexturePro( texture, team_quad, dest, Vector2 {}, 0.0f, color );
+
+	//  end hit shader
+	if ( is_currently_hit )
+		EndShaderMode();
 }
 
 
@@ -112,6 +119,10 @@ void WorldEntity::take_damage( int damage )
 	//  deal damage & check destroy
 	if ( ( health -= damage ) <= 0 )
 		safe_destroy();
+
+	//  hit shader
+	is_currently_hit = true;
+	TIMER( hit_time, is_currently_hit = false; );
 
 	//  event
 	on_take_damage( damage );

@@ -22,6 +22,10 @@ protected:
 	int max_health = 100;
 	int health = 100;
 
+	Shader hit_shader;
+	float hit_time = .25f;
+	bool is_currently_hit = false;
+
 	std::weak_ptr<Map> map;
 	std::weak_ptr<UITileCursor> selecting_cursor; //  tile cursor which is currently selecting the world entity
 	std::vector<std::weak_ptr<UIButton>> buttons;
