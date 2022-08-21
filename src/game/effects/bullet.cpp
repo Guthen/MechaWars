@@ -69,9 +69,12 @@ void Bullet::impact()
 	//  simple shot
 	if ( explosion_radius == 0 )
 	{
-		auto ent = map_tmp->get_structure_at_pos( dest_pos.x, dest_pos.y );
-		if ( auto ent_tmp = ent.lock() )
-			ent_tmp->take_damage( damage );
+		if ( map_tmp->has_structure_at( dest_pos.x, dest_pos.y ) )
+		{
+			auto ent = map_tmp->get_structure_at_pos( dest_pos.x, dest_pos.y );
+			if ( auto ent_tmp = ent.lock() )
+				ent_tmp->take_damage( damage );
+		}
 	}
 	//  big bang, boom!
 	else

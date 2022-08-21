@@ -55,6 +55,7 @@ Finding a New Game Design:
 	+ **~2h30** => Refactoring Shot Spread 
 + 21/08/2022:
 	+**~0h05** => Add non-explosion Bullet Damage
+	+**~0h30** => Fix bug preventing units from moving to a previously shot position 
 
 **Total: ~87h10**
 
