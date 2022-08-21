@@ -59,8 +59,9 @@ Finding a New Game Design:
 	+**~0h10** => Remove `Unit::should_update_render_pos`
 	+**~0h05** => Fix some compilation warnings
 	+**~0h20** => Add hit shader on `WorldEntity::take_damage`
+	+**~0h20** => Fix abusive knockback on shoot
 
-**Total: ~87h10**
+**Total: ~88h40**
 
 ## What I learned from this project?
 

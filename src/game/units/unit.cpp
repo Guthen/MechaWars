@@ -299,7 +299,7 @@ void Unit::fire_bullet( Int2 shoot_target )
 	GameManager::create<Bullet>( map, Vector2 { dest.x + dest.width / 2, dest.y + dest.height / 2 }, move_dir, dist * Map::TILE_SIZE, data.shoot.damage, data.shoot.explosion_radius );
 
 	//  knockback
-	float knockback_amount = (float) Map::TILE_SIZE / 2;
+	float knockback_amount = (float) ( Map::TILE_SIZE / 2.0f ) / (float) data.shoot.burst_count / (float) data.shoot.burst_delay;
 	dest.x -= move_dir.x * knockback_amount;
 	dest.y -= move_dir.y * knockback_amount;
 }
