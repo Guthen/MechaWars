@@ -62,8 +62,17 @@ Finding a New Game Design:
 	+**~0h20** => Fix abusive knockback on shoot
 + 23/08/2022:
 	+**~0h30** => Add circular Explosion Shape
+	+**~5h00** => 
+		+ Designing new Units (Znyper & Fastor..)
+		+ added unit data for setup timer, trajectory prediction & bullet speed
+		+ added idle units riposting when attacked by enemies
+		+ added projectile trajectory prediction
+		+ added debug drawing variables
+		+ fixed bullet hitbox
+		+ fixed custom health not applied
+		+ fixed explosion shape to circular
 
-**Total: ~88h40**
+**Total: ~94h10**
 
 ## What I learned from this project?
 
