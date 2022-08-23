@@ -115,13 +115,13 @@ void WorldEntity::unreserve_pos()
 			map_tmp->unreserve_structure_pos( pos.x + x, pos.y + y );
 }
 
-void WorldEntity::take_damage( int damage )
+void WorldEntity::take_damage( DamageInfo info )
 {
 	if ( health <= 0 )
 		return;
 
 	//  deal damage & check destroy
-	if ( ( health -= damage ) <= 0 )
+	if ( ( health -= info.damage ) <= 0 )
 		safe_destroy();
 
 	//  hit shader
@@ -129,7 +129,7 @@ void WorldEntity::take_damage( int damage )
 	TIMER( hit_time, is_currently_hit = false; );
 
 	//  event
-	on_take_damage( damage );
+	on_take_damage( info );
 }
 
 void WorldEntity::select( std::weak_ptr<UITileCursor> cursor )

@@ -152,6 +152,19 @@ void Unit::render()
 	WorldEntity::render();
 }
 
+void Unit::on_take_damage( DamageInfo info )
+{
+	auto attacker_tmp = info.attacker.lock();
+	if ( !attacker_tmp )
+		return;
+
+	//  riposte on idle: attack if enemy
+	if ( dynamic_cast<UnitState_Idle*>( state ) )
+		//  check if enemy
+		if ( !( attacker_tmp->get_team() == team_id ) )
+			attack_target( false, info.attacker );
+}
+
 void Unit::on_right_click_selected()
 {
 	auto map_tmp = map.lock();
@@ -330,7 +343,7 @@ void Unit::fire_bullet( Int2 shoot_target )
 	Vector2 move_dir = Vector2 { dir.x / dist, dir.y / dist };
 
 	//  spawn bullet
-	GameManager::create<Bullet>( 
+	std::shared_ptr<Bullet> bullet = GameManager::create<Bullet>( 
 		map,  //  map
 		Vector2 {  //  bullet's origin
 			dest.x + dest.width / 2, 
@@ -342,6 +355,7 @@ void Unit::fire_bullet( Int2 shoot_target )
 		data.shoot.explosion_radius,  //  explosion radius
 		data.shoot.bullet_speed  //  bullet speed
 	);
+	bullet->set_owner( _get_shared_from_this<WorldEntity>() );
 
 	//  knockback
 	float knockback_amount = (float) ( Map::TILE_SIZE / 2.0f ) / (float) data.shoot.burst_count / (float) data.shoot.burst_delay;

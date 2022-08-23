@@ -8,6 +8,14 @@
 #include "ui/ui_button.hpp"
 #include "ui/ui_tile_cursor.h"
 
+struct DamageInfo
+{
+	int damage = 0;
+	std::weak_ptr<WorldEntity> attacker;
+
+	bool is_explosion = false;
+};
+
 class WorldEntity : public Entity
 {
 protected:
@@ -46,8 +54,8 @@ public:
 	void reserve_pos();
 	void unreserve_pos();
 
-	void take_damage( int damage );
-	virtual void on_take_damage( int damage ) {};
+	void take_damage( DamageInfo info );
+	virtual void on_take_damage( DamageInfo info ) {};
 
 	void set_selecting_cursor( std::weak_ptr<UITileCursor> cursor ) { selecting_cursor = cursor; }
 	void unset_selecting_cursor() { selecting_cursor.reset(); }

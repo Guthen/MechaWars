@@ -49,9 +49,14 @@ void Explosion::update( const float dt )
 		if ( auto map_tmp = map.lock() )
 			if ( map_tmp->has_structure_at( pos.x, pos.y ) )
 			{
+				DamageInfo info;
+				info.damage = damage;
+				info.attacker = owner;
+				info.is_explosion = true;
+
 				auto ent = map_tmp->get_structure_at_pos( pos.x, pos.y );
 				if ( auto ent_tmp = ent.lock() )
-					ent_tmp->take_damage( damage );
+					ent_tmp->take_damage( info );
 			}
 		damage_dealt = true;
 	}
@@ -66,13 +71,13 @@ void Explosion::update( const float dt )
 			for ( const Cardinal dir : { Cardinal::SOUTH, Cardinal::WEST, Cardinal::NORTH, Cardinal::EAST } )
 			{
 				Int2 cell = pos + utility::get_cardinal_offset( dir );
-				ExplosionManager::create_explosion( map_tmp, cell, damage, expansion - 1, false );
+				ExplosionManager::create_explosion( map_tmp, cell, damage, expansion - 1, owner, false );
 			}
 
 			//  diagonals
 			if ( expansion >= 2 )
 				for ( Int2 dir : { Int2 { -1, -1 }, Int2 { 1, -1 }, Int2 { -1, 1 }, Int2 { 1, 1 } } )
-					ExplosionManager::create_explosion( map_tmp, pos + dir, damage, expansion - 2, false );
+					ExplosionManager::create_explosion( map_tmp, pos + dir, damage, expansion - 2, owner, false );
 		}
 		expansion_done = true;
 	}

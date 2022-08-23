@@ -69,6 +69,8 @@ public:
 	void update( float dt ) override;
 	void render() override;
 
+	void on_take_damage( DamageInfo info ) override;
+
 	void on_right_click_selected() override;
 
 	template <typename T, typename... Args>

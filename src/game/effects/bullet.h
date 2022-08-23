@@ -23,6 +23,7 @@ protected:
 
 	std::weak_ptr<Map> map;
 	std::weak_ptr<PixelParticles> particles;
+	std::weak_ptr<WorldEntity> owner;
 
 	Texture texture;
 public:
@@ -30,6 +31,8 @@ public:
 
 	void update( float dt ) override;
 	void render() override;
+
+	void set_owner( std::weak_ptr<WorldEntity> ent ) { owner = ent; };
 
 	virtual void impact();
 

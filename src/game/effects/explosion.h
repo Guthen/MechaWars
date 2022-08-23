@@ -38,6 +38,7 @@ private:
 	float _anim_expansion = 0.0f;
 
 	std::weak_ptr<Map> map;
+	std::weak_ptr<WorldEntity> owner;
 
 	Texture texture;
 	Animator animator;
@@ -51,6 +52,8 @@ public:
 
 	void update( const float dt ) override;
 	void render() override;
+
+	void set_owner( std::weak_ptr<WorldEntity> ent ) { owner = ent; };
 
 	void set_epicenter( bool epicenter ) { is_epicenter = epicenter; }
 };

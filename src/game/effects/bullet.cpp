@@ -73,12 +73,17 @@ void Bullet::impact()
 	{
 		Vector2 pos { dest.x, dest.y };
 
+		//  setup damage info
+		DamageInfo info;
+		info.damage = damage;
+		info.attacker = owner;
+
 		//  extra check for moving units (fit w/ renderering)
 		for ( std::weak_ptr<Unit> unit : Unit::get_units() )
 			if ( auto unit_tmp = unit.lock() )
 				if ( CheckCollisionPointRec( pos, unit_tmp->get_dest_rect() ) )
 				{
-					unit_tmp->take_damage( damage );
+					unit_tmp->take_damage( info );
 					return;
 				}
 
@@ -87,12 +92,12 @@ void Bullet::impact()
 		{
 			auto ent = map_tmp->get_structure_at_pos( dest_pos.x, dest_pos.y );
 			if ( auto ent_tmp = ent.lock() )
-				ent_tmp->take_damage( damage );
+				ent_tmp->take_damage( info );
 		}
 	}
 	//  big bang, boom!
 	else
-		ExplosionManager::create_explosion( map_tmp, dest_pos, damage, explosion_radius );
+		ExplosionManager::create_explosion( map_tmp, dest_pos, damage, explosion_radius, owner, true );
 }
 
 void Bullet::safe_destroy()
