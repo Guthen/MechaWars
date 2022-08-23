@@ -114,7 +114,8 @@ void Unit::update( float dt )
 	//  debug draw
 	if ( GameManager::is_debug_state( DEBUG_STATE::ENTITY ) && is_selected() )
 	{
-		DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
+		//  debug unit
+		DRAW_DEBUG( TextFormat( "UNIT[id=%d]", get_id() ) );
 		DRAW_DEBUG( TextFormat( "HEALTH: %d/%d", health, max_health ) );
 		DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
 		DRAW_DEBUG( "STATE: " + state->str() );
@@ -127,11 +128,20 @@ void Unit::update( float dt )
 		int queue_size = states_queue.size();
 		if ( queue_size > 0 )
 		{
-			DRAW_DEBUG( "STATES_QUEUE: " );
+			DRAW_DEBUG( TextFormat( "STATES_QUEUE [n=%d]:", queue_size ) );
 			for ( int i = 0; i < queue_size; i++ )
-				DRAW_DEBUG( " " + std::to_string( i ) + ": " + states_queue[i]->str());
+				DRAW_DEBUG( " " + std::to_string( i ) + ": " + states_queue[i]->str() );
 		}
 	
+		//  debug units list
+		DRAW_DEBUG( "" );
+		DRAW_DEBUG( TextFormat( "UNITS [n=%d]:", units.size() ) );
+
+		int i = 0;
+		for ( std::weak_ptr<Unit> unit : units )
+			if ( auto unit_tmp = unit.lock() )
+				DRAW_DEBUG( TextFormat( " %d: UNIT[id=%d]", i++, unit_tmp->get_id() ) );
+
 		//  DEBUG: destroy unit if pressing SUPPR
 		if ( IsKeyPressed( KEY_DELETE ) )
 			safe_destroy();
