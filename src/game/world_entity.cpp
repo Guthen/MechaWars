@@ -63,7 +63,7 @@ void WorldEntity::render_hud()
 	DrawRectangleRec( rect, utility::multiply_color( color, .8f ) );
 
 	//  dither
-	int wide = rect.width;
+	int wide = (int) rect.width;
 	rect.width = 1;
 	for ( int i = 0; i < wide; i += 2 )
 	{
