@@ -297,6 +297,13 @@ void Unit::shoot_to( std::weak_ptr<WorldEntity> target )
 	_next_fire_timer = data.shoot.fire_delay;
 }
 
+void Unit::reset_firing()
+{
+	_firing_times = 0;
+	_firing_timer = 0.0f;
+	_firing_target = std::weak_ptr<WorldEntity>();
+}
+
 void Unit::fire_bullet( Int2 shoot_target )
 {
 	float dir_ang = Vector2Angle( pos.to_v2(), shoot_target.to_v2() );

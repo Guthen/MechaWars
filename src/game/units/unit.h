@@ -97,6 +97,7 @@ public:
 	void attack_target( bool is_queued, std::weak_ptr<WorldEntity> target );
 	void shoot_to( std::weak_ptr<WorldEntity> target );
 	void reset_setup_timer() { _setup_timer = data.shoot.setup_delay; };
+	void reset_firing();
 	void fire_bullet( Int2 shoot_target );
 	bool is_firing();
 	bool can_fire();

@@ -8,6 +8,11 @@ class UnitState_Shoot : public _UnitState_Target
 public:
 	UnitState_Shoot( Unit* unit, std::weak_ptr<WorldEntity> target ) : _UnitState_Target( unit, target ) {}
 
+	~UnitState_Shoot()
+	{
+		unit->reset_firing();
+	}
+
 	void update( float dt ) override
 	{
 		//  check target validity
