@@ -15,15 +15,15 @@ public:
 		team_quad = Rectangle { 16, 0, 8, 8 };
 
 		//  data
-		max_health = 50;
+		max_health = 75;
 		data.move_speed = 20.0f;
 		data.shoot.attack_range = 10.0f;
-		data.shoot.fire_delay = 1.0f;
+		data.shoot.fire_delay = 0.7f;
 		data.shoot.spread = 10;
 		data.shoot.accuracy = .7f;
 		data.shoot.burst_count = 1;
 		data.shoot.burst_delay = .5f;
-		data.shoot.damage = 10;
+		data.shoot.damage = 5;
 		data.shoot.explosion_radius = 0;
 	}
 };
