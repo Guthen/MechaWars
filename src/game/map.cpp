@@ -10,6 +10,8 @@
 #include "structures/structure_silo.h"
 #include "units/unit_vk2.hpp"
 #include "units/unit_rider.hpp"
+#include "units/unit_znyper.hpp"
+#include "units/unit_fastor.hpp"
 
 #include <algorithm>
 #include <random>
@@ -216,6 +218,10 @@ void Map::generate( const unsigned int _seed )
 			generator->reserve_pos();
 
 			//  create units
+			auto builder = GameManager::create<UnitFastor>( pos.x - 1, pos.y + 2, weak_ptr );
+			builder->set_team( team );
+			builder->reserve_pos();
+
 			auto vk2 = GameManager::create<UnitVK2>( pos.x, pos.y + 2, weak_ptr );
 			vk2->set_team( team );
 			vk2->reserve_pos();
@@ -223,6 +229,10 @@ void Map::generate( const unsigned int _seed )
 			auto rider = GameManager::create<UnitRider>( pos.x + 1, pos.y + 2, weak_ptr );
 			rider->set_team( team );
 			rider->reserve_pos();
+
+			auto znyper = GameManager::create<UnitZnyper>( pos.x + 2, pos.y + 2, weak_ptr );
+			znyper->set_team( team );
+			znyper->reserve_pos();
 			//GameManager::create<StructureDrill>( pos.x + 2, pos.y + 1, weak_ptr )->set_team( team );
 			/*GameManager::create<StructureNexus>( 4 + team * 2, 5, this )->set_team( (TEAM) team );
 			GameManager::create<StructureGenerator>( 4 + team * 2, 7, this )->set_team( (TEAM) team );

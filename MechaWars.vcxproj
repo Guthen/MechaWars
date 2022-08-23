@@ -355,6 +355,7 @@
     <ClInclude Include="src\game\units\states\unit_state_move_to.hpp" />
     <ClInclude Include="src\game\units\states\_unit_state_target.hpp" />
     <ClInclude Include="src\game\units\unit_fastor.hpp" />
+    <ClInclude Include="src\game\units\unit_znyper.hpp" />
     <ClInclude Include="src\utility\color.h" />
     <ClInclude Include="src\game\effects\pixel_particles.h" />
     <ClInclude Include="src\utility\cardinal.h" />
