@@ -44,6 +44,8 @@ class Unit : public WorldEntity
 {
 private:
 	static std::vector<std::weak_ptr<Unit>> units;
+
+	void _shoot_update( float dt );
 protected:
 	void _update_dest_rect() override;
 

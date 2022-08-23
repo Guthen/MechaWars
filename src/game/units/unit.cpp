@@ -51,41 +51,8 @@ Unit::~Unit()
 	}
 }
 
-void Unit::update( float dt )
+void Unit::_shoot_update( float dt )
 {
-	//  render pos
-	dest.x = utility::approach( dest.x, (float) pos.x * Map::TILE_SIZE, dt * data.move_speed );
-	dest.y = utility::approach( dest.y, (float) pos.y * Map::TILE_SIZE, dt * data.move_speed );
-
-	//  animator
-	if ( animator.update( dt ) )
-		quad = animator.get_current_frame();
-
-	//  debug draw
-	if ( GameManager::is_debug_state( DEBUG_STATE::ENTITY ) && is_selected() )
-	{
-		DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
-		DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
-		DRAW_DEBUG( "STATE: " + state->str() );
-		DRAW_DEBUG( TextFormat( "SETUP TIMER: %02f", _setup_timer ) );
-		DRAW_DEBUG( TextFormat( "NEXT FIRE TIMER: %02f", _next_fire_timer ) );
-		DRAW_DEBUG( TextFormat( "BURST TIMES: %d", _firing_times ) );
-		DRAW_DEBUG( TextFormat( "BURST TIMER: %02f", _firing_timer ) );
-
-		//  states queue
-		int queue_size = states_queue.size();
-		if ( queue_size > 0 )
-		{
-			DRAW_DEBUG( "STATES_QUEUE: " );
-			for ( int i = 0; i < queue_size; i++ )
-				DRAW_DEBUG( " " + std::to_string( i ) + ": " + states_queue[i]->str());
-		}
-	
-		//  DEBUG: destroy unit if pressing SUPPR
-		if ( IsKeyPressed( KEY_DELETE ) )
-			safe_destroy();
-	}
-
 	//  decrease shoot timers
 	if ( _setup_timer > 0.0f )
 		_setup_timer -= dt;
@@ -132,6 +99,45 @@ void Unit::update( float dt )
 	//  next fire delay
 	else if ( _next_fire_timer > 0.0f )
 		_next_fire_timer -= dt;
+}
+
+void Unit::update( float dt )
+{
+	//  render pos
+	dest.x = utility::approach( dest.x, (float) pos.x * Map::TILE_SIZE, dt * data.move_speed );
+	dest.y = utility::approach( dest.y, (float) pos.y * Map::TILE_SIZE, dt * data.move_speed );
+
+	//  animator
+	if ( animator.update( dt ) )
+		quad = animator.get_current_frame();
+
+	//  debug draw
+	if ( GameManager::is_debug_state( DEBUG_STATE::ENTITY ) && is_selected() )
+	{
+		DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
+		DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
+		DRAW_DEBUG( "STATE: " + state->str() );
+		DRAW_DEBUG( TextFormat( "SETUP TIMER: %02f", _setup_timer ) );
+		DRAW_DEBUG( TextFormat( "NEXT FIRE TIMER: %02f", _next_fire_timer ) );
+		DRAW_DEBUG( TextFormat( "BURST TIMES: %d", _firing_times ) );
+		DRAW_DEBUG( TextFormat( "BURST TIMER: %02f", _firing_timer ) );
+
+		//  states queue
+		int queue_size = states_queue.size();
+		if ( queue_size > 0 )
+		{
+			DRAW_DEBUG( "STATES_QUEUE: " );
+			for ( int i = 0; i < queue_size; i++ )
+				DRAW_DEBUG( " " + std::to_string( i ) + ": " + states_queue[i]->str());
+		}
+	
+		//  DEBUG: destroy unit if pressing SUPPR
+		if ( IsKeyPressed( KEY_DELETE ) )
+			safe_destroy();
+	}
+
+	//  update shooting behaviour
+	_shoot_update( dt );
 
 	//  state
 	if ( state )
