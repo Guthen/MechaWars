@@ -27,6 +27,7 @@ public:
 			Pathfinder::set_pos_disabled( path.back(), false );
 
 		unit->get_animator()->set_playing( false );
+		unit->set_move_direction( Vector2 { 0, 0 } );  //  reset moving direction
 	}
 
 	void init() override
@@ -54,9 +55,12 @@ public:
 			current_move_time += Map::TILE_SIZE / unit->get_data().move_speed;
 			
 			//  move
+			Int2 pos = unit->get_pos(), new_pos = path.front();
 			unit->unreserve_pos();
-			unit->set_pos( path.front() );
+			unit->set_pos( new_pos );
 			unit->reserve_pos();
+
+			unit->set_move_direction( Vector2Normalize( ( pos - new_pos ).to_v2() ) );  //  set moving direction
 
 			path.erase( path.begin() );
 		}

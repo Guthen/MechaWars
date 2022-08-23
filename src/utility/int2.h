@@ -2,6 +2,8 @@
 
 #include "raylib.h"
 
+#include <cmath>
+
 /*
  *  Similar to Vector2 but with int instead of float
  */
@@ -26,6 +28,6 @@ struct Int2
 		return a.x + a.y * 10;
 	}
 
-	static Int2 from_v2( Vector2& v ) { return Int2 { (int) v.x, (int) v.y }; }
+	static Int2 from_v2( Vector2& v ) { return Int2 { (int) roundf( v.x ), (int) roundf( v.y ) }; }
 	Vector2 to_v2() { return Vector2 { (float) x, (float) y }; }
 };

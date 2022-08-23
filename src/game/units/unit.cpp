@@ -96,8 +96,23 @@ void Unit::update( float dt )
 		//  timer & shoot
 		if ( ( _firing_timer -= dt ) <= 0.0f )
 		{
-			fire_bullet( target_tmp->get_pos() );
+			Int2 shot_pos = target_tmp->get_pos();
 
+			//  predict target
+			if ( data.shoot.should_predict_movement )
+				if ( auto target_unit = dynamic_cast<Unit*>( target_tmp.get() ) )
+				{
+					Vector2 target_vel = Vector2Scale( target_unit->get_move_direction(), target_unit->get_data().move_speed );
+					Vector2 predicted = utility::get_linear_predicted_position( shot_pos.to_v2(), target_vel, pos.to_v2(), data.shoot.bullet_speed );
+					shot_pos = Int2::from_v2( predicted );
+
+					//printf( "pos: x=%d; y=%d; predicted: x=%d; y=%d!\n", target_tmp->get_pos().x, target_tmp->get_pos().y, shot_pos.x, shot_pos.y );
+				}
+
+			//  fire
+			fire_bullet( shot_pos );
+
+			//  next fire delay
 			_firing_timer = data.shoot.burst_delay;
 			_firing_times--;
 		}
@@ -266,7 +281,7 @@ void Unit::fire_bullet( Int2 shoot_target )
 
 	//  check accuracy
 	float accuracy = data.shoot.accuracy;
-	if ( accuracy > 0.0f )  //  avoid generating numbers when accuracy = 0.0f
+	if ( accuracy > 0.0f && accuracy < 1.0f )  //  avoid generating numbers when accuracy is an extreme
 		accuracy = rand() / static_cast<float>( RAND_MAX );  //  random number in range: [0.0f; 1.0f]
 
 	if ( accuracy == 0.0f || accuracy > data.shoot.accuracy )
@@ -284,7 +299,8 @@ void Unit::fire_bullet( Int2 shoot_target )
 	}
 
 	//  apply angle randomness
-	angle += GetRandomValue( -Map::TILE_SIZE, Map::TILE_SIZE ) / 2.0f;
+	if ( data.shoot.spread > 0 )
+		angle += GetRandomValue( -data.shoot.spread, data.shoot.spread ) / 3.0f;
 	//  convert angle to rad
 	angle *= DEG2RAD;
 
@@ -293,7 +309,7 @@ void Unit::fire_bullet( Int2 shoot_target )
 	dir.y = sinf( angle ) * dist;
 
 	//  normalize direction
-	Vector2 move_dir = Vector2 { dir.x * 1.0f / dist, dir.y * 1.0f / dist };
+	Vector2 move_dir = Vector2 { dir.x / dist, dir.y / dist };
 
 	//  spawn bullet
 	GameManager::create<Bullet>( 

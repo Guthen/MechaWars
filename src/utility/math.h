@@ -3,6 +3,8 @@
 #include "int2.h"
 #include <cmath>
 
+#include "raymath.h"
+
 namespace utility
 {
 	static float lerp( float a, float b, float t ) { return ( 1.0f - t ) * a + b * t; }
@@ -43,6 +45,50 @@ namespace utility
 	{
 		float mul = powf( 10, decimals );
 		return ceil( value * mul ) / mul;
+	}
+
+	//  Projectile Linear Prediction from a GDC talk:
+	//  https://www.youtube.com/watch?v=6OkhjWUIUf0&ab_channel=GDC
+	static Vector2 get_linear_predicted_position( Vector2 target_pos, Vector2 target_vel, Vector2 bullet_pos, float bullet_speed )
+	{
+		//  let's solve a quadratic equation
+		//  get a
+		float target_vel_scalar = Vector2DotProduct( target_vel, target_vel );
+		float a = target_vel_scalar - bullet_speed * bullet_speed;
+
+		//  get b
+		Vector2 dir = Vector2 { target_pos.x - bullet_pos.x, target_pos.y - bullet_pos.y };
+		float b = Vector2DotProduct( Vector2Scale( dir, 2.0f ), target_vel );
+
+		//  get c
+		float c = Vector2DotProduct( dir, dir );
+
+		//  compute t
+		float t = 0.0f;
+		if ( a == 0.0f )
+			t = -c / b;
+		else
+		{
+			float discriminant = b * b - 4.0f * a * c;
+			if ( discriminant < 0.0f )  //  no solution: no prediction
+				return target_pos;
+			else if ( discriminant == 0.0f )  //  d=0: only one solution
+				t = -b / ( 2.0f * a );
+			else  //  d>0: two possible solutions
+			{
+				float discriminant_unsqr = sqrtf( discriminant );
+				float t1 = ( -b + discriminant_unsqr ) / ( 2.0f * a );
+				float t2 = ( -b - discriminant_unsqr ) / ( 2.0f * a );
+				
+				//  choose the minimum
+				if ( t1 > t2 )
+					t = t2;
+				else
+					t = t1;
+			}
+		}
+
+		return Vector2Add( target_pos, Vector2Scale( target_vel, t ) );
 	}
 
 	//  mathematical functions from https://easings.net/

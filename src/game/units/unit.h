@@ -17,8 +17,7 @@ struct UnitData
 {
 	struct Shoot
 	{
-		bool enabled = false;
-
+		bool should_predict_movement = false;  //  should we predict target's movement?
 		float attack_range = 16.0f;  //  how many tiles can we shoot from target
 		float fire_delay = 1.5f;  //  how many time between each fire
 		int spread = 10;  //  how much the bullet's direction angle can offset? (in degrees)
@@ -55,6 +54,7 @@ protected:
 	float _firing_timer = 0.0f;
 	float _next_fire_timer = 0.0f;
 	std::weak_ptr<WorldEntity> _firing_target;
+	Vector2 _moving_dir { 0, 0 };
 
 	Animator animator;
 public:
@@ -84,6 +84,9 @@ public:
 
 	//  move
 	void move_to( bool is_queued, Int2 goal );
+
+	Vector2 get_move_direction() { return _moving_dir; }
+	void set_move_direction( Vector2 dir ) { _moving_dir = dir; }
 
 	//  fire
 	void attack_target( bool is_queued, std::weak_ptr<WorldEntity> target );
