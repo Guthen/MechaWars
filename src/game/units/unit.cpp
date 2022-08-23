@@ -115,6 +115,7 @@ void Unit::update( float dt )
 	if ( GameManager::is_debug_state( DEBUG_STATE::ENTITY ) && is_selected() )
 	{
 		DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
+		DRAW_DEBUG( TextFormat( "HEALTH: %d/%d", health, max_health ) );
 		DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
 		DRAW_DEBUG( "STATE: " + state->str() );
 		DRAW_DEBUG( TextFormat( "SETUP TIMER: %02f", _setup_timer ) );
