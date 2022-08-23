@@ -26,8 +26,8 @@ void GameScene::update( float dt )
 	if ( IsKeyPressed( KEY_R ) )
 		DEFERED(
 			auto scene = GameManager::create<GameScene>( (unsigned int) time( NULL ) );
-	GameManager::change_scene_to( scene );
-	);
+			GameManager::change_scene_to( scene );
+		);
 	else if ( IsKeyPressed( KEY_COMMA ) )
 		GameManager::set_debug_state( (DEBUG_STATE) ( ( (int) GameManager::get_debug_state() + 1 ) % DEBUG_STATE_COUNT ) );
 }

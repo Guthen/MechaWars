@@ -165,8 +165,8 @@ void GameManager::update( float dt )
 	size = defereds.size();
 	if ( size > 0 )
 	{
-		for ( const lambda call : defereds )
-			call();
+		for ( auto it = defereds.begin(); !( it == defereds.end() ); it++ )
+			(*it)();
 		defereds.clear();
 		
 		//printf( "GameManager: called %d defered!\n", size );
