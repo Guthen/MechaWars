@@ -15,6 +15,7 @@ public:
 		team_quad = Rectangle { 16, 0, 8, 8 };
 
 		//  data
+		max_health = 250;
 		data.move_speed = 8.0f;
 		data.shoot.attack_range = 16.0f;
 		data.shoot.fire_delay = 7.0f;

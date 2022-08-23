@@ -12,6 +12,8 @@ public:
 		texture = AssetsManager::get_or_load_texture( "assets/textures/buildings/nexus.png" );
 		quad = Rectangle { 0, 0, (float) texture.height, (float) texture.height };
 		team_quad = Rectangle { quad.width, 0, quad.width, quad.height };
+
+		max_health = 5000;
 	}
 
 	void on_selected() override

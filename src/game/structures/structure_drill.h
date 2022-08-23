@@ -9,5 +9,7 @@ public:
 	{
 		texture = AssetsManager::get_or_load_texture( "assets/textures/buildings/drill.png" );
 		team_quad = Rectangle { (float) texture.height, 0, (float) texture.height, (float) texture.height };
+
+		max_health = 500;
 	}
 };

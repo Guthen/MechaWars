@@ -36,7 +36,6 @@ struct UnitData
 
 	Shoot shoot;
 
-	int health = 100;
 	float move_speed = 8.0f;  //  how many pixels per second can we move
 };
 
