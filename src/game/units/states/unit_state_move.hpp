@@ -28,6 +28,7 @@ public:
 
 		unit->get_animator()->set_playing( false );
 		unit->set_move_direction( Vector2 { 0, 0 } );  //  reset moving direction
+		unit->reset_setup_timer();  //  re-install your bipod again..
 	}
 
 	void init() override

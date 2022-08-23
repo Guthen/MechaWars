@@ -19,6 +19,7 @@ struct UnitData
 	{
 		bool should_predict_movement = false;  //  should we predict target's movement?
 		float attack_range = 16.0f;  //  how many tiles can we shoot from target
+		float setup_delay = 0.0f;  //  how much time should we wait after moving to start firing?
 		float fire_delay = 1.5f;  //  how many time between each fire
 		int spread = 10;  //  how much the bullet's direction angle can offset? (in degrees)
 		float accuracy = .8f; //  [0.0f; 1.0f] ranged value; how much are the unit's shots accurate?
@@ -51,6 +52,7 @@ protected:
 	std::deque<UnitState*> states_queue;
 
 	int _firing_times = 0;
+	float _setup_timer = 0.0f;
 	float _firing_timer = 0.0f;
 	float _next_fire_timer = 0.0f;
 	std::weak_ptr<WorldEntity> _firing_target;
@@ -91,6 +93,7 @@ public:
 	//  fire
 	void attack_target( bool is_queued, std::weak_ptr<WorldEntity> target );
 	void shoot_to( std::weak_ptr<WorldEntity> target );
+	void reset_setup_timer() { _setup_timer = data.shoot.setup_delay; };
 	void fire_bullet( Int2 shoot_target );
 	bool is_firing();
 	bool can_fire();

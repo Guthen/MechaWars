@@ -82,6 +82,10 @@ void Unit::update( float dt )
 			safe_destroy();
 	}
 
+	//  decrease shoot timers
+	if ( _setup_timer > 0.0f )
+		_setup_timer -= dt;
+
 	//  burst firing
 	if ( is_firing() )
 	{
@@ -92,6 +96,10 @@ void Unit::update( float dt )
 			_firing_times = 0;
 			return;
 		}
+
+		//  check setup
+		if ( _setup_timer > 0.0f )
+			return;
 
 		//  timer & shoot
 		if ( ( _firing_timer -= dt ) <= 0.0f )
