@@ -67,6 +67,10 @@ void Unit::update( float dt )
 		DRAW_DEBUG( TextFormat( "UNIT [%d]", get_id() ) );
 		DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
 		DRAW_DEBUG( "STATE: " + state->str() );
+		DRAW_DEBUG( TextFormat( "SETUP TIMER: %02f", _setup_timer ) );
+		DRAW_DEBUG( TextFormat( "NEXT FIRE TIMER: %02f", _next_fire_timer ) );
+		DRAW_DEBUG( TextFormat( "BURST TIMES: %d", _firing_times ) );
+		DRAW_DEBUG( TextFormat( "BURST TIMER: %02f", _firing_timer ) );
 
 		//  states queue
 		int queue_size = states_queue.size();
