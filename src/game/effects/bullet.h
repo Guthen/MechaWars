@@ -26,7 +26,7 @@ protected:
 
 	Texture texture;
 public:
-	Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist, int damage, int explosion_radius );
+	Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist, int damage, int explosion_radius, float move_speed );
 
 	void update( float dt ) override;
 	void render() override;

@@ -24,6 +24,7 @@ struct UnitData
 		int spread = 10;  //  how much the bullet's direction angle can offset? (in degrees)
 		float accuracy = .8f; //  [0.0f; 1.0f] ranged value; how much are the unit's shots accurate?
 		int damage = 10;  //  how many damage should we deal to the target
+		float bullet_speed = 150.0f;  //  how fast the bullet should be?
 
 		//  burst
 		int burst_count = 1;  //  how many bullet should we shoot when firing

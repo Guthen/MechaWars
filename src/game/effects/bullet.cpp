@@ -1,8 +1,8 @@
 #include "bullet.h"
 
-Bullet::Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist, int damage, int explosion_radius ) : 
+Bullet::Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist, int damage, int explosion_radius, float move_speed ) : 
 	map( map ), dist_to_move( dist ),
-	damage( damage ), explosion_radius( explosion_radius )
+	damage( damage ), explosion_radius( explosion_radius ), move_speed( move_speed )
 {
 	dest.x = (float) pos.x, dest.y = (float) pos.y;
 	dest.width = (float) size.x * Map::TILE_SIZE, dest.height = (float) size.y * Map::TILE_SIZE;

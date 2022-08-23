@@ -296,7 +296,18 @@ void Unit::fire_bullet( Int2 shoot_target )
 	Vector2 move_dir = Vector2 { dir.x * 1.0f / dist, dir.y * 1.0f / dist };
 
 	//  spawn bullet
-	GameManager::create<Bullet>( map, Vector2 { dest.x + dest.width / 2, dest.y + dest.height / 2 }, move_dir, dist * Map::TILE_SIZE, data.shoot.damage, data.shoot.explosion_radius );
+	GameManager::create<Bullet>( 
+		map,  //  map
+		Vector2 {  //  bullet's origin
+			dest.x + dest.width / 2, 
+			dest.y + dest.height / 2 
+		}, 
+		move_dir,  //  direction to move
+		dist * Map::TILE_SIZE,  //  distance to move
+		data.shoot.damage,  //  damage
+		data.shoot.explosion_radius,  //  explosion radius
+		data.shoot.bullet_speed  //  bullet speed
+	);
 
 	//  knockback
 	float knockback_amount = (float) ( Map::TILE_SIZE / 2.0f ) / (float) data.shoot.burst_count / (float) data.shoot.burst_delay;
