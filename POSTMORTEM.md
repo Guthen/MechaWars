@@ -71,8 +71,9 @@ Finding a New Game Design:
 		+ fixed bullet hitbox
 		+ fixed custom health not applied
 		+ fixed explosion shape to circular
+	+**~0h50** => Some fixes
 
-**Total: ~94h10**
+**Total: ~95h00**
 
 ## What I learned from this project?
 
