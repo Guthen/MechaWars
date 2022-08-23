@@ -75,6 +75,7 @@
     <ClInclude Include="src\game\units\states\unit_state_attack.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_move_to.hpp" />
     <ClInclude Include="src\game\units\states\_unit_state_target.hpp" />
+    <ClInclude Include="src\game\units\unit_fastor.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />
