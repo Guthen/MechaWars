@@ -210,7 +210,7 @@ void GameManager::render_hud()
 
 		for ( std::string text : debug_texts )
 		{
-			utility::draw_shadow_text( text.c_str(), text_pos.x, text_pos.y, 16, RAYWHITE );
+			utility::draw_shadow_text( text.c_str(), text_pos.x, text_pos.y, 16 );
 			text_pos.y += 20;
 		}
 

@@ -39,12 +39,12 @@ void GameScene::render_hud()
 		return;
 
 	//  debug
-	utility::draw_shadow_text( TextFormat( "FPS: %d", GetFPS() ), 20, 20, 12, RAYWHITE );
-	utility::draw_shadow_text( TextFormat( "DEBUG: %d", debug_state ), 20, 40, 12, RAYWHITE );
-	utility::draw_shadow_text( TextFormat( "EC: %d", GameManager::get_entities().size() ), 20, 60, 12, RAYWHITE );
+	utility::draw_shadow_text( TextFormat( "FPS: %d", GetFPS() ), 20, 20, 12 );
+	utility::draw_shadow_text( TextFormat( "DEBUG: %d", debug_state ), 20, 40, 12 );
+	utility::draw_shadow_text( TextFormat( "EC: %d", GameManager::get_entities().size() ), 20, 60, 12 );
 
 	if ( auto map_tmp = map.lock() )
-		utility::draw_shadow_text( TextFormat( "SEED: %d", map_tmp->get_seed() ), 20, 80, 12, RAYWHITE );
+		utility::draw_shadow_text( TextFormat( "SEED: %d", map_tmp->get_seed() ), 20, 80, 12 );
 
-	utility::draw_shadow_text( TextFormat( "ZOOM: %f%%", camera.get_zoom() * 100.0f ), 20, 100, 12, RAYWHITE );
+	utility::draw_shadow_text( TextFormat( "ZOOM: %f%%", camera.get_zoom() * 100.0f ), 20, 100, 12 );
 }
