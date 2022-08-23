@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../world_entity.h"
+#include "structure.h"
 
 #include "../ui/ui_button.hpp"
 
-class StructureNexus : public WorldEntity
+class StructureNexus : public Structure
 {
 public:
-	StructureNexus( int x, int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, 2, 2, map )
+	StructureNexus( int x, int y, std::weak_ptr<Map> map ) : Structure( x, y, 2, 2, map )
 	{
 		texture = AssetsManager::get_or_load_texture( "assets/textures/buildings/nexus.png" );
 		quad = Rectangle { 0, 0, (float) texture.height, (float) texture.height };

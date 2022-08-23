@@ -25,6 +25,7 @@
     <ClCompile Include="src\utility\astar2.cpp" />
     <ClCompile Include="src\game\effects\explosion.cpp" />
     <ClCompile Include="src\game\effects\explosion_manager.cpp" />
+    <ClCompile Include="src\game\structures\structure.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\map.h" />
@@ -77,6 +78,7 @@
     <ClInclude Include="src\game\units\states\_unit_state_target.hpp" />
     <ClInclude Include="src\game\units\unit_znyper.hpp" />
     <ClInclude Include="src\game\units\unit_fastor.hpp" />
+    <ClInclude Include="src\game\structures\structure.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />
