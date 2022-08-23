@@ -61,12 +61,19 @@ void Explosion::update( const float dt )
 	{
 		//  expand
 		if ( auto map_tmp = map.lock() )
+		{
+			//  vertical & horizontal
 			for ( const Cardinal dir : { Cardinal::SOUTH, Cardinal::WEST, Cardinal::NORTH, Cardinal::EAST } )
 			{
 				Int2 cell = pos + utility::get_cardinal_offset( dir );
 				ExplosionManager::create_explosion( map_tmp, cell, damage, expansion - 1, false );
 			}
 
+			//  diagonals
+			if ( expansion >= 2 )
+				for ( Int2 dir : { Int2 { -1, -1 }, Int2 { 1, -1 }, Int2 { -1, 1 }, Int2 { 1, 1 } } )
+					ExplosionManager::create_explosion( map_tmp, pos + dir, damage, expansion - 2, false );
+		}
 		expansion_done = true;
 	}
 

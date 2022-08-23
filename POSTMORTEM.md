@@ -60,6 +60,8 @@ Finding a New Game Design:
 	+**~0h05** => Fix some compilation warnings
 	+**~0h20** => Add hit shader on `WorldEntity::take_damage`
 	+**~0h20** => Fix abusive knockback on shoot
++ 23/08/2022:
+	+**~0h30** => Add circular Explosion Shape
 
 **Total: ~88h40**
 
