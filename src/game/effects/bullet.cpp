@@ -1,5 +1,7 @@
 #include "bullet.h"
 
+#include "../units/unit.h"
+
 Bullet::Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist, int damage, int explosion_radius, float move_speed ) : 
 	map( map ), dist_to_move( dist ),
 	damage( damage ), explosion_radius( explosion_radius ), move_speed( move_speed )
@@ -69,6 +71,18 @@ void Bullet::impact()
 	//  simple shot
 	if ( explosion_radius == 0 )
 	{
+		Vector2 pos { dest.x, dest.y };
+
+		//  extra check for moving units (fit w/ renderering)
+		for ( std::weak_ptr<Unit> unit : Unit::get_units() )
+			if ( auto unit_tmp = unit.lock() )
+				if ( CheckCollisionPointRec( pos, unit_tmp->get_dest_rect() ) )
+				{
+					unit_tmp->take_damage( damage );
+					return;
+				}
+
+		//  damage structures
 		if ( map_tmp->has_structure_at( dest_pos.x, dest_pos.y ) )
 		{
 			auto ent = map_tmp->get_structure_at_pos( dest_pos.x, dest_pos.y );
