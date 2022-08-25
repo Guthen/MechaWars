@@ -36,6 +36,7 @@ struct UnitData
 
 	Shoot shoot;
 
+	bool can_attack = true;  //  can we attack other units?
 	float move_speed = 8.0f;  //  how many pixels per second can we move
 };
 

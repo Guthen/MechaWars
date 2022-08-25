@@ -53,6 +53,10 @@ Unit::~Unit()
 
 void Unit::_shoot_update( float dt )
 {
+	//  can't attack? sigh..
+	if ( !data.can_attack )
+		return;
+
 	//  decrease shoot timers
 	if ( _setup_timer > 0.0f )
 		_setup_timer -= dt;
@@ -170,10 +174,11 @@ void Unit::on_take_damage( DamageInfo info )
 		return;
 
 	//  riposte on idle: attack if enemy
-	if ( dynamic_cast<UnitState_Idle*>( state ) )
-		//  check if enemy
-		if ( !( attacker_tmp->get_team() == team_id ) )
-			attack_target( false, info.attacker );
+	if ( data.can_attack )
+		if ( dynamic_cast<UnitState_Idle*>( state ) )
+			//  check if enemy
+			if ( !( attacker_tmp->get_team() == team_id ) )
+				attack_target( false, info.attacker );
 }
 
 void Unit::on_right_click_selected()
@@ -281,6 +286,10 @@ void Unit::move_to( bool is_queued, Int2 goal )
 
 void Unit::attack_target( bool is_queued, std::weak_ptr<WorldEntity> target )
 {
+	//  can't attack? sigh..
+	if ( !data.can_attack )
+		return;	
+
 	//  queue attack
 	if ( is_queued )
 		push_state( false, new_state<UnitState_Attack>( target ) );

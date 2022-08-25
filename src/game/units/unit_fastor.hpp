@@ -16,14 +16,7 @@ public:
 
 		//  data
 		max_health = 50;
+		data.can_attack = false;
 		data.move_speed = 12.0f;
-		data.shoot.attack_range = 0.0f;
-		data.shoot.fire_delay = 0.0f;
-		data.shoot.spread = 0;
-		data.shoot.accuracy = 0.0f;
-		data.shoot.burst_count = 0;
-		data.shoot.burst_delay = 0.0f;
-		data.shoot.damage = 0;
-		data.shoot.explosion_radius = 0;
 	}
 };
