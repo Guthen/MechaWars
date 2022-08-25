@@ -18,8 +18,6 @@ Unit::Unit( const int x, const int y, std::weak_ptr<Map> map ) : WorldEntity( x,
 
 	dest.x = (float) x * Map::TILE_SIZE, dest.y = (float) y * Map::TILE_SIZE;
 	dest.width = (float) size.x * Map::TILE_SIZE, dest.height = (float) size.y * Map::TILE_SIZE;
-
-	DEFERED( units.push_back( _get_shared_from_this<Unit>() ); );
 }
 
 Unit::~Unit()
@@ -103,6 +101,15 @@ void Unit::_shoot_update( float dt )
 	//  next fire delay
 	else if ( _next_fire_timer > 0.0f )
 		_next_fire_timer -= dt;
+}
+
+void Unit::init()
+{
+	//  add to static list
+	units.push_back( _get_shared_from_this<Unit>() );
+
+	//  default behaviour
+	WorldEntity::init();
 }
 
 void Unit::update( float dt )

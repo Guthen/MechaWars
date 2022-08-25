@@ -72,8 +72,10 @@ Finding a New Game Design:
 		+ fixed custom health not applied
 		+ fixed explosion shape to circular
 	+**~0h50** => Some fixes
++ 25/08/2022:
+	+**~1h30** => Fix growing defereds calls causing game crash on game scene reload
 
-**Total: ~95h00**
+**Total: ~96h30**
 
 ## What I learned from this project?
 

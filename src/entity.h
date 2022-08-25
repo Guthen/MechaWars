@@ -35,11 +35,14 @@ protected:
 public:
 	static unsigned int global_id;
 
+	bool is_initialized = false;  //  public cuz I want to be able to read & write the variable (get/set methods have same result)
+
 	Entity();
 	virtual ~Entity();
 
 	bool operator==( Entity &a );
 
+	virtual void init() {};
 	virtual bool unhandled_mouse_click( int mouse_button, bool is_pressed ) { return false; };
 	virtual void update( const float dt ) {};
 	virtual void render() {};

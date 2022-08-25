@@ -26,10 +26,14 @@ WorldEntity::WorldEntity( const int x, const int y, const int w, const int h, st
 
 	hit_shader = AssetsManager::get_or_load_shader( "assets/shaders/hit.glsl" );
 
-	//  setup custom health
-	DEFERED( health = max_health; );
 
 	//reserve_pos(); //  can't call `reserve_pos()` in the ctor since it use `shared_from_this()`
+}
+
+void WorldEntity::init()
+{
+	//  setup custom health
+	health = max_health;
 }
 
 void WorldEntity::render()

@@ -44,6 +44,7 @@ public:
 	WorldEntity( int x, int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, 1, 1, map ) {};
 	WorldEntity( int x, int y, int w, int h, std::weak_ptr<Map> map );
 
+	void init() override;
 	void render() override;
 	void render_hud() override;
 

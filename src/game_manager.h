@@ -68,7 +68,10 @@ public:
 	static void change_scene_to( std::shared_ptr<Scene> scene );
 
 	static void defered_call( lambda call )
-	{ defereds.push_back( call ); }
+	{
+		printf( "defereds.push_back\n" );
+		defereds.push_back( call );
+	}
 	static void timed_call( float time, lambda call )
 	{ timers.push_back( Timer( time, call ) ); }
 	static void debug_text( std::string text )
@@ -96,5 +99,3 @@ public:
 	static bool is_debug_state( DEBUG_STATE state ) { return debug_state == state; }
 	static DEBUG_STATE get_debug_state() { return debug_state; }
 };
-
-//#define DEFERED( code )  GameManager::call_defered( DeferedCall( [&]() { code } ) )  //  macro are awesome

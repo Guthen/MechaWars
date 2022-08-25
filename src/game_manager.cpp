@@ -26,6 +26,7 @@ void GameManager::change_scene_to( std::shared_ptr<Scene> scene )
 
 	current_scene = scene;
 	current_scene->init();
+	current_scene->is_initialized = true;  //  avoid double-init
 	//printf( "GameManager: scene changed!\n" );
 }
 
@@ -140,7 +141,17 @@ void GameManager::update( float dt )
 	//  update entities
 	handle_input();
 	for ( const std::shared_ptr<Entity>& ent : entities )
+	{
+		//  init
+		if ( !ent->is_initialized )
+		{
+			ent->init();
+			ent->is_initialized = true;
+		}
+
+		//  update
 		ent->update( dt );
+	}
 
 	//  update deletion queue
 	size = deletion_queue.size();
@@ -165,9 +176,11 @@ void GameManager::update( float dt )
 	size = defereds.size();
 	if ( size > 0 )
 	{
+		printf( "defereds iteration\n" );
 		for ( auto it = defereds.begin(); !( it == defereds.end() ); it++ )
 			(*it)();
 		defereds.clear();
+		printf( "defereds.clear()\n" );
 		
 		//printf( "GameManager: called %d defered!\n", size );
 	}

@@ -67,6 +67,7 @@ public:
 	Unit( const int x, const int y, std::weak_ptr<Map> map );
 	virtual ~Unit();
 
+	void init() override;
 	void update( float dt ) override;
 	void render() override;
 
