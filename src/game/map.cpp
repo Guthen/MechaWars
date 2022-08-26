@@ -2,12 +2,15 @@
 
 #include "../game_manager.h"
 #include "pathfinder.h"
+
 #include "structures/structure_tree.h"
 #include "structures/structure_steel.h"
 #include "structures/structure_nexus.h"
 #include "structures/structure_generator.h"
 #include "structures/structure_drill.h"
 #include "structures/structure_silo.h"
+#include "structures/structure_blueprint.hpp"
+
 #include "units/unit_vk2.hpp"
 #include "units/unit_rider.hpp"
 #include "units/unit_znyper.hpp"
@@ -233,6 +236,12 @@ void Map::generate( const unsigned int _seed )
 			auto znyper = GameManager::create<UnitZnyper>( pos.x + 2, pos.y + 2, weak_ptr );
 			znyper->set_team( team );
 			znyper->reserve_pos();
+
+			//  create blueprint
+			auto blueprint = GameManager::create<StructureBlueprint>( pos.x, pos.y - 1, weak_ptr );
+			blueprint->set_size( 2, 1 );
+			blueprint->set_team( team );
+			blueprint->reserve_pos();
 			//GameManager::create<StructureDrill>( pos.x + 2, pos.y + 1, weak_ptr )->set_team( team );
 			/*GameManager::create<StructureNexus>( 4 + team * 2, 5, this )->set_team( (TEAM) team );
 			GameManager::create<StructureGenerator>( 4 + team * 2, 7, this )->set_team( (TEAM) team );

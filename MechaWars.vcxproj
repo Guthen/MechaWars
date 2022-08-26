@@ -353,7 +353,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\structures\structure.h" />
+    <ClInclude Include="src\game\structures\structure_blueprint.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_attack.hpp" />
+    <ClInclude Include="src\game\units\states\unit_state_build.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_move_to.hpp" />
     <ClInclude Include="src\game\units\states\_unit_state_target.hpp" />
     <ClInclude Include="src\game\units\unit_fastor.hpp" />

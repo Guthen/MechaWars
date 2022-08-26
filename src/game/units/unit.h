@@ -38,6 +38,9 @@ struct UnitData
 
 	bool can_attack = true;  //  can we attack other units?
 	float move_speed = 8.0f;  //  how many pixels per second can we move
+
+	bool can_build = false;  //  can the unit build structures?
+	float work_time = .3f;  //  how much time should we wait in order to advance to work once?
 };
 
 class Unit : public WorldEntity

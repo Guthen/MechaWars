@@ -18,5 +18,7 @@ public:
 		max_health = 50;
 		data.can_attack = false;
 		data.move_speed = 12.0f;
+		data.can_build = true;
+		data.work_time = .5f;
 	}
 };

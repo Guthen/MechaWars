@@ -4,6 +4,9 @@
 #include "states/unit_state_idle.hpp"
 #include "states/unit_state_attack.hpp"
 #include "states/unit_state_move.hpp"
+#include "states/unit_state_build.hpp"
+
+#include "../structures/structure_blueprint.hpp"
 
 //  static
 std::vector<std::weak_ptr<Unit>> Unit::units;
@@ -217,7 +220,19 @@ void Unit::on_right_click_selected()
 			}
 			//  check if ally
 			if ( target_team == get_team() )
+			{
+				//  build if is blueprint structure
+				if ( data.can_build )
+				{
+					StructureBlueprint* blueprint = dynamic_cast<StructureBlueprint*>( target_tmp.get() );
+					if ( blueprint )
+					{
+						change_state( false, new_state<UnitState_Build>( target ) );
+					}
+				}
+
 				return;
+			}
 
 			//  attack hostile entity
 			attack_target( is_queued, target_tmp );

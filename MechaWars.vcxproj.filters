@@ -79,6 +79,8 @@
     <ClInclude Include="src\game\units\unit_znyper.hpp" />
     <ClInclude Include="src\game\units\unit_fastor.hpp" />
     <ClInclude Include="src\game\structures\structure.h" />
+    <ClInclude Include="src\game\structures\structure_blueprint.hpp" />
+    <ClInclude Include="src\game\units\states\unit_state_build.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />
