@@ -9,14 +9,14 @@ class _UnitState_Target : public UnitState
 {
 protected:
 	std::weak_ptr<WorldEntity> target;
-
-	void update_debug_draw( std::shared_ptr<WorldEntity> target_tmp )
-	{
-		if ( GameManager::is_debug_state( DEBUG_STATE::ENTITY ) && unit->is_selected() )
-			DRAW_DEBUG( TextFormat( "TARGET: %d", target_tmp->get_id() ) );
-	}
 public:
 	_UnitState_Target( Unit* unit, std::weak_ptr<WorldEntity> target ) : UnitState( unit ), target( target ) {}
+
+	void debug_update( float dt ) override
+	{
+		if ( auto target_tmp = target.lock() )
+			DRAW_DEBUG( TextFormat( "target->get_id(): %d", target_tmp->get_id() ) );
+	}
 
 	void render() override
 	{

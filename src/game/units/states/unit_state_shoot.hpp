@@ -35,9 +35,6 @@ public:
 		//  fire regularly towards target
 		if ( unit->can_fire() )
 			unit->shoot_to( target_tmp );
-
-		//  debug draw
-		update_debug_draw( target_tmp );
 	}
 
 	std::string str() const override { return "UnitState_Shoot"; }

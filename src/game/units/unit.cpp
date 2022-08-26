@@ -118,11 +118,14 @@ void Unit::debug_update( float dt )
 	DRAW_DEBUG( TextFormat( "Unit [id=%d]", get_id() ) );
 	DRAW_DEBUG( TextFormat( "health: %d/%d", health, max_health ) );
 	DRAW_DEBUG( "team_id: " + std::to_string( team_id ) );
-	DRAW_DEBUG( "state->str(): " + state->str() );
 	DRAW_DEBUG( TextFormat( "_setup_timer: %02f", _setup_timer ) );
 	DRAW_DEBUG( TextFormat( "_next_fire_timer: %02f", _next_fire_timer ) );
 	DRAW_DEBUG( TextFormat( "_firing_times: %d", _firing_times ) );
 	DRAW_DEBUG( TextFormat( "_firing_timer: %02f", _firing_timer ) );
+
+	//  state
+	DRAW_DEBUG( "state->str(): " + state->str() );
+	state->debug_update( dt );
 
 	//  states queue
 	int queue_size = states_queue.size();

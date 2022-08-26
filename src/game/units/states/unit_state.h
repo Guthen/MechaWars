@@ -15,6 +15,7 @@ public:
 
 	virtual void init() {};
 
+	virtual void debug_update( float dt ) {};
 	virtual void update( float dt ) {};
 	virtual void render() {};
 
