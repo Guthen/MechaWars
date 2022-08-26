@@ -74,8 +74,11 @@ Finding a New Game Design:
 	+**~0h50** => Some fixes
 + 25/08/2022:
 	+**~1h30** => Fix growing defereds calls causing game crash on game scene reload
++ 26/08/2022:
+	+**~2h10** => added `StructureBlueprint` (w/ auto-tile depending on size) & building state
+	+**~0h20** => edit `WorldEntity`'s debug drawing & some fix
 
-**Total: ~96h30**
+**Total: ~99h00**
 
 ## What I learned from this project?
 
