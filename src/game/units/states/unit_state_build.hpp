@@ -1,7 +1,7 @@
 #pragma once
 
 #include "unit_state_move_to.hpp"
-#include "../../structures/structure_blueprint.hpp"
+#include "../../structures/structure_blueprint.h"
 
 class UnitState_Build : public _UnitState_Target
 {

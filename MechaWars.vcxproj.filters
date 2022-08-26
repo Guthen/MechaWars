@@ -26,6 +26,7 @@
     <ClCompile Include="src\game\effects\explosion.cpp" />
     <ClCompile Include="src\game\effects\explosion_manager.cpp" />
     <ClCompile Include="src\game\structures\structure.cpp" />
+    <ClCompile Include="src\game\structures\structure_blueprint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\map.h" />
@@ -79,7 +80,7 @@
     <ClInclude Include="src\game\units\unit_znyper.hpp" />
     <ClInclude Include="src\game\units\unit_fastor.hpp" />
     <ClInclude Include="src\game\structures\structure.h" />
-    <ClInclude Include="src\game\structures\structure_blueprint.hpp" />
+    <ClInclude Include="src\game\structures\structure_blueprint.h" />
     <ClInclude Include="src\game\units\states\unit_state_build.hpp" />
   </ItemGroup>
   <ItemGroup>

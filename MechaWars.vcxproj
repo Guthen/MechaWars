@@ -336,6 +336,7 @@
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\game\pathfinder.cpp" />
     <ClCompile Include="src\game\structures\structure.cpp" />
+    <ClCompile Include="src\game\structures\structure_blueprint.cpp" />
     <ClCompile Include="src\game\units\states\unit_state.cpp" />
     <ClCompile Include="src\game\world_entity.cpp" />
     <ClCompile Include="src\game_manager.cpp" />
@@ -353,7 +354,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\structures\structure.h" />
-    <ClInclude Include="src\game\structures\structure_blueprint.hpp" />
+    <ClInclude Include="src\game\structures\structure_blueprint.h" />
     <ClInclude Include="src\game\units\states\unit_state_attack.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_build.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_move_to.hpp" />

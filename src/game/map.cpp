@@ -9,7 +9,7 @@
 #include "structures/structure_generator.h"
 #include "structures/structure_drill.h"
 #include "structures/structure_silo.h"
-#include "structures/structure_blueprint.hpp"
+#include "structures/structure_blueprint.h"
 
 #include "units/unit_vk2.hpp"
 #include "units/unit_rider.hpp"

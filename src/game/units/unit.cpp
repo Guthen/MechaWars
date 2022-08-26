@@ -6,7 +6,7 @@
 #include "states/unit_state_move.hpp"
 #include "states/unit_state_build.hpp"
 
-#include "../structures/structure_blueprint.hpp"
+#include "../structures/structure_blueprint.h"
 
 //  static
 std::vector<std::weak_ptr<Unit>> Unit::units;
