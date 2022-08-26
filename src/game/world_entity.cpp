@@ -134,7 +134,7 @@ void WorldEntity::unreserve_pos()
 
 void WorldEntity::take_damage( DamageInfo info )
 {
-	if ( health <= 0 )
+	if ( is_queued_to_deletion )
 		return;
 
 	//  deal damage & check destroy

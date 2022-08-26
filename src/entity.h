@@ -27,6 +27,8 @@ protected:
 
 	unsigned int z_order = 10;
 
+	bool is_queued_to_deletion = false;
+
 	Int2 pos;
 	Int2 size;
 
