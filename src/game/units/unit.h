@@ -68,6 +68,7 @@ public:
 	virtual ~Unit();
 
 	void init() override;
+	void debug_update( float dt ) override;
 	void update( float dt ) override;
 	void render() override;
 

@@ -36,6 +36,19 @@ void WorldEntity::init()
 	health = max_health;
 }
 
+void WorldEntity::debug_update( float dt )
+{
+	DRAW_DEBUG( TextFormat( "WorldEntity [id=%d]", get_id() ) );
+	DRAW_DEBUG( TextFormat( "health: %d/%d", health, max_health ) );
+}
+
+void WorldEntity::update( float dt )
+{
+	if ( GameManager::is_debug_state( DEBUG_STATE::ENTITY ) && is_selected() )
+		debug_update( dt );
+}
+
+
 void WorldEntity::render()
 {
 	//  start hit shader

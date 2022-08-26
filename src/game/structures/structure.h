@@ -10,5 +10,5 @@ public:
 	Structure( const int x, const int y, const int w, const int h, std::weak_ptr<Map> map ) : WorldEntity( x, y, w, h, map ) {};
 	virtual ~Structure() {};
 
-	void update( float dt ) override;
+	void debug_update( float dt ) override;
 };

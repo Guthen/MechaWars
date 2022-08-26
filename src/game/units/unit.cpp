@@ -112,6 +112,41 @@ void Unit::init()
 	WorldEntity::init();
 }
 
+void Unit::debug_update( float dt )
+{
+	//  debug unit
+	DRAW_DEBUG( TextFormat( "Unit [id=%d]", get_id() ) );
+	DRAW_DEBUG( TextFormat( "health: %d/%d", health, max_health ) );
+	DRAW_DEBUG( "team_id: " + std::to_string( team_id ) );
+	DRAW_DEBUG( "state->str(): " + state->str() );
+	DRAW_DEBUG( TextFormat( "_setup_timer: %02f", _setup_timer ) );
+	DRAW_DEBUG( TextFormat( "_next_fire_timer: %02f", _next_fire_timer ) );
+	DRAW_DEBUG( TextFormat( "_firing_times: %d", _firing_times ) );
+	DRAW_DEBUG( TextFormat( "_firing_timer: %02f", _firing_timer ) );
+
+	//  states queue
+	int queue_size = states_queue.size();
+	if ( queue_size > 0 )
+	{
+		DRAW_DEBUG( TextFormat( "states_queue [size=%d]:", queue_size ) );
+		for ( int i = 0; i < queue_size; i++ )
+			DRAW_DEBUG( " " + std::to_string( i ) + ": " + states_queue[i]->str() );
+	}
+
+	//  debug units list
+	DRAW_DEBUG( "" );
+	DRAW_DEBUG( TextFormat( "units [size=%d]:", units.size() ) );
+
+	int i = 0;
+	for ( std::weak_ptr<Unit> unit : units )
+		if ( auto unit_tmp = unit.lock() )
+			DRAW_DEBUG( TextFormat( " %d: Unit [id=%d]", i++, unit_tmp->get_id() ) );
+
+	//  DEBUG: destroy unit if pressing SUPPR
+	if ( IsKeyPressed( KEY_DELETE ) )
+		safe_destroy();
+}
+
 void Unit::update( float dt )
 {
 	//  render pos
@@ -122,41 +157,8 @@ void Unit::update( float dt )
 	if ( animator.update( dt ) )
 		quad = animator.get_current_frame();
 
-	//  debug draw
-	if ( GameManager::is_debug_state( DEBUG_STATE::ENTITY ) && is_selected() )
-	{
-		//  debug unit
-		DRAW_DEBUG( TextFormat( "UNIT[id=%d]", get_id() ) );
-		DRAW_DEBUG( TextFormat( "HEALTH: %d/%d", health, max_health ) );
-		DRAW_DEBUG( "TEAM: " + std::to_string( team_id ) );
-		DRAW_DEBUG( "STATE: " + state->str() );
-		DRAW_DEBUG( TextFormat( "SETUP TIMER: %02f", _setup_timer ) );
-		DRAW_DEBUG( TextFormat( "NEXT FIRE TIMER: %02f", _next_fire_timer ) );
-		DRAW_DEBUG( TextFormat( "BURST TIMES: %d", _firing_times ) );
-		DRAW_DEBUG( TextFormat( "BURST TIMER: %02f", _firing_timer ) );
-
-		//  states queue
-		int queue_size = states_queue.size();
-		if ( queue_size > 0 )
-		{
-			DRAW_DEBUG( TextFormat( "STATES_QUEUE [n=%d]:", queue_size ) );
-			for ( int i = 0; i < queue_size; i++ )
-				DRAW_DEBUG( " " + std::to_string( i ) + ": " + states_queue[i]->str() );
-		}
-	
-		//  debug units list
-		DRAW_DEBUG( "" );
-		DRAW_DEBUG( TextFormat( "UNITS [n=%d]:", units.size() ) );
-
-		int i = 0;
-		for ( std::weak_ptr<Unit> unit : units )
-			if ( auto unit_tmp = unit.lock() )
-				DRAW_DEBUG( TextFormat( " %d: UNIT[id=%d]", i++, unit_tmp->get_id() ) );
-
-		//  DEBUG: destroy unit if pressing SUPPR
-		if ( IsKeyPressed( KEY_DELETE ) )
-			safe_destroy();
-	}
+	//  base (debug draw)
+	WorldEntity::update( dt );
 
 	//  update shooting behaviour
 	_shoot_update( dt );

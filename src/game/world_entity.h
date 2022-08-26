@@ -45,6 +45,10 @@ public:
 	WorldEntity( int x, int y, int w, int h, std::weak_ptr<Map> map );
 
 	void init() override;
+
+	virtual void debug_update( float dt );
+	void update( float dt ) override;
+
 	void render() override;
 	void render_hud() override;
 
@@ -55,21 +59,26 @@ public:
 	void reserve_pos();
 	void unreserve_pos();
 
+	//  damage
 	void take_damage( DamageInfo info );
 	virtual void on_take_damage( DamageInfo info ) {};
 
+	//  cursor selection
 	void set_selecting_cursor( std::weak_ptr<UITileCursor> cursor ) { selecting_cursor = cursor; }
 	void unset_selecting_cursor() { selecting_cursor.reset(); }
 	std::weak_ptr<UITileCursor> get_selecting_cursor() { return selecting_cursor; }
 	bool is_selected() { return !selecting_cursor.expired(); }
 
+	//  selecting
 	void select( std::weak_ptr<UITileCursor> cursor );
 	void unselect();
 
+	//  selection events
 	virtual void on_selected() {};
 	virtual void on_unselected() {};
 	virtual void on_right_click_selected() {};
 
+	//  teams
 	void set_team( TEAM id )
 	{
 		team_id = id;
@@ -77,6 +86,7 @@ public:
 	}
 	TEAM get_team() { return team_id; }
 
+	//  buttons
 	template <typename... Args>
 	std::shared_ptr<UIButton> create_button( Args... args )
 	{
