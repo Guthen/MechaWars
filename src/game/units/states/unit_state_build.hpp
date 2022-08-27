@@ -48,6 +48,11 @@ public:
 			
 			//  reset timer
 			next_work_time = unit->get_data().work_time;
+
+			//  build anim
+			Vector2 build_dir = Vector2Scale( Vector2Normalize( ( blueprint->get_pos() - unit->get_pos() ).to_v2() ), 2 );
+			Rectangle& dest = unit->get_dest_rect();
+			dest.x += build_dir.x, dest.y += build_dir.y;
 		}
 	}
 
