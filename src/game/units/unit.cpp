@@ -188,6 +188,10 @@ void Unit::on_take_damage( DamageInfo info )
 	if ( !attacker_tmp )
 		return;
 
+	//  knockback anim
+	Vector2 knockback_dir = Vector2Scale( Vector2Normalize( ( attacker_tmp->get_pos() - pos ).to_v2() ), info.damage / 5 );
+	dest.x -= knockback_dir.x, dest.y -= knockback_dir.y;
+
 	//  riposte on idle: attack if enemy
 	if ( data.can_attack )
 		if ( dynamic_cast<UnitState_Idle*>( state ) )
