@@ -77,8 +77,9 @@ Finding a New Game Design:
 + 26/08/2022:
 	+**~2h10** => added `StructureBlueprint` (w/ auto-tile depending on size) & building state
 	+**~0h20** => edit `WorldEntity`'s debug drawing & some fix
+	+**~0h10** => added build & damage anim
 
-**Total: ~99h00**
+**Total: ~99h10**
 
 ## What I learned from this project?
 
