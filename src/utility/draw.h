@@ -14,8 +14,8 @@ namespace utility
 	{
 		Color flick_color = {
 			color.r,
-			color.b,
 			color.g,
+			color.b,
 			(unsigned char) ( 94 + abs( sin( GetTime() * 5.0 ) ) * 66 ),
 		};
 
