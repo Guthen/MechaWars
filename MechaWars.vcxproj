@@ -357,6 +357,7 @@
     <ClInclude Include="src\game\structures\structure_blueprint.h" />
     <ClInclude Include="src\game\units\states\unit_state_attack.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_build.hpp" />
+    <ClInclude Include="src\game\units\states\unit_state_move_in.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_move_to.hpp" />
     <ClInclude Include="src\game\units\states\_unit_state_target.hpp" />
     <ClInclude Include="src\game\units\unit_fastor.hpp" />
@@ -401,6 +402,7 @@
     <ClInclude Include="src\utility\draw.h" />
     <ClInclude Include="src\utility\file.h" />
     <ClInclude Include="src\utility\math.h" />
+    <ClInclude Include="src\utility\rect.hpp" />
     <ClInclude Include="src\utility\str_comp.h" />
     <ClInclude Include="src\game\structures\structure_tree.h" />
     <ClInclude Include="src\game\structures\structure_steel.h" />

@@ -82,6 +82,8 @@
     <ClInclude Include="src\game\structures\structure.h" />
     <ClInclude Include="src\game\structures\structure_blueprint.h" />
     <ClInclude Include="src\game\units\states\unit_state_build.hpp" />
+    <ClInclude Include="src\utility\rect.hpp" />
+    <ClInclude Include="src\game\units\states\unit_state_move_in.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />
