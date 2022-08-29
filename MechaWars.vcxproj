@@ -125,6 +125,7 @@
     <IntDir>obj\x64\Debug\</IntDir>
     <TargetName>RTS</TargetName>
     <TargetExt>.exe</TargetExt>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -180,7 +181,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DEBUG;PLATFORM_DESKTOP;GRAPHICS_API_OPENGL_33;_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.;..\raylib\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\raylib\src;..\luacpp\src;..\luacpp\include;..\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -188,16 +189,25 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>raylib.lib;winmm.lib;opengl32.lib;kernel32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>lua_static.lib;luacpp_static.lib;raylib.lib;winmm.lib;opengl32.lib;kernel32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy "$(ProjectDir)assets" "$(TargetDir)assets" /e /y /i /r
+xcopy "$(ProjectDir)lua" "$(TargetDir)lua" /e /y /i /r</Command>
+      <Message>Copy 'assets' &amp; 'lua' folder to build</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DEBUG;PLATFORM_DESKTOP;GRAPHICS_API_OPENGL_33;_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.;..\raylib\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\raylib\src;..\luacpp\src;..\luacpp\include;..\lua-5.4.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -205,7 +215,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>raylib.lib;winmm.lib;opengl32.lib;kernel32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>lua_static.lib;luacpp_static.lib;raylib.lib;winmm.lib;opengl32.lib;kernel32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -343,6 +353,7 @@
     <ClCompile Include="src\game_manager.cpp" />
     <ClCompile Include="src\game\game_camera.cpp" />
     <ClCompile Include="src\game\ui\ui_tile_cursor.cpp" />
+    <ClCompile Include="src\lua_engine.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\game\map.cpp" />
     <ClCompile Include="src\game\units\unit.cpp" />
@@ -364,6 +375,7 @@
     <ClInclude Include="src\game\units\states\_unit_state_target.hpp" />
     <ClInclude Include="src\game\units\unit_fastor.hpp" />
     <ClInclude Include="src\game\units\unit_znyper.hpp" />
+    <ClInclude Include="src\lua_engine.h" />
     <ClInclude Include="src\utility\color.h" />
     <ClInclude Include="src\game\effects\pixel_particles.h" />
     <ClInclude Include="src\utility\cardinal.h" />

@@ -2,6 +2,8 @@
 
 #include <unordered_map>
 
+#include <src/lua_engine.h>
+
 #include "structures/structure.h"
 
 #define __MAP_ACCESSORS( NAME, MAP, TYPE )								  \
@@ -13,6 +15,8 @@ class Defs
 private:
 	static std::unordered_map<std::string, StructureDef> structures;
 public:
+	static void bind_lua( luacpp::LuaState* L );
+
 	__MAP_ACCESSORS( structure, structures, StructureDef )
 };
 

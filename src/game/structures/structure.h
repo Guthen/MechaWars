@@ -6,7 +6,7 @@
 struct StructData
 {
 	int health = 100;
-	int work_to_make = 100;  //  how much times should the builder hit the building to finish it? 
+	int work_to_make = 10;  //  how much times should the builder hit the building to finish it? 
 
 	Int2 size { 1, 1 };  //  structure size in tiles
 

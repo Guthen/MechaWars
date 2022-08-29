@@ -78,9 +78,12 @@ Finding a New Game Design:
 	+**~2h10** => added `StructureBlueprint` (w/ auto-tile depending on size) & building state
 	+**~0h20** => edit `WorldEntity`'s debug drawing & some fix
 	+**~0h10** => added build & damage anim
++ 29/08/2022:
 	+**~1h30** => added state `UnitState_MoveIn` w/ homemade algorithm to find nearest pos on rectangle's edges
+	+**~1h20** => added blueprint structure creation on finish
+	+**~5h00** => added Lua to handle structures definition (& surely more :))
 
-**Total: ~100h40**
+**Total: ~106h00**
 
 ## What I learned from this project?
 
