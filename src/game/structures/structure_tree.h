@@ -5,7 +5,7 @@
 class StructureTree : public Structure
 {
 public:
-	StructureTree( int x, int y, std::weak_ptr<Map> map ) : Structure( x, y, map )
+	StructureTree( int x, int y, StructData data, std::weak_ptr<Map> map ) : Structure( x, y, data, map )
 	{
 		texture = AssetsManager::get_or_load_texture( "assets/textures/resources/tree.png" );
 

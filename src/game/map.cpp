@@ -3,12 +3,14 @@
 #include "../game_manager.h"
 #include "pathfinder.h"
 
+#include <src/game/defs.h>
+
 #include "structures/structure_tree.h"
 #include "structures/structure_steel.h"
-#include "structures/structure_nexus.h"
-#include "structures/structure_generator.h"
-#include "structures/structure_drill.h"
-#include "structures/structure_silo.h"
+//#include "structures/structure_nexus.h"
+//#include "structures/structure_generator.h"
+//#include "structures/structure_drill.h"
+//#include "structures/structure_silo.h"
 #include "structures/structure_blueprint.h"
 
 #include "units/unit_vk2.hpp"
@@ -120,7 +122,7 @@ void Map::generate_trees( FastNoiseLite fnl, float threshold )
 
 			float noise = utility::remap_11_to_01( fnl.GetNoise( (float) x, (float) y ) );
 			if ( noise >= threshold )
-				GameManager::create<StructureTree>( x, y, weak_ptr )->reserve_pos();
+				GameManager::create<StructureTree>( x, y, StructData {}, weak_ptr )->reserve_pos();
 		}
 }
 
@@ -136,7 +138,7 @@ void Map::generate_ores( FastNoiseLite fnl, float threshold )
 
 			float noise = utility::remap_11_to_01( fnl.GetNoise( (float) x, (float) y ) );
 			if ( noise >= threshold )
-				GameManager::create<StructureSteel>( x, y, weak_ptr )->reserve_pos();
+				GameManager::create<StructureSteel>( x, y, StructData {}, weak_ptr )->reserve_pos();
 		}
 }
 
@@ -211,14 +213,14 @@ void Map::generate( const unsigned int _seed )
 			std::weak_ptr<Map> weak_ptr( _get_shared_from_this<Map>() );
 
 			//  create nexus
-			auto nexus = GameManager::create<StructureNexus>( pos.x, pos.y, weak_ptr );
+			/*auto nexus = GameManager::create<StructureNexus>( pos.x, pos.y, weak_ptr );
 			nexus->set_team( team );
-			nexus->reserve_pos();
+			nexus->reserve_pos();*/
 
 			//  create generator
-			auto generator = GameManager::create<StructureGenerator>( pos.x + 2, pos.y, weak_ptr );
+			/*auto generator = GameManager::create<StructureGenerator>( pos.x + 2, pos.y, weak_ptr );
 			generator->set_team( team );
-			generator->reserve_pos();
+			generator->reserve_pos();*/
 
 			//  create units
 			auto builder = GameManager::create<UnitFastor>( pos.x - 1, pos.y + 2, weak_ptr );
@@ -238,8 +240,8 @@ void Map::generate( const unsigned int _seed )
 			znyper->reserve_pos();
 
 			//  create blueprint
-			auto blueprint = GameManager::create<StructureBlueprint>( pos.x, pos.y - 1, weak_ptr );
-			blueprint->set_size( 2, 1 );
+			StructData data = Defs::get_structure( "nexus" ).data;
+			auto blueprint = GameManager::create<StructureBlueprint>( pos.x - 1, pos.y - 1, data, weak_ptr );
 			blueprint->set_team( team );
 			blueprint->reserve_pos();
 			//GameManager::create<StructureDrill>( pos.x + 2, pos.y + 1, weak_ptr )->set_team( team );

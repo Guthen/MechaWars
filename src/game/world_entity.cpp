@@ -33,7 +33,8 @@ WorldEntity::WorldEntity( const int x, const int y, const int w, const int h, st
 void WorldEntity::init()
 {
 	//  setup custom health
-	health = max_health;
+	if ( health == -1 )
+		health = max_health;
 }
 
 void WorldEntity::debug_update( float dt )

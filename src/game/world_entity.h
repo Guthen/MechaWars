@@ -28,7 +28,7 @@ protected:
 	Rectangle team_quad;
 
 	int max_health = 100;
-	int health = 100;
+	int health = -1;
 
 	Shader hit_shader;
 	float hit_time = .25f;
@@ -60,6 +60,7 @@ public:
 	void unreserve_pos();
 
 	//  damage
+	void set_health( int points ) { health = points; }
 	void take_damage( DamageInfo info );
 	virtual void on_take_damage( DamageInfo info ) {};
 

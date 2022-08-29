@@ -1,17 +1,13 @@
 #include "structure_blueprint.h"
 
-StructureBlueprint::StructureBlueprint( int x, int y, int w, int h, std::weak_ptr<Map> map ) : Structure( x, y, w, h, map )
+StructureBlueprint::StructureBlueprint( int x, int y, StructData data, std::weak_ptr<Map> map ) : Structure( x, y, data, map )
 {
 	texture = AssetsManager::get_or_load_texture( "assets/textures/buildings/blueprint.png" );
 
 	//  render texture
-	rt = LoadRenderTexture( w * Map::TILE_SIZE, h * Map::TILE_SIZE );
+	rt = LoadRenderTexture( size.x * Map::TILE_SIZE, size.y * Map::TILE_SIZE );
 	quad = Rectangle { 0, 0, (float) rt.texture.width, (float) -rt.texture.height };
 	should_update_rt = true;  //  defered update for team color
-
-	work_to_make = 100;
-	max_health = 1000;
-	health_per_work = max_health / work_to_make;
 }
 
 Vector2 zero { 0.0f, 0.0f };
@@ -124,6 +120,9 @@ void StructureBlueprint::_rt_update()
 void StructureBlueprint::init()
 {
 	health = 0;
+	work_to_make = data.work_to_make;
+	max_health = data.health;
+	health_per_work = max_health / work_to_make;
 }
 
 void StructureBlueprint::debug_update( float dt )
@@ -145,11 +144,18 @@ void StructureBlueprint::advance_work()
 
 void StructureBlueprint::finish_work()
 {
-	//  TODO: create implemented structure
-	//  ..
-
 	//  destroy blueprint
 	safe_destroy();
+
+	//  create structure
+	auto structure = GameManager::create<Structure>( pos.x, pos.y, data, map );
+	structure->reserve_pos();
+	structure->set_team( team_id );
+	structure->set_health( health );
+
+	//  update selecting cursor
+	if ( auto cursor_tmp = selecting_cursor.lock() )
+		cursor_tmp->select( structure );
 }
 
 void StructureBlueprint::render()

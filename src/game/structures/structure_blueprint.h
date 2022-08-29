@@ -2,7 +2,7 @@
 
 #include "structure.h"
 
-constexpr size_t QUAD_STUFF_LENGTH = 2;
+#define QUAD_STUFF_LENGTH  2
 
 class StructureBlueprint : public Structure
 {
@@ -26,7 +26,7 @@ protected:
 		Int2 { 1, 4 },
 	};
 public:
-	StructureBlueprint( int x, int y, int w, int h, std::weak_ptr<Map> map );
+	StructureBlueprint( int x, int y, StructData data, std::weak_ptr<Map> map );
 
 	void init() override;
 	void debug_update( float dt ) override;

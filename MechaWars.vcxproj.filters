@@ -27,6 +27,7 @@
     <ClCompile Include="src\game\effects\explosion_manager.cpp" />
     <ClCompile Include="src\game\structures\structure.cpp" />
     <ClCompile Include="src\game\structures\structure_blueprint.cpp" />
+    <ClCompile Include="src\game\defs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\map.h" />
@@ -44,11 +45,7 @@
     <ClInclude Include="src\game\structures\structure_steel.h" />
     <ClInclude Include="src\globals.h" />
     <ClInclude Include="src\game\ui\ui_tile_cursor.h" />
-    <ClInclude Include="src\game\structures\structure_nexus.h" />
     <ClInclude Include="src\game\teams.h" />
-    <ClInclude Include="src\game\structures\structure_generator.h" />
-    <ClInclude Include="src\game\structures\structure_drill.h" />
-    <ClInclude Include="src\game\structures\structure_silo.h" />
     <ClInclude Include="src\game\world_entity.fwd.h" />
     <ClInclude Include="src\game\ui\ui_base.hpp" />
     <ClInclude Include="src\game\ui\ui_button.hpp" />
@@ -84,6 +81,7 @@
     <ClInclude Include="src\game\units\states\unit_state_build.hpp" />
     <ClInclude Include="src\utility\rect.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_move_in.hpp" />
+    <ClInclude Include="src\game\defs.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />

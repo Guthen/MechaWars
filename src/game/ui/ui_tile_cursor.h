@@ -29,4 +29,6 @@ public:
 
 	void update( float dt ) override;
 	void render() override;
+
+	void select( std::weak_ptr<WorldEntity> target );
 };

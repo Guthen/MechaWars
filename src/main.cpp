@@ -10,10 +10,23 @@
 #include "game/game_camera.h"
 #include "game/game_scene.h"
 
+#include "game/defs.h"
+
 #include "globals.h"
 
 void load()
 {
+	//  define game data
+	StructData data {};
+	data.health = 5000;
+	data.work_to_make = 10;
+	data.size.x = 2, data.size.y = 2;
+	data.texture_path = "assets/textures/buildings/nexus.png";
+	data.quad = Rectangle { 0, 0, 16, 16 };
+	data.team_quad = Rectangle { 16, 0, 16, 16 };
+	Defs::define_structure( "nexus", StructureDef { data } );
+
+	//  load game scene
 	GameManager::change_scene<GameScene>();
 }
 

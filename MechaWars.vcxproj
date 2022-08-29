@@ -328,6 +328,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\defs.cpp" />
     <ClCompile Include="src\game\effects\bullet.cpp" />
     <ClCompile Include="src\game\effects\explosion.cpp" />
     <ClCompile Include="src\game\effects\explosion_manager.cpp" />
@@ -353,6 +354,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\defs.h" />
     <ClInclude Include="src\game\structures\structure.h" />
     <ClInclude Include="src\game\structures\structure_blueprint.h" />
     <ClInclude Include="src\game\units\states\unit_state_attack.hpp" />
@@ -385,9 +387,6 @@
     <ClInclude Include="src\scene.hpp" />
     <ClInclude Include="src\game\game_camera.h" />
     <ClInclude Include="src\game\world_entity.fwd.h" />
-    <ClInclude Include="src\game\structures\structure_silo.h" />
-    <ClInclude Include="src\game\structures\structure_drill.h" />
-    <ClInclude Include="src\game\structures\structure_generator.h" />
     <ClInclude Include="src\game\teams.h" />
     <ClInclude Include="src\game\ui\ui_base.hpp" />
     <ClInclude Include="src\game\ui\ui_button.hpp" />
@@ -406,7 +405,6 @@
     <ClInclude Include="src\utility\str_comp.h" />
     <ClInclude Include="src\game\structures\structure_tree.h" />
     <ClInclude Include="src\game\structures\structure_steel.h" />
-    <ClInclude Include="src\game\structures\structure_nexus.h" />
     <ClInclude Include="src\game\units\unit.h" />
   </ItemGroup>
   <ItemGroup>

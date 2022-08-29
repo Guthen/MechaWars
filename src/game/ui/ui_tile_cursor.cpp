@@ -161,3 +161,16 @@ void UITileCursor::render()
 	//  bottom-right
 	DrawTextureEx( texture, Vector2 { dest.x + size.x * Map::TILE_SIZE + offset, dest.y + size.y * Map::TILE_SIZE + offset }, 180.0f, 1.0f, color );
 }
+
+void UITileCursor::select( std::weak_ptr<WorldEntity> target )
+{
+	auto target_tmp = target.lock();
+	if ( !target_tmp ) return;
+
+	//  select it
+	_select( selected_structure.lock(), target_tmp );
+
+	//  update to structure
+	hovered_structure = selected_structure;
+	_update_to_hovered();
+}
