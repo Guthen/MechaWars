@@ -176,8 +176,16 @@ void Unit::update( float dt )
 
 void Unit::render()
 {
+	//  state
 	if ( state )
+	{
+		//  debug render
+		if ( GameManager::is_debug_state( DEBUG_STATE::ENTITY ) && is_selected() )
+			state->debug_render();
+
+		//  render
 		state->render();
+	}
 
 	WorldEntity::render();
 }

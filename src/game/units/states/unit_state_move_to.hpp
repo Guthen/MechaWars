@@ -20,17 +20,12 @@ public:
 			return;
 		}
 
-		//  rendering
-		unit->get_animator()->set_playing( true );
-
-		//  pathfinding color
-		pathfinding_color = unit->get_color();
+		//  pathfinding to target
+		goal = target_tmp->get_pos();
+		UnitState_Move::init();
 
 		//  avoid manually changing goal w/ Unit::move_to
 		can_change_goal = false;
-
-		//  pathfinding to target
-		set_goal( target_tmp->get_pos() );
 	}
 
 	void update( float dt ) override
@@ -74,6 +69,17 @@ public:
 
 		//  move towards target
 		UnitState_Move::update( dt );
+	}
+
+	void debug_render() override
+	{
+		//  check target validity
+		auto target_tmp = target.lock();
+		if ( !target_tmp )
+			return;
+
+		Int2 pos = target_tmp->get_pos() * Map::TILE_SIZE;
+		utility::draw_debug_rect( pos.x, pos.y, Map::TILE_SIZE, Map::TILE_SIZE, RED );
 	}
 
 	std::string str() const override { return "UnitState_MoveTo"; }

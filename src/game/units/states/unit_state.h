@@ -18,6 +18,7 @@ public:
 	virtual void debug_update( float dt ) {};
 	virtual void update( float dt ) {};
 	virtual void render() {};
+	virtual void debug_render() {};
 
 	virtual std::string str() const { return "UnitState_Base"; };
 };
