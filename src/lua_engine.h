@@ -1,5 +1,7 @@
 #pragma once
 
+#include <filesystem>
+
 #include "raylib.h"
 #include <src/utility/int2.h>
 
@@ -11,6 +13,9 @@ class LuaEngine
 private:
 	static LuaState L;
 public:
+	static void require( std::string file_path );
+	static void require_folder( std::string folder_path );
+
 	static bool is_nil( const LuaObject& obj ) { return obj.GetType() == LUA_TNIL; }
 	static bool is_string( const LuaObject& obj ) { return obj.GetType() == LUA_TSTRING; }
 	static bool is_bool( const LuaObject& obj ) { return obj.GetType() == LUA_TBOOLEAN; }

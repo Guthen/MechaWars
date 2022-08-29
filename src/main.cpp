@@ -23,10 +23,10 @@ void load()
 	//  bindings
 	Defs::bind_lua( L );
 
-	std::string err;
-	if ( !L->DoFile( "lua/structures/nexus.lua", &err ) )
-		printf( "lua error: %s\n", err.c_str() );
-
+	//  requires
+	printf( "\n" );
+	LuaEngine::require_folder( "lua/structures" );
+	printf( "\n" );
 
 	//  define game data
 	/*StructData data {};
