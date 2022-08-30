@@ -6,6 +6,7 @@
 
 #include <src/globals.h>
 #include <src/game/map.h>
+#include <src/game_manager.h>
 
 class GameCamera
 {
@@ -56,7 +57,7 @@ public:
 		if ( is_bounded )
 		{
 			Vector2 viewport_size = get_viewport_size( zoom );
-			if ( ( bounds.width - viewport_size.x ) - ( bounds.x + viewport_size.x ) <= 0 )
+			if ( ( bounds.width - viewport_size.x ) - ( bounds.x + viewport_size.x ) <= 0.0f )
 				return;
 		}
 		//  zoom & update position
@@ -69,7 +70,7 @@ public:
 	{
 		Vector2 move_delta = {};
 
-		float camera_move_speed = move_speed * dt * 1 / camera.zoom;
+		float camera_move_speed = move_speed * dt * 1.0f / camera.zoom;
 		if ( IsKeyDown( KEY_Z ) )
 			move_delta.y -= camera_move_speed;
 		if ( IsKeyDown( KEY_S ) )
@@ -78,6 +79,9 @@ public:
 			move_delta.x -= camera_move_speed;
 		if ( IsKeyDown( KEY_D ) )
 			move_delta.x += camera_move_speed;
+
+		//  debug bounded
+		is_bounded = GameManager::get_debug_state() == DEBUG_STATE::NONE;
 
 		//  translate
 		if ( !( move_delta.x == .0f && move_delta.y == .0f ) )
@@ -91,7 +95,7 @@ public:
 
 	Vector2 get_viewport_size( float zoom )
 	{
-		float factor = 1 / zoom / 2;
+		float factor = 1.0f / zoom / 2.0f;
 		return Vector2 { SCREEN_WIDTH * factor, SCREEN_HEIGHT * factor };
 	}
 	Vector2 get_viewport_size() { return get_viewport_size( camera.zoom ); }
@@ -110,8 +114,8 @@ public:
 		Vector2 viewport_size = get_viewport_size();
 
 		Vector2 mouse_pos = GetMousePosition();
-		mouse_pos.x *= 1 / camera.zoom;
-		mouse_pos.y *= 1 / camera.zoom;
+		mouse_pos.x *= 1.0f / camera.zoom;
+		mouse_pos.y *= 1.0f / camera.zoom;
 		mouse_pos.x += camera.target.x - viewport_size.x;
 		mouse_pos.y += camera.target.y - viewport_size.y;
 
