@@ -19,10 +19,7 @@ public:
 		//  check target validity
 		auto target_tmp = target.lock();
 		if ( !target_tmp )
-		{
-			unit->next_state();
 			return;
-		}
 
 		next_work_time = unit->get_data().work_time;
 

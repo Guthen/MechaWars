@@ -15,10 +15,7 @@ public:
 		//  check target validity
 		auto target_tmp = target.lock();
 		if ( !target_tmp )
-		{
-			unit->next_state();
 			return;
-		}
 
 		//  pathfinding to target
 		goal = target_tmp->get_pos();
