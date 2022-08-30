@@ -113,6 +113,9 @@ void Map::generate_tiles( FastNoiseLite gen_fnl, FastNoiseLite warp_fnl, float r
 void Map::generate_trees( FastNoiseLite fnl, float threshold )
 {
 	std::weak_ptr<Map> weak_ptr( _get_shared_from_this<Map>() );
+	
+	//  load tree data
+	StructData data = Defs::get_structure( "spruce_tree" ).data;
 
 	for ( int y = 0; y < size.y; y++ )
 		for ( int x = 0; x < size.x; x++ )
@@ -122,7 +125,7 @@ void Map::generate_trees( FastNoiseLite fnl, float threshold )
 
 			float noise = utility::remap_11_to_01( fnl.GetNoise( (float) x, (float) y ) );
 			if ( noise >= threshold )
-				GameManager::create<StructureTree>( x, y, StructData {}, weak_ptr )->reserve_pos();
+				GameManager::create<Structure>( x, y, data, weak_ptr )->reserve_pos();
 		}
 }
 
@@ -130,6 +133,9 @@ void Map::generate_ores( FastNoiseLite fnl, float threshold )
 {
 	std::weak_ptr<Map> weak_ptr( _get_shared_from_this<Map>() );
 
+	//  load steel data
+	StructData data = Defs::get_structure( "steel_ore" ).data;
+
 	for ( int y = 0; y < size.y; y++ )
 		for ( int x = 0; x < size.x; x++ )
 		{
@@ -138,7 +144,7 @@ void Map::generate_ores( FastNoiseLite fnl, float threshold )
 
 			float noise = utility::remap_11_to_01( fnl.GetNoise( (float) x, (float) y ) );
 			if ( noise >= threshold )
-				GameManager::create<StructureSteel>( x, y, StructData {}, weak_ptr )->reserve_pos();
+				GameManager::create<Structure>( x, y, data, weak_ptr )->reserve_pos();
 		}
 }
 
