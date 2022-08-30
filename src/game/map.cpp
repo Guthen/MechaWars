@@ -108,7 +108,7 @@ void Map::generate_trees( FastNoiseLite fnl, float threshold )
 	std::weak_ptr<Map> weak_ptr( _get_shared_from_this<Map>() );
 	
 	//  load tree data
-	StructData data = Defs::get_structure( "spruce_tree" ).data;
+	StructureData data = Defs::get_structure( "spruce_tree" ).data;
 
 	for ( int y = 0; y < size.y; y++ )
 		for ( int x = 0; x < size.x; x++ )
@@ -127,7 +127,7 @@ void Map::generate_ores( FastNoiseLite fnl, float threshold )
 	std::weak_ptr<Map> weak_ptr( _get_shared_from_this<Map>() );
 
 	//  load steel data
-	StructData data = Defs::get_structure( "steel_ore" ).data;
+	StructureData data = Defs::get_structure( "steel_ore" ).data;
 
 	for ( int y = 0; y < size.y; y++ )
 		for ( int x = 0; x < size.x; x++ )
@@ -239,7 +239,7 @@ void Map::generate( const unsigned int _seed )
 			znyper->reserve_pos();
 
 			//  create blueprint
-			StructData data = Defs::get_structure( "nexus" ).data;
+			StructureData data = Defs::get_structure( "nexus" ).data;
 			auto blueprint = GameManager::create<StructureBlueprint>( pos.x - 1, pos.y - 1, data, weak_ptr );
 			blueprint->set_team( team );
 			blueprint->reserve_pos();

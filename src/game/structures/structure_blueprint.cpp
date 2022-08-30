@@ -1,6 +1,6 @@
 #include "structure_blueprint.h"
 
-StructureBlueprint::StructureBlueprint( int x, int y, StructData data, std::weak_ptr<Map> map ) : Structure( x, y, data, map )
+StructureBlueprint::StructureBlueprint( int x, int y, StructureData data, std::weak_ptr<Map> map ) : Structure( x, y, data, map )
 {
 	texture = AssetsManager::get_or_load_texture( "assets/textures/structures/blueprint.png" );
 

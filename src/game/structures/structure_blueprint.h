@@ -26,7 +26,7 @@ protected:
 		Int2 { 1, 4 },
 	};
 public:
-	StructureBlueprint( int x, int y, StructData data, std::weak_ptr<Map> map );
+	StructureBlueprint( int x, int y, StructureData data, std::weak_ptr<Map> map );
 
 	void init() override;
 	void debug_update( float dt ) override;

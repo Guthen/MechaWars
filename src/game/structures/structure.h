@@ -1,9 +1,9 @@
 #pragma once
-
-#include "../../game_manager.h"
 #include "../world_entity.h"
 
-struct StructData
+#include <src/game_manager.h>
+
+struct StructureData
 {
 	int health = 100;
 	int work_to_make = 10;  //  how much times should the builder hit the building to finish it? 
@@ -18,21 +18,21 @@ struct StructData
 struct StructureDef
 {
 	StructureDef() {}
-	StructureDef( StructData data ) : data( data ) {}
-	StructData data;
+	StructureDef( StructureData data ) : data( data ) {}
+	StructureData data;
 };
 
 class Structure : public WorldEntity
 {
 protected:
-	StructData data;
+	StructureData data;
 public:
-	Structure::Structure( const int x, const int y, StructData data, std::weak_ptr<Map> map ) : WorldEntity( x, y, data.size.x, data.size.y, map ), data( data ) {};
-	Structure( const int x, const int y, const int w, const int h, StructData data, std::weak_ptr<Map> map ) : WorldEntity( x, y, w, h, map ), data( data ) {};
+	Structure::Structure( const int x, const int y, StructureData data, std::weak_ptr<Map> map ) : WorldEntity( x, y, data.size.x, data.size.y, map ), data( data ) {};
+	Structure( const int x, const int y, const int w, const int h, StructureData data, std::weak_ptr<Map> map ) : WorldEntity( x, y, w, h, map ), data( data ) {};
 	virtual ~Structure() {};
 
 	void init() override;
 	void debug_update( float dt ) override;
 
-	StructData get_data() { return data; }
+	StructureData get_data() { return data; }
 };

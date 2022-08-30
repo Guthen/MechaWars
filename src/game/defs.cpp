@@ -7,7 +7,7 @@ std::unordered_map<std::string, StructureDef> Defs::structures;
 void Defs::bind_lua( LuaState* L )
 {
 	L->CreateFunction( []( const char* id, const LuaObject& obj ) -> void {
-		StructData data {};
+		StructureData data {};
 		
 		//  read Lua values
 		LuaTable& tbl = (LuaTable&) obj;
