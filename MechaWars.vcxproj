@@ -375,8 +375,6 @@ xcopy "$(ProjectDir)lua" "$(TargetDir)lua" /e /y /i /r</Command>
     <ClInclude Include="src\game\units\states\unit_state_move_in.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_move_to.hpp" />
     <ClInclude Include="src\game\units\states\_unit_state_target.hpp" />
-    <ClInclude Include="src\game\units\unit_fastor.hpp" />
-    <ClInclude Include="src\game\units\unit_znyper.hpp" />
     <ClInclude Include="src\lua_engine.h" />
     <ClInclude Include="src\utility\color.h" />
     <ClInclude Include="src\game\effects\pixel_particles.h" />
@@ -392,8 +390,6 @@ xcopy "$(ProjectDir)lua" "$(TargetDir)lua" /e /y /i /r</Command>
     <ClInclude Include="src\game\units\states\unit_state_idle.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_shoot.hpp" />
     <ClInclude Include="src\game\units\unit.fwd.h" />
-    <ClInclude Include="src\game\units\unit_rider.hpp" />
-    <ClInclude Include="src\game\units\unit_vk2.hpp" />
     <ClInclude Include="src\animator.hpp" />
     <ClInclude Include="src\game\world_entity.h" />
     <ClInclude Include="src\utility\defered_call.hpp" />

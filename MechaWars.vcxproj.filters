@@ -53,9 +53,7 @@
     <ClInclude Include="src\scene.hpp" />
     <ClInclude Include="src\game\game_scene.h" />
     <ClInclude Include="src\utility\defered_call.hpp" />
-    <ClInclude Include="src\game\units\unit_vk2.hpp" />
     <ClInclude Include="src\animator.hpp" />
-    <ClInclude Include="src\game\units\unit_rider.hpp" />
     <ClInclude Include="src\game\units\unit.h" />
     <ClInclude Include="src\game\effects\bullet.h" />
     <ClInclude Include="src\game\units\states\unit_state.h" />
@@ -75,8 +73,6 @@
     <ClInclude Include="src\game\units\states\unit_state_attack.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_move_to.hpp" />
     <ClInclude Include="src\game\units\states\_unit_state_target.hpp" />
-    <ClInclude Include="src\game\units\unit_znyper.hpp" />
-    <ClInclude Include="src\game\units\unit_fastor.hpp" />
     <ClInclude Include="src\game\structures\structure.h" />
     <ClInclude Include="src\game\structures\structure_blueprint.h" />
     <ClInclude Include="src\game\units\states\unit_state_build.hpp" />
