@@ -149,6 +149,9 @@ void StructureBlueprint::advance_work()
 
 void StructureBlueprint::finish_work()
 {
+	if ( is_queued_to_deletion )
+		return;
+
 	//  destroy blueprint
 	safe_destroy();
 
