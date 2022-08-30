@@ -13,6 +13,21 @@
 
 struct UnitData
 {
+	//  stats
+	int health = 100;
+	bool can_attack = true;  //  can we attack other units?
+	float move_speed = 8.0f;  //  how many pixels per second can we move
+
+	//  renderer
+	std::string texture_path = "assets/textures/error.png";
+	std::vector<Rectangle> anim_quads { { 0, 0, Map::TILE_SIZE, Map::TILE_SIZE } };
+	Rectangle team_quad { 0, 0, 0, 0 };
+
+	//  build
+	bool can_build = false;  //  can the unit build structures?
+	float work_time = .3f;  //  how much time should we wait in order to advance to work once?
+
+	//  shoot
 	struct Shoot
 	{
 		bool should_predict_movement = false;  //  should we predict target's movement?
@@ -31,14 +46,15 @@ struct UnitData
 		//  explosion
 		int explosion_radius = 0;  //  if >=1, bullet will create explosion with the given radius
 	};
-
 	Shoot shoot;
+};
 
-	bool can_attack = true;  //  can we attack other units?
-	float move_speed = 8.0f;  //  how many pixels per second can we move
+struct UnitDef
+{
+	UnitDef() {}
+	UnitDef( UnitData data ) : data( data ) {}
 
-	bool can_build = false;  //  can the unit build structures?
-	float work_time = .3f;  //  how much time should we wait in order to advance to work once?
+	UnitData data;
 };
 
 class Unit : public WorldEntity
@@ -65,7 +81,7 @@ protected:
 public:
 	static std::vector<std::weak_ptr<Unit>> get_units() { return units; }
 	
-	Unit( const int x, const int y, std::weak_ptr<Map> map );
+	Unit( const int x, const int y, UnitData data, std::weak_ptr<Map> map );
 	virtual ~Unit();
 
 	void init() override;

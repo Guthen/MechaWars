@@ -15,7 +15,7 @@ std::vector<std::weak_ptr<Unit>> Unit::units;
 
 void Unit::_update_dest_rect() {}  //  I take control over that
 
-Unit::Unit( const int x, const int y, std::weak_ptr<Map> map ) : WorldEntity( x, y, map )
+Unit::Unit( const int x, const int y, UnitData data, std::weak_ptr<Map> map ) : WorldEntity( x, y, map ), data( data )
 {
 	animator.set_playing( false );
 	change_state( true, new_state<UnitState_Idle>() );
@@ -109,11 +109,18 @@ void Unit::_shoot_update( float dt )
 
 void Unit::init()
 {
+	//  apply data
+	max_health = data.health;
+	if ( health == -1 )
+		health = max_health;
+
+	texture = AssetsManager::get_or_load_texture( data.texture_path.c_str() );
+	for ( const Rectangle& quad : data.anim_quads )
+		animator.add_frame( quad );
+	team_quad = data.team_quad;
+
 	//  add to static list
 	units.push_back( _get_shared_from_this<Unit>() );
-
-	//  default behaviour
-	WorldEntity::init();
 }
 
 void Unit::debug_update( float dt )

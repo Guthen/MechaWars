@@ -9,10 +9,7 @@
 
 #include <src/game/structures/structure_blueprint.h>
 
-#include <src/game/units/unit_vk2.hpp>
-#include <src/game/units/unit_rider.hpp>
-#include <src/game/units/unit_znyper.hpp>
-#include <src/game/units/unit_fastor.hpp>
+#include <src/game/units/unit.h>
 
 
 Map::Map( int w, int h )
@@ -222,21 +219,29 @@ void Map::generate( const unsigned int _seed )
 			generator->reserve_pos();*/
 
 			//  create units
-			auto builder = GameManager::create<UnitFastor>( pos.x - 1, pos.y + 2, weak_ptr );
+			auto builder = GameManager::create<Unit>( pos.x - 1, pos.y + 1, Defs::get_unit( "fastor" ).data, weak_ptr);
 			builder->set_team( team );
 			builder->reserve_pos();
 
-			auto vk2 = GameManager::create<UnitVK2>( pos.x, pos.y + 2, weak_ptr );
+			builder = GameManager::create<Unit>( pos.x, pos.y + 1, Defs::get_unit( "fastor" ).data, weak_ptr );
+			builder->set_team( team );
+			builder->reserve_pos();
+
+			builder = GameManager::create<Unit>( pos.x + 1, pos.y + 1, Defs::get_unit( "fastor" ).data, weak_ptr );
+			builder->set_team( team );
+			builder->reserve_pos();
+
+			auto vk2 = GameManager::create<Unit>( pos.x, pos.y + 2, Defs::get_unit( "vk2" ).data, weak_ptr );
 			vk2->set_team( team );
 			vk2->reserve_pos();
 
-			auto rider = GameManager::create<UnitRider>( pos.x + 1, pos.y + 2, weak_ptr );
+			auto rider = GameManager::create<Unit>( pos.x + 1, pos.y + 2, Defs::get_unit( "rider" ).data, weak_ptr );
 			rider->set_team( team );
 			rider->reserve_pos();
 
-			auto znyper = GameManager::create<UnitZnyper>( pos.x + 2, pos.y + 2, weak_ptr );
-			znyper->set_team( team );
-			znyper->reserve_pos();
+			auto snyper = GameManager::create<Unit>( pos.x + 2, pos.y + 2, Defs::get_unit( "snyper" ).data, weak_ptr );
+			snyper->set_team( team );
+			snyper->reserve_pos();
 
 			//  create blueprint
 			StructureData data = Defs::get_structure( "nexus" ).data;

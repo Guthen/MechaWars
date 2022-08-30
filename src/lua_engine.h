@@ -15,6 +15,13 @@ public:
 	static void require( std::string file_path );
 	static void require_folder( std::string folder_path );
 
+	template <typename... Args>
+	static void error( std::string msg, Args... args )
+	{
+		msg = TextFormat( msg.c_str(), args... );
+		printf( TextFormat( "\x1B[91mERROR: %s: %s\033[0m\n", "LuaEngine", msg.c_str() ) );
+	}
+
 	static bool is_nil( const LuaObject& obj ) { return obj.GetType() == LUA_TNIL; }
 	static bool is_string( const LuaObject& obj ) { return obj.GetType() == LUA_TSTRING; }
 	static bool is_bool( const LuaObject& obj ) { return obj.GetType() == LUA_TBOOLEAN; }

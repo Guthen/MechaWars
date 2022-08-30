@@ -19,6 +19,7 @@ struct StructureDef
 {
 	StructureDef() {}
 	StructureDef( StructureData data ) : data( data ) {}
+
 	StructureData data;
 };
 

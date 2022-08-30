@@ -15,6 +15,7 @@ void load()
 
 	//  requires
 	printf( "\nLua Modding:\n" );
+	LuaEngine::require_folder( "lua/units" );
 	LuaEngine::require_folder( "lua/structures" );
 	printf( "\n" );
 	#pragma endregion
