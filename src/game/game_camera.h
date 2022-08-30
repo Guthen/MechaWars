@@ -1,10 +1,11 @@
 #pragma once
 
-#include "raylib.h"
-#include "../utility/math.h"
+#include <raylib.h>
 
-#include "../globals.h"
-#include "map.h"
+#include <src/utility/math.h>
+
+#include <src/globals.h>
+#include <src/game/map.h>
 
 class GameCamera
 {

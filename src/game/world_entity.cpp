@@ -1,9 +1,6 @@
 #include "world_entity.h"
 
-#include "../utility/color.h"
-
-#include "map.h"
-#include "../game_manager.h"
+#include <src/utility/color.h>
 
 void WorldEntity::_update_dest_rect()
 {
@@ -49,7 +46,6 @@ void WorldEntity::update( float dt )
 		debug_update( dt );
 }
 
-
 void WorldEntity::render()
 {
 	//  start hit shader
@@ -66,7 +62,6 @@ void WorldEntity::render()
 	if ( is_currently_hit )
 		EndShaderMode();
 }
-
 
 void WorldEntity::render_hud()
 {

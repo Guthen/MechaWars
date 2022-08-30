@@ -1,16 +1,16 @@
 #pragma once
-
 #include "unit_state_move_in.hpp"
-#include "../../structures/structure_blueprint.h"
 
 #include "src/utility/rect.hpp"
+
+#include <src/game/structures/structure_blueprint.h>
 
 class UnitState_Build : public _UnitState_Target
 {
 protected:
 	float next_work_time = 0.0f;
 
-	Rectangle build_area;
+	Rectangle build_area { 0, 0, 0, 0 };
 public:
 	UnitState_Build( Unit* unit, std::weak_ptr<WorldEntity> target ) : _UnitState_Target( unit, target ) {}
 
@@ -73,7 +73,13 @@ public:
 
 	void debug_render() override
 	{
-		utility::draw_debug_rect( build_area.x * Map::TILE_SIZE, build_area.y * Map::TILE_SIZE, build_area.width * Map::TILE_SIZE, build_area.height * Map::TILE_SIZE, BLUE );
+		utility::draw_debug_rect( 
+			(int) build_area.x * Map::TILE_SIZE, 
+			(int) build_area.y * Map::TILE_SIZE, 
+			(int) build_area.width * Map::TILE_SIZE, 
+			(int) build_area.height * Map::TILE_SIZE,
+		BLUE 
+		);
 	}
 
 	std::string str() const override { return "UnitState_Build"; }

@@ -1,26 +1,19 @@
 #include "map.h"
 
-#include "../game_manager.h"
-#include "pathfinder.h"
-
-#include <src/game/defs.h>
-
-#include "structures/structure_tree.h"
-#include "structures/structure_steel.h"
-//#include "structures/structure_nexus.h"
-//#include "structures/structure_generator.h"
-//#include "structures/structure_drill.h"
-//#include "structures/structure_silo.h"
-#include "structures/structure_blueprint.h"
-
-#include "units/unit_vk2.hpp"
-#include "units/unit_rider.hpp"
-#include "units/unit_znyper.hpp"
-#include "units/unit_fastor.hpp"
-
-#include <algorithm>
 #include <random>
 #include <numeric>
+
+#include <src/game_manager.h>
+#include <src/game/pathfinder.h>
+#include <src/game/defs.h>
+
+#include <src/game/structures/structure_blueprint.h>
+
+#include <src/game/units/unit_vk2.hpp>
+#include <src/game/units/unit_rider.hpp>
+#include <src/game/units/unit_znyper.hpp>
+#include <src/game/units/unit_fastor.hpp>
+
 
 Map::Map( int w, int h )
 {

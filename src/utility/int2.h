@@ -1,6 +1,6 @@
 #pragma once
 
-#include "raylib.h"
+#include <raylib.h>
 
 #include <cmath>
 
@@ -25,7 +25,7 @@ struct Int2
 	bool operator ==( const Int2& a ) const { return x == a.x && y == a.y; }
 	size_t operator()( const Int2& a ) const
 	{
-		return a.x + a.y * 10;
+		return (size_t) ( a.x + a.y * 10 );
 	}
 
 	static Int2 from_v2( Vector2& v ) { return Int2 { (int) roundf( v.x ), (int) roundf( v.y ) }; }

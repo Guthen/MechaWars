@@ -6,13 +6,11 @@
 #include <raylib.h>
 #include <raymath.h>
 
-#include "../libs/fast_noise_lite.h"
-#include "../utility/math.h"
-#include "../utility/int2.h"
+#include <src/libs/fast_noise_lite.h>
 
-#include "../assets_manager.h"
-#include "../entity.h"
-#include "world_entity.fwd.h"
+#include <src/entity.h>
+#include <src/assets_manager.h>
+#include <src/game/world_entity.fwd.h>
 
 class Map : public Entity
 {
@@ -46,7 +44,7 @@ public:
 	void set_size( const int w, const int h ) override
 	{
 		Entity::set_size( w, h );
-		tiles.resize( w * h );
+		tiles.resize( (size_t) ( w * h ) );
 	}
 
 	void render() override;

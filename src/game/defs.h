@@ -3,8 +3,7 @@
 #include <unordered_map>
 
 #include <src/lua_engine.h>
-
-#include "structures/structure.h"
+#include <src/game/structures/structure.h>
 
 #define __MAP_ACCESSORS( NAME, MAP, TYPE )								  \
 	static void define_##NAME( const char* id, TYPE def ) { MAP[id] = def; }  \

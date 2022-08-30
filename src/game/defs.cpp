@@ -20,9 +20,9 @@ void Defs::bind_lua( LuaState* L )
 
 		//  convert to cpp
 		if ( LuaEngine::is_number( health ) )
-			data.health = health.ToInteger();
+			data.health = (int) health.ToInteger();
 		if ( LuaEngine::is_number( work_to_make ) )
-			data.work_to_make = work_to_make.ToInteger();
+			data.work_to_make = (int) work_to_make.ToInteger();
 
 		if ( LuaEngine::is_table( size ) )
 			data.size = LuaEngine::to_int2( size );

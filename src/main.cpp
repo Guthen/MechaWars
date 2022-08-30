@@ -1,42 +1,23 @@
-#include <iostream>
-#include <chrono>
+#include <raylib.h>
 
-#include <luacpp/luacpp.h>
-
-#include "raylib.h"
-
-#include "utility/draw.h"
-
-#include "assets_manager.h"
-#include "game_manager.h"
-#include "game/game_camera.h"
-#include "game/game_scene.h"
-
-#include "game/defs.h"
-
-#include "globals.h"
+#include <src/game_manager.h>
+#include <src/game/game_scene.h>
+#include <src/game/defs.h>
+#include <src/globals.h>
 
 void load()
 {
+	#pragma region LuaModding
 	LuaState* L = LuaEngine::get_state();
 
 	//  bindings
 	Defs::bind_lua( L );
 
 	//  requires
-	printf( "\n" );
+	printf( "\nLua Modding:\n" );
 	LuaEngine::require_folder( "lua/structures" );
 	printf( "\n" );
-
-	//  define game data
-	/*StructData data {};
-	data.health = 5000;
-	data.work_to_make = 10;
-	data.size.x = 2, data.size.y = 2;
-	data.texture_path = "assets/textures/buildings/nexus.png";
-	data.quad = Rectangle { 0, 0, 16, 16 };
-	data.team_quad = Rectangle { 16, 0, 16, 16 };
-	Defs::define_structure( "nexus", StructureDef { data } );*/
+	#pragma endregion
 
 	//  load game scene
 	GameManager::change_scene<GameScene>();

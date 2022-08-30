@@ -1,9 +1,9 @@
 #pragma once
 
 #include "int2.h"
-#include <cmath>
 
-#include "raymath.h"
+#include <cmath>
+#include <raymath.h>
 
 namespace utility
 {

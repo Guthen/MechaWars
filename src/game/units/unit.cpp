@@ -6,7 +6,8 @@
 #include "states/unit_state_move.hpp"
 #include "states/unit_state_build.hpp"
 
-#include "../structures/structure_blueprint.h"
+#include <src/game/structures/structure_blueprint.h>
+#include <src/game/effects/bullet.h>
 
 //  static
 std::vector<std::weak_ptr<Unit>> Unit::units;
@@ -131,7 +132,7 @@ void Unit::debug_update( float dt )
 	state->debug_update( dt );
 
 	//  states queue
-	int queue_size = states_queue.size();
+	size_t queue_size = states_queue.size();
 	if ( queue_size > 0 )
 	{
 		DRAW_DEBUG( TextFormat( "states_queue [size=%d]:", queue_size ) );
@@ -197,7 +198,10 @@ void Unit::on_take_damage( DamageInfo info )
 		return;
 
 	//  knockback anim
-	Vector2 knockback_dir = Vector2Scale( Vector2Normalize( ( attacker_tmp->get_pos() - pos ).to_v2() ), info.damage / 5 );
+	Vector2 knockback_dir = Vector2Scale( 
+		Vector2Normalize( ( attacker_tmp->get_pos() - pos ).to_v2() ), 
+		info.damage / 5.0f
+	);
 	dest.x -= knockback_dir.x, dest.y -= knockback_dir.y;
 
 	//  riposte on idle: attack if enemy

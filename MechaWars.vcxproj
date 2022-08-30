@@ -123,7 +123,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\bin\Debug\</OutDir>
     <IntDir>obj\x64\Debug\</IntDir>
-    <TargetName>RTS</TargetName>
+    <TargetName>MechaWars</TargetName>
     <TargetExt>.exe</TargetExt>
     <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>

@@ -1,15 +1,13 @@
 #pragma once
-
 #include "unit.fwd.h"
 #include "states/unit_state.fwd.h"
-#include "../../utility/math.h"
-#include "../../utility/draw.h"
 
-#include "../../game_manager.h"
-#include "../../animator.hpp"
+#include <src/utility/math.h>
+#include <src/utility/draw.h>
 
-#include "../world_entity.h"
-#include "../effects/bullet.h"
+#include <src/game_manager.h>
+#include <src/animator.hpp>
+#include <src/game/world_entity.h>
 
 #include <deque>
 

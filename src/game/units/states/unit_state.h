@@ -1,6 +1,6 @@
 #pragma once
-
 #include "unit_state.fwd.h"
+
 #include "../unit.fwd.h"
 
 #include <string>

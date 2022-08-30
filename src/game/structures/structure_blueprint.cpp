@@ -13,7 +13,12 @@ StructureBlueprint::StructureBlueprint( int x, int y, StructData data, std::weak
 Vector2 zero { 0.0f, 0.0f };
 void _draw_tile( Texture2D texture, Int2 quad, Rectangle dest, bool flip_x, bool draw_team_quad, Color team_color = WHITE )
 {
-	Rectangle source { quad.x * Map::TILE_SIZE, quad.y * Map::TILE_SIZE, Map::TILE_SIZE, Map::TILE_SIZE };
+	Rectangle source { 
+		(float) quad.x * Map::TILE_SIZE, 
+		(float) quad.y * Map::TILE_SIZE, 
+		(float) Map::TILE_SIZE, 
+		(float) Map::TILE_SIZE 
+	};
 
 	//  flip horizontally
 	if ( flip_x )
@@ -47,11 +52,11 @@ void StructureBlueprint::_rt_update()
 
 		for ( int y = 0; y < size.y; y++ )
 		{
-			dest.y = y * Map::TILE_SIZE;
+			dest.y = (float) ( y * Map::TILE_SIZE );
 
 			for ( int x = 0; x < size.x; x++ )
 			{
-				dest.x = x * Map::TILE_SIZE;
+				dest.x = (float) ( x * Map::TILE_SIZE );
 
 				//  thin tall
 				if ( size.y == 1 )
@@ -119,10 +124,10 @@ void StructureBlueprint::_rt_update()
 
 void StructureBlueprint::init()
 {
-	health = 0;
+	health = data.health / 10;
 	work_to_make = data.work_to_make;
 	max_health = data.health;
-	health_per_work = max_health / work_to_make;
+	health_per_work = ( max_health - health ) / work_to_make;
 }
 
 void StructureBlueprint::debug_update( float dt )

@@ -1,8 +1,8 @@
 #pragma once
-
 #include "unit_state.h"
 
-#include "../../world_entity.h"
+#include <src/game/world_entity.h>
+
 #include <memory>
 
 class _UnitState_Target : public UnitState

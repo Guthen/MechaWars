@@ -1,12 +1,11 @@
 #pragma once
+#include <luacpp/luacpp.h>
+using namespace luacpp;
 
 #include <filesystem>
 
-#include "raylib.h"
+#include <raylib.h>
 #include <src/utility/int2.h>
-
-#include <luacpp/luacpp.h>
-using namespace luacpp;
 
 class LuaEngine
 {

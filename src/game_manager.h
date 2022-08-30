@@ -6,8 +6,8 @@
 #include "scene.hpp"
 #include "entity.h"
 
-#include "utility/defered_call.hpp"
-#include "utility/draw.h"
+#include <src/utility/defered_call.hpp>
+#include <src/utility/draw.h>
 
 #define DRAW_DEBUG( text )  GameManager::debug_text( text )
 

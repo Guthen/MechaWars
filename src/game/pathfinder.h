@@ -1,8 +1,9 @@
 #pragma once
 
 #include <raylib.h>
-#include "../utility/astar2.h"
-#include "../game_manager.h"
+
+#include <src/utility/astar2.h>
+#include <src/game_manager.h>
 
 class Pathfinder
 {

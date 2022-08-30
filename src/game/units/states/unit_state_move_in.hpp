@@ -23,8 +23,8 @@ private:
 		Int2 unit_pos = unit->get_pos();
 
 		//  get rect-corners
-		int left = area.x, right = area.x + area.width - 1;
-		int top = area.y, bottom = area.y + area.height - 1;
+		int left = (int) area.x, right = (int) ( area.x + area.width ) - 1;
+		int top = (int) area.y, bottom = (int) ( area.y + area.height ) - 1;
 		Int2 corners[4] {
 			Int2 { left, top },		//  top-left
 			Int2 { right, top },	//  top-right
@@ -69,7 +69,8 @@ private:
 		return corners[a_id];
 	}
 
-	Int2 corner_a, corner_b;
+	Int2 corner_a { 0, 0 };
+	Int2 corner_b { 0, 0 };
 public:
 	UnitState_MoveIn( Unit* unit, Rectangle area ) : UnitState_Move( unit ), area( area ) {};
 

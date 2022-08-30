@@ -1,14 +1,14 @@
 #pragma once
-
-#include "../scene.hpp"
+#include <src/scene.hpp>
 
 #include <chrono>
 
-#include "map.h"
-#include "game_camera.h"
-#include "ui/ui_tile_cursor.h"
-#include "../game_manager.h"
-#include "../utility/draw.h"
+#include <src/utility/draw.h>
+
+#include <src/game/map.h>
+#include <src/game/game_camera.h>
+#include <src/game/ui/ui_tile_cursor.h>
+#include <src/game_manager.h>
 
 class GameScene : public Scene
 {

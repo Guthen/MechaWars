@@ -1,12 +1,13 @@
 #pragma once
-
-#include "raylib.h"
-
 #include "world_entity.fwd.h"
-#include "map.h"
-#include "teams.h"
-#include "ui/ui_button.hpp"
-#include "ui/ui_tile_cursor.h"
+
+#include <raylib.h>
+
+#include <src/game_manager.h>
+#include <src/game/map.h>
+#include <src/game/teams.h>
+#include <src/game/ui/ui_button.hpp>
+#include <src/game/ui/ui_tile_cursor.h>
 
 struct DamageInfo
 {

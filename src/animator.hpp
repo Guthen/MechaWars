@@ -30,7 +30,7 @@ public:
 			next_frame_time += 1.0f / fps;
 
 			//  next frame
-			int next_frame_id = ( current_frame_id + 1 ) % frames.size();
+			int next_frame_id = ( current_frame_id + 1 ) % (int) frames.size();
 			if ( next_frame_id == 0 && !looping )
 				playing = false;
 			else
@@ -54,5 +54,5 @@ public:
 
 	void add_frame( Rectangle quad ) { frames.push_back( quad ); }
 	Rectangle get_current_frame() { return frames[current_frame_id]; }
-	int get_frame_count() { return frames.size(); }
+	size_t get_frame_count() { return frames.size(); }
 };
