@@ -197,7 +197,9 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)assets" "$(TargetDir)assets" /e /y /i /r
+      <Command>rmdir "$(TargetDir)assets" /s /q
+rmdir "$(TargetDir)lua" /s /q
+xcopy "$(ProjectDir)assets" "$(TargetDir)assets" /e /y /i /r
 xcopy "$(ProjectDir)lua" "$(TargetDir)lua" /e /y /i /r</Command>
       <Message>Copy 'assets' &amp; 'lua' folder to build</Message>
     </PreBuildEvent>
