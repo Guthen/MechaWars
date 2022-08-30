@@ -8,12 +8,15 @@ private:
 	Rectangle area;
 
 	/*
-	 *  homemade algorithm to find the nearest position in a rectangle by using its corners and edges:
-	 *  it's simple & clean
+	 *  Homemade algorithm to find the nearest position in a rectangle by using its corners and edges:
+	 *  It's simple & clean
 	 * 
-	 *  only problem I found is that it doesn't take in account the map's topography, so resulting paths
+	 *  Only problem I found is that it doesn't take in account the map's topography, so resulting paths
 	 *  may look stupid. however, I do not plan to fix this, since I don't want this algorithm to be 
 	 *	performance-consuming by computing the best path possible
+	 * 
+	 *  30/08/2022 10h30: Issue: infinite loop when the algorithm return a position where all its adjacents tiles
+	 *					  are obstructed/disabled in the pathfinding
 	 */
 	Int2 _get_area_nearest_goal()
 	{
