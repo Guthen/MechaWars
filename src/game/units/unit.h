@@ -122,6 +122,8 @@ public:
 	bool is_firing();
 	bool can_fire();
 
+	bool build_blueprint( bool is_queued, std::weak_ptr<WorldEntity> target );
+
 	UnitData get_data() { return data; }
 	Animator* get_animator() { return &animator; }
 };

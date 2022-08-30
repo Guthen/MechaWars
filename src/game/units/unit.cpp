@@ -244,16 +244,8 @@ void Unit::on_right_click_selected()
 			//  check if ally
 			if ( target_team == get_team() )
 			{
-				//  build if is blueprint structure
-				if ( data.can_build )
-				{
-					StructureBlueprint* blueprint = dynamic_cast<StructureBlueprint*>( target_tmp.get() );
-					if ( blueprint )
-					{
-						change_state( false, new_state<UnitState_Build>( target ) );
-					}
-				}
-
+				//  build (if possible)
+				build_blueprint( is_queued, target );
 				return;
 			}
 
@@ -442,3 +434,32 @@ void Unit::fire_bullet( Int2 shoot_target )
 
 bool Unit::is_firing() { return _firing_times > 0; }
 bool Unit::can_fire() { return !is_firing() && _next_fire_timer <= 0.0f; }
+
+bool Unit::build_blueprint( bool is_queued, std::weak_ptr<WorldEntity> target )
+{
+	//  can't build? get out..
+	if ( !data.can_build )
+		return false;
+
+	//  check target validity
+	auto target_tmp = target.lock();
+	if ( !target_tmp )
+		return false;
+
+	//  check is blueprint
+	StructureBlueprint* blueprint = dynamic_cast<StructureBlueprint*>( target_tmp.get() );
+	if ( !blueprint )
+		return false;
+
+	//  create state
+	UnitState* _state = new_state<UnitState_Build>( target );
+	if ( is_queued )
+		push_state( false, _state );
+	else
+	{
+		clear_states();
+		change_state( false, _state );
+	}
+
+	return true;
+}
