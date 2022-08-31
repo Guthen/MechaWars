@@ -5,12 +5,13 @@
 
 #include <memory>
 
+template <class T>
 class _UnitState_Target : public UnitState
 {
 protected:
-	std::weak_ptr<WorldEntity> target;
+	std::weak_ptr<T> target;
 public:
-	_UnitState_Target( Unit* unit, std::weak_ptr<WorldEntity> target ) : UnitState( unit ), target( target ) {}
+	_UnitState_Target( Unit* unit, std::weak_ptr<T> target ) : UnitState( unit ), target( target ) {}
 
 	void debug_update( float dt ) override
 	{
@@ -27,5 +28,5 @@ public:
 		utility::draw_debug_rect( pos.x, pos.y, Map::TILE_SIZE, Map::TILE_SIZE, RED );
 	}
 
-	void set_target( std::weak_ptr<WorldEntity> _target ) { target = _target; }
+	void set_target( std::weak_ptr<T> _target ) { target = _target; }
 };

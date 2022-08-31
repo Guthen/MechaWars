@@ -5,6 +5,7 @@
 #include "states/unit_state_attack.hpp"
 #include "states/unit_state_move.hpp"
 #include "states/unit_state_build.hpp"
+#include "states/unit_state_repair.hpp"
 
 #include <src/game/structures/structure_blueprint.h>
 #include <src/game/effects/bullet.h>
@@ -244,8 +245,8 @@ void Unit::on_right_click_selected()
 			//  check if ally
 			if ( target_team == get_team() )
 			{
-				//  build (if possible)
-				build_blueprint( is_queued, target );
+				//  build or repair (if possible)
+				build_or_repair( is_queued, target );
 				return;
 			}
 
@@ -435,7 +436,7 @@ void Unit::fire_bullet( Int2 shoot_target )
 bool Unit::is_firing() { return _firing_times > 0; }
 bool Unit::can_fire() { return !is_firing() && _next_fire_timer <= 0.0f; }
 
-bool Unit::build_blueprint( bool is_queued, std::weak_ptr<WorldEntity> target )
+bool Unit::build_or_repair( bool is_queued, std::weak_ptr<WorldEntity> target )
 {
 	//  can't build? get out..
 	if ( !data.can_build )
@@ -446,20 +447,34 @@ bool Unit::build_blueprint( bool is_queued, std::weak_ptr<WorldEntity> target )
 	if ( !target_tmp )
 		return false;
 
-	//  check is blueprint
-	StructureBlueprint* blueprint = dynamic_cast<StructureBlueprint*>( target_tmp.get() );
-	if ( !blueprint )
-		return false;
+	UnitState* _state = nullptr;
 
-	//  create state
-	UnitState* _state = new_state<UnitState_Build>( target );
-	if ( is_queued )
-		push_state( false, _state );
-	else
-	{
-		clear_states();
-		change_state( false, _state );
+	//  build if blueprint
+	auto blueprint = std::dynamic_pointer_cast<StructureBlueprint>( target_tmp );
+	if ( blueprint )
+		_state = new_state<UnitState_Build>( blueprint );
+	else {
+		//  repair if structure
+		auto structure = std::dynamic_pointer_cast<Structure>( target_tmp );
+		if ( !structure || structure->get_health() >= structure->get_max_health() )
+			return false;
+
+		_state = new_state<UnitState_Repair>( structure );
 	}
 
-	return true;
+	//  apply state
+	if ( _state )
+	{
+		if ( is_queued )
+			push_state( false, _state );
+		else
+		{
+			clear_states();
+			change_state( false, _state );
+		}
+
+		return true;
+	}
+
+	return false;
 }

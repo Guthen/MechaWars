@@ -416,6 +416,7 @@ xcopy "$(ProjectDir)lua" "$(TargetDir)lua" /e /y /i /r</Command>
     <ClInclude Include="src\game\structures\structure_tree.h" />
     <ClInclude Include="src\game\structures\structure_steel.h" />
     <ClInclude Include="src\game\units\unit.h" />
+    <ClInclude Include="src\game\units\states\unit_state_repair.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />

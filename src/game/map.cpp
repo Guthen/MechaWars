@@ -248,6 +248,10 @@ void Map::generate( const unsigned int _seed )
 			auto blueprint = GameManager::create<StructureBlueprint>( pos.x - 1, pos.y - 1, data, weak_ptr );
 			blueprint->set_team( team );
 			blueprint->reserve_pos();
+
+			blueprint = GameManager::create<StructureBlueprint>( pos.x + 1, pos.y - 1, Defs::get_structure( "drill" ).data, weak_ptr );
+			blueprint->set_team( team );
+			blueprint->reserve_pos();
 			//GameManager::create<StructureDrill>( pos.x + 2, pos.y + 1, weak_ptr )->set_team( team );
 			/*GameManager::create<StructureNexus>( 4 + team * 2, 5, this )->set_team( (TEAM) team );
 			GameManager::create<StructureGenerator>( 4 + team * 2, 7, this )->set_team( (TEAM) team );

@@ -80,6 +80,7 @@
     <ClInclude Include="src\game\units\states\unit_state_move_in.hpp" />
     <ClInclude Include="src\game\defs.h" />
     <ClInclude Include="src\lua_engine.h" />
+    <ClInclude Include="src\game\units\states\unit_state_repair.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />

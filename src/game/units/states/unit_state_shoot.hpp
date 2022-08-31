@@ -3,7 +3,7 @@
 #include "_unit_state_target.hpp"
 #include "../../../utility/int2.h"
 
-class UnitState_Shoot : public _UnitState_Target
+class UnitState_Shoot : public _UnitState_Target<WorldEntity>
 {
 public:
 	UnitState_Shoot( Unit* unit, std::weak_ptr<WorldEntity> target ) : _UnitState_Target( unit, target ) {}

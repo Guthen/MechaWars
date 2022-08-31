@@ -62,6 +62,8 @@ public:
 
 	//  damage
 	void set_health( int points ) { health = points; }
+	int get_health() { return health; }
+	int get_max_health() { return max_health; }
 	void take_damage( DamageInfo info );
 	virtual void on_take_damage( DamageInfo info ) {};
 

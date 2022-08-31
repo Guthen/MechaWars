@@ -6,7 +6,7 @@
 
 #include <memory>
 
-class UnitState_Attack : public _UnitState_Target
+class UnitState_Attack : public _UnitState_Target<WorldEntity>
 {
 public:
 	UnitState_Attack( Unit* unit, std::weak_ptr<WorldEntity> target ) : _UnitState_Target( unit, target ) {};

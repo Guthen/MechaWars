@@ -3,16 +3,17 @@
 
 #include <src/utility/rect.hpp>
 
-#include <src/game/structures/structure_blueprint.h>
+#include <src/game/structures/structure.h>
 
-class UnitState_Build : public _UnitState_Target<StructureBlueprint>
+class UnitState_Repair : public _UnitState_Target<Structure>
 {
 protected:
 	float next_work_time = 0.0f;
+	int health_per_work = 0;
 
 	Rectangle build_area { 0, 0, 0, 0 };
 public:
-	UnitState_Build( Unit* unit, std::weak_ptr<StructureBlueprint> target ) : _UnitState_Target( unit, target ) {}
+	UnitState_Repair( Unit* unit, std::weak_ptr<Structure> target ) : _UnitState_Target( unit, target ) {}
 
 	void init() override
 	{
@@ -23,18 +24,21 @@ public:
 
 		next_work_time = unit->get_data().work_time;
 
+		StructureData struct_data = target_tmp->get_data();
+		health_per_work = struct_data.health / struct_data.work_to_make;
+
 		//  cache build area
-		build_area = utility::rect_expand( 
-			utility::rect( target_tmp->get_pos(), target_tmp->get_size() ), 
-			1.0f 
+		build_area = utility::rect_expand(
+			utility::rect( target_tmp->get_pos(), target_tmp->get_size() ),
+			1.0f
 		);
 	}
 
 	void update( float dt ) override
 	{
-		//  check target validity
+		//  check target validity & health
 		auto target_tmp = target.lock();
-		if ( !target_tmp )
+		if ( !target_tmp || target_tmp->get_health() >= target_tmp->get_max_health() )
 		{
 			unit->next_state();
 			return;
@@ -51,12 +55,12 @@ public:
 		//  advance to work
 		if ( ( next_work_time -= dt ) <= 0.0f )
 		{
-			target_tmp->advance_work();
-			
+			target_tmp->set_health( target_tmp->get_health() + health_per_work );
+
 			//  reset timer
 			next_work_time = unit->get_data().work_time;
 
-			//  build anim
+			//  repair anim
 			Vector2 build_dir = Vector2Scale( Vector2Normalize( ( target_tmp->get_pos() - unit->get_pos() ).to_v2() ), 2 );
 			Rectangle& dest = unit->get_dest_rect();
 			dest.x += build_dir.x, dest.y += build_dir.y;
@@ -65,14 +69,14 @@ public:
 
 	void debug_render() override
 	{
-		utility::draw_debug_rect( 
-			(int) build_area.x * Map::TILE_SIZE, 
-			(int) build_area.y * Map::TILE_SIZE, 
-			(int) build_area.width * Map::TILE_SIZE, 
+		utility::draw_debug_rect(
+			(int) build_area.x * Map::TILE_SIZE,
+			(int) build_area.y * Map::TILE_SIZE,
+			(int) build_area.width * Map::TILE_SIZE,
 			(int) build_area.height * Map::TILE_SIZE,
-		BLUE 
+			GREEN
 		);
 	}
 
-	std::string str() const override { return "UnitState_Build"; }
+	std::string str() const override { return "UnitState_Repair"; }
 };
