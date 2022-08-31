@@ -82,6 +82,10 @@ Finding a New Game Design:
 	+**~1h30** => added state `UnitState_MoveIn` w/ homemade algorithm to find nearest pos on rectangle's edges
 	+**~1h20** => added blueprint structure creation on finish
 	+**~5h00** => added Lua to handle structures definition (& surely more :))
++ 30/08/2022:
+	+**~5h00** => added lua-defined units queuable building state, project clean-up, unit art design, Repair State WIP..
++ 31/08/2022:
+	+**~0h30** => finished Repair State
 
 **Total: ~106h00**
 
