@@ -67,6 +67,8 @@ void Defs::bind_lua( LuaState* L )
 		auto anim_quads = tbl.Get( "anim_quads" );
 		if ( LuaEngine::is_table( anim_quads ) )
 		{
+			data.anim_quads.clear();
+
 			LuaTable& tbl = (LuaTable&) anim_quads;
 			tbl.ForEach( [&data]( const LuaObject& key, const LuaObject& value ) -> bool {
 				if ( LuaEngine::is_table( value ) )

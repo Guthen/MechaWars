@@ -86,8 +86,10 @@ Finding a New Game Design:
 	+**~5h00** => added lua-defined units queuable building state, project clean-up, unit art design, Repair State WIP..
 + 31/08/2022:
 	+**~0h30** => finished Repair State
++ 01/09/2022:
+	+**~0h10** => fixed unit anim's speed 
 
-**Total: ~106h00**
+**Total: ~111h40**
 
 ## What I learned from this project?
 

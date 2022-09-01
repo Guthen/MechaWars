@@ -49,7 +49,7 @@ public:
 	bool is_looping() { return looping; }
 
 	void set_fps( float _fps ) { fps = _fps; }
-	void set_fps_to_time( float time ) { set_fps( ( frames.size() / time ) ); }
+	void set_fps_to_time( float time ) { set_fps( frames.size() / time ); }
 	float get_fps() { return fps; }
 
 	void add_frame( Rectangle quad ) { frames.push_back( quad ); }

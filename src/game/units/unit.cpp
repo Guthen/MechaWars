@@ -110,14 +110,20 @@ void Unit::_shoot_update( float dt )
 
 void Unit::init()
 {
-	//  apply data
+	//  stats
 	max_health = data.health;
 	if ( health == -1 )
 		health = max_health;
 
+	//  texture
 	texture = AssetsManager::get_or_load_texture( data.texture_path.c_str() );
+
+	//  anim
 	for ( const Rectangle& quad : data.anim_quads )
 		animator.add_frame( quad );
+	animator.set_fps_to_time( Map::TILE_SIZE / data.move_speed / 2.0f );
+
+	//  team quad
 	team_quad = data.team_quad;
 
 	//  add to static list
