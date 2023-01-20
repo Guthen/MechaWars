@@ -112,8 +112,8 @@ void Unit::init()
 {
 	//  stats
 	max_health = data.health;
-	if ( health == -1 )
-		health = max_health;
+
+	vision_range = data.vision_range;
 
 	//  texture
 	texture = AssetsManager::get_or_load_texture( data.texture_path.c_str() );
@@ -128,6 +128,8 @@ void Unit::init()
 
 	//  add to static list
 	units.push_back( _get_shared_from_this<Unit>() );
+
+	WorldEntity::init();
 }
 
 void Unit::debug_update( float dt )

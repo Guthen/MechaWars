@@ -1,6 +1,8 @@
 #include "world_entity.h"
 
 #include <src/utility/color.h>
+#include "commander.h"
+#include "fog_of_war.h"
 
 void WorldEntity::_update_dest_rect()
 {
@@ -32,6 +34,11 @@ void WorldEntity::init()
 	//  setup custom health
 	if ( health == -1 )
 		health = max_health;
+
+	//  register to commander
+	Commander* commander = Commander::get_team_commander( team_id );
+	if ( commander )
+		commander->register_entity( _get_shared_from_this<WorldEntity>() );
 }
 
 void WorldEntity::debug_update( float dt )
@@ -97,6 +104,11 @@ void WorldEntity::safe_destroy()
 	clear_buttons();
 
 	unreserve_pos();
+
+	//  remove from commander
+	Commander* commander = Commander::get_team_commander( team_id );
+	if ( commander )
+		commander->unregister_entity( _get_shared_from_this<WorldEntity>() );
 }
 
 void WorldEntity::reserve_pos()
@@ -112,6 +124,8 @@ void WorldEntity::reserve_pos()
 	for ( int y = 0; y < size.y; y++ )
 		for ( int x = 0; x < size.x; x++ )
 			map_tmp->reserve_structure_pos( pos.x + x, pos.y + y, weak_ptr );
+
+	update_vision();
 }
 
 void WorldEntity::unreserve_pos()
@@ -189,5 +203,17 @@ void WorldEntity::perform_layout()
 		}
 		else
 			printf( "Error: WorldEntity::perform_layout(): Button is not valid anymore!\n" );
+	}
+}
+
+void WorldEntity::update_vision()
+{
+	Commander* commander = Commander::get_team_commander( team_id );
+	if ( !commander ) return;
+
+	auto fow = commander->get_fog_of_war();
+	if ( auto fow_tmp = fow.lock() )
+	{
+		fow_tmp->schedule_update();
 	}
 }

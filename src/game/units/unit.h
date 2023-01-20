@@ -17,6 +17,7 @@ struct UnitData
 	int health = 100;
 	bool can_attack = true;  //  can we attack other units?
 	float move_speed = 8.0f;  //  how many pixels per second can we move
+	float vision_range = 4.5f;  //  how much tiles can this unit see around?
 
 	//  renderer
 	std::string texture_path = "assets/textures/error.png";

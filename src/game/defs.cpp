@@ -21,6 +21,9 @@ void Defs::bind_lua( LuaState* L )
 		auto work_to_make = tbl.Get( "work_to_make" );
 		if ( LuaEngine::is_number( work_to_make ) )
 			data.work_to_make = (int) work_to_make.ToInteger();
+		auto vision_range = tbl.Get( "vision_range" );
+		if ( LuaEngine::is_number( vision_range ) )
+			data.vision_range = (float) vision_range.ToNumber();
 
 		auto size = tbl.Get( "size" );
 		if ( LuaEngine::is_table( size ) )
@@ -59,6 +62,9 @@ void Defs::bind_lua( LuaState* L )
 		auto move_speed = tbl.Get( "move_speed" );
 		if ( LuaEngine::is_number( move_speed ) )
 			data.move_speed = (float) move_speed.ToNumber();
+		auto vision_range = tbl.Get( "vision_range" );
+		if ( LuaEngine::is_number( vision_range ) )
+			data.vision_range = (float) vision_range.ToNumber();
 
 		//  renderer
 		auto texture_path = tbl.Get( "texture_path" );

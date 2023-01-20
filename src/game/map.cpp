@@ -10,6 +10,7 @@
 #include <src/game/structures/structure_blueprint.h>
 
 #include <src/game/units/unit.h>
+#include "commander.h"
 
 
 Map::Map( int w, int h )
@@ -196,17 +197,21 @@ void Map::generate( const unsigned int _seed )
 		auto rng = std::default_random_engine { seed };
 		std::shuffle( players_ids.begin(), players_ids.end(), rng );
 
+		//  prepare our weak pointer to map
+		std::weak_ptr<Map> weak_ptr( _get_shared_from_this<Map>() );
+
 		//  init players
 		for ( unsigned int i = 0; i < players_ids.size(); i++ )
 		{
 			int id = players_ids[i];
 			TEAM team = (TEAM) ( i + 1 );
 
+			Commander* commander = new Commander( weak_ptr, team );
+			if ( i == 0 )
+				Commander::PLAYER_COMMANDER = commander;
+
 			//  search for a valid nexus position
 			Int2 pos = find_nexus_position( get_start_position_for_player( id ));
-
-			//  prepare our weak pointer to map
-			std::weak_ptr<Map> weak_ptr( _get_shared_from_this<Map>() );
 
 			//  create nexus
 			/*auto nexus = GameManager::create<StructureNexus>( pos.x, pos.y, weak_ptr );

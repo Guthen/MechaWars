@@ -12,6 +12,7 @@ DATA.team_quad = { 16, 0, 8, 8 }
 --  stats
 DATA.can_attack = true
 DATA.move_speed = 8.0
+DATA.vision_range = 3.5
 
 --  build
 DATA.can_build = false

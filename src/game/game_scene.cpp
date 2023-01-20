@@ -1,6 +1,7 @@
 #include "game_scene.h"
 
 #include "pathfinder.h"
+#include "commander.h"
 
 void GameScene::init()
 {
@@ -18,6 +19,11 @@ void GameScene::init()
 
 	//  create tile cursor
 	tile_cursor = GameManager::create<UITileCursor>( map );
+}
+
+GameScene::~GameScene()
+{
+	Commander::clear();
 }
 
 void GameScene::update( float dt )

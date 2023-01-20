@@ -7,6 +7,7 @@ struct StructureData
 {
 	int health = 100;
 	int work_to_make = 10;  //  how much times should the builder hit the building to finish it? 
+	int vision_range = 5;  //  how much tiles can this unit see around?
 
 	Int2 size { 1, 1 };  //  structure size in tiles
 

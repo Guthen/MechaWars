@@ -30,6 +30,7 @@ protected:
 
 	int max_health = 100;
 	int health = -1;
+	float vision_range = 2.0f;
 
 	Shader hit_shader;
 	float hit_time = .25f;
@@ -104,6 +105,9 @@ public:
 	}
 	void clear_buttons();
 	void perform_layout();
+
+	void update_vision();
+	float get_vision_range() { return vision_range; }
 
 	std::weak_ptr<Map> get_map() { return map; }
 };

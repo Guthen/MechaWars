@@ -20,6 +20,7 @@ private:
 	unsigned int seed;
 public:
 	GameScene( unsigned int seed = 1353857574 ) : seed( seed ) {};
+	~GameScene();
 
 	void init() override;
 	void update( float dt ) override;

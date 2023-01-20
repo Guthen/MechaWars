@@ -29,6 +29,8 @@
     <ClCompile Include="src\game\structures\structure_blueprint.cpp" />
     <ClCompile Include="src\game\defs.cpp" />
     <ClCompile Include="src\lua_engine.cpp" />
+    <ClCompile Include="src\game\commander.cpp" />
+    <ClCompile Include="src\game\fog_of_war.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\map.h" />
@@ -81,6 +83,10 @@
     <ClInclude Include="src\game\defs.h" />
     <ClInclude Include="src\lua_engine.h" />
     <ClInclude Include="src\game\units\states\unit_state_repair.hpp" />
+    <ClInclude Include="src\game\commander.h" />
+    <ClInclude Include="src\game\fog_of_war.h" />
+    <ClInclude Include="src\game\commander.fwd.h" />
+    <ClInclude Include="src\game\fog_of_war.fwd.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="POSTMORTEM.md" />
