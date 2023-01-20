@@ -15,6 +15,7 @@ FogOfWar::FogOfWar( Commander* commander, std::shared_ptr<Map> map )
 	//  init bool 2D vector
 	bool_vector row( map_size.x, false );
 	visible_tiles = bool_vector2D( map_size.y, row );
+	explored_tiles = bool_vector2D( map_size.y, row );
 }
 
 void FogOfWar::_rt_update()
@@ -25,8 +26,15 @@ void FogOfWar::_rt_update()
 	//  draw non-visible tiles
 	for ( int y = 0; y < visible_tiles.size(); y++ )
 		for ( int x = 0; x < visible_tiles[y].size(); x++ )
+		{
 			if ( !visible_tiles[y][x] )
-				DrawRectangle( x * Map::TILE_SIZE, y * Map::TILE_SIZE, Map::TILE_SIZE, Map::TILE_SIZE, BLACK );
+			{
+				if ( explored_tiles[y][x] )
+					DrawRectangle( x * Map::TILE_SIZE, y * Map::TILE_SIZE, Map::TILE_SIZE, Map::TILE_SIZE, Color { 0, 0, 0, 127 } );
+				else
+					DrawRectangle( x * Map::TILE_SIZE, y * Map::TILE_SIZE, Map::TILE_SIZE, Map::TILE_SIZE, BLACK );
+			}
+		}
 
 	EndTextureMode();
 }
@@ -61,6 +69,7 @@ void FogOfWar::provide_vision( Int2 pos, float range )
 			
 			//  set visible
 			visible_tiles[y][x] = true;
+			explored_tiles[y][x] = true;
 		}
 }
 

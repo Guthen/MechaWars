@@ -18,6 +18,7 @@ private:
 	bool should_update { true };
 
 	bool_vector2D visible_tiles;
+	bool_vector2D explored_tiles;
 
 	Commander* commander { nullptr };
 	std::weak_ptr<Map> map;
