@@ -340,6 +340,7 @@ xcopy "$(ProjectDir)lua" "$(TargetDir)lua" /e /y /i /r</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\effects\missile.cpp" />
     <ClCompile Include="src\game\fog_of_war.cpp" />
     <ClCompile Include="src\game\commander.cpp" />
     <ClCompile Include="src\game\defs.cpp" />
@@ -370,12 +371,14 @@ xcopy "$(ProjectDir)lua" "$(TargetDir)lua" /e /y /i /r</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\commander.fwd.h" />
+    <ClInclude Include="src\game\effects\missile.h" />
     <ClInclude Include="src\game\fog_of_war.fwd.h" />
     <ClInclude Include="src\game\fog_of_war.h" />
     <ClInclude Include="src\game\commander.h" />
     <ClInclude Include="src\game\defs.h" />
     <ClInclude Include="src\game\structures\structure.h" />
     <ClInclude Include="src\game\structures\structure_blueprint.h" />
+    <ClInclude Include="src\game\structures\structure_silo.h" />
     <ClInclude Include="src\game\units\states\unit_state_attack.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_build.hpp" />
     <ClInclude Include="src\game\units\states\unit_state_move_in.hpp" />

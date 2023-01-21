@@ -2,9 +2,9 @@
 
 #include "raylib.h"
 
-#include "../../entity.h"
-#include "../map.h"
-#include "../../assets_manager.h"
+#include <src/entity.h>
+#include <src/game/map.h>
+#include <src/assets_manager.h>
 #include "pixel_particles.h"
 
 #include "explosion_manager.h"

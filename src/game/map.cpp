@@ -11,6 +11,7 @@
 
 #include <src/game/units/unit.h>
 #include "commander.h"
+#include "structures/structure_silo.h"
 
 
 Map::Map( int w, int h )
@@ -257,14 +258,17 @@ void Map::generate( const unsigned int _seed )
 			blueprint = GameManager::create<StructureBlueprint>( pos.x + 1, pos.y - 1, Defs::get_structure( "drill" ).data, weak_ptr );
 			blueprint->set_team( team );
 			blueprint->reserve_pos();
+
+			auto silo = GameManager::create<StructureSilo>( pos.x + 1, pos.y, Defs::get_structure( "silo" ).data, weak_ptr );
+			silo->set_team( team );
+			silo->reserve_pos();
+			silo->set_opened( team % 2 == 0 );
 			//GameManager::create<StructureDrill>( pos.x + 2, pos.y + 1, weak_ptr )->set_team( team );
 			/*GameManager::create<StructureNexus>( 4 + team * 2, 5, this )->set_team( (TEAM) team );
 			GameManager::create<StructureGenerator>( 4 + team * 2, 7, this )->set_team( (TEAM) team );
 			GameManager::create<StructureDrill>( 5 + team * 2, 7, this )->set_team( (TEAM) team );
 			
-			auto silo = GameManager::create<StructureSilo>( 4 + team * 2, 8, this );
-			silo->set_team( (TEAM) team );
-			silo->set_opened( team % 2 == 0 );*/
+			*/
 		}
 	#pragma endregion
 }

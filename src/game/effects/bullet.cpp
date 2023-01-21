@@ -6,7 +6,7 @@ Bullet::Bullet( std::weak_ptr<Map> map, Vector2 pos, Vector2 dir, float dist, in
 	map( map ), dist_to_move( dist ),
 	damage( damage ), explosion_radius( explosion_radius ), move_speed( move_speed )
 {
-	dest.x = (float) pos.x, dest.y = (float) pos.y;
+	dest.x = pos.x, dest.y = pos.y;
 	dest.width = (float) size.x * Map::TILE_SIZE, dest.height = (float) size.y * Map::TILE_SIZE;
 
 	set_move_dir( dir );
