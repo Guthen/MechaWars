@@ -94,4 +94,5 @@ namespace utility
 	//  mathematical functions from https://easings.net/
 	static float ease_in_expo( float x ) { return x == 0 ? 0 : powf( 2, 10 * x - 10 ); }
 	static float ease_in_cubic( float x ) { return x * x * x; }
+	static float ease_in_quint( float x ) { return x * x * x * x * x; }
 }

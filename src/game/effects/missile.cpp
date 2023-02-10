@@ -4,7 +4,8 @@ Missile::Missile( std::weak_ptr<Map> map, Int2 pos, Int2 target, int damage, int
 	: map( map ),
 	damage( damage ), explosion_radius( explosion_radius )
 {
-	dest.x = ( (float) pos.x + 0.5f ) * Map::TILE_SIZE, dest.y = (float) pos.y * Map::TILE_SIZE;
+	this->pos = pos * Map::TILE_SIZE + Int2 { Map::TILE_SIZE / 2, Map::TILE_SIZE };
+	dest.x = this->pos.x, dest.y = this->pos.y;
 	dest.width = 8.0f, dest.height = 16.0f;
 
 	target_pos = ( target * Map::TILE_SIZE ).to_v2();
@@ -14,6 +15,7 @@ Missile::Missile( std::weak_ptr<Map> map, Int2 pos, Int2 target, int damage, int
 	team_quad = Rectangle { 8, 0, 8, 16 };
 
 	//  setup flames animation
+	animator.set_fps( 12.0f );
 	animator.add_frame( Rectangle { 0, 16, 8, 16 } );
 	animator.add_frame( Rectangle { 8, 16, 8, 16 } );
 	animator.add_frame( Rectangle { 16, 16, 8, 16 } );
@@ -30,12 +32,23 @@ void Missile::update( float dt )
 	float y_dir = is_falling ? 1.0f : -1.0f;
 	dest.y += y_dir * current_move_speed * dt;
 
+	life_time = life_time + dt;
+
 	if ( !is_falling )
 	{
 		//  speed update
-		current_move_speed = utility::lerp( current_move_speed, move_speed, dt * 0.5f );
+		current_move_speed = utility::lerp( current_move_speed, move_speed, dt * LAUNCH_GAIN_SPEED );
 
-		if ( dest.y <= -Map::TILE_SIZE - move_speed * 2.0f )
+		//  shake update
+		float shake_time = life_time <= MAX_SHAKE_TIME ? MAX_SHAKE_TIME : life_time;
+		float shake_scale = utility::ease_in_cubic( shake_time / MAX_SHAKE_TIME );
+
+		float game_time = GameManager::get_time();
+		dest.x = pos.x 
+			   + sinf( life_time + shake_scale * HEAVY_SHAKE_FREQUENCY ) * 0.25f
+			   + cosf( life_time - 0.5f + shake_scale * LOW_SHAKE_FREQUENCY ) * 1.0f;
+
+		if ( dest.y <= -Map::TILE_SIZE - move_speed * TIME_TO_START_FALLING )
 		{
 			is_falling = true;
 			is_drawing_flames = false;
@@ -48,7 +61,7 @@ void Missile::update( float dt )
 	}
 	else
 	{
-		current_move_speed = std::min( move_speed * 2.0f, current_move_speed + current_move_speed * 2.0f * dt );
+		current_move_speed = std::min( fall_move_speed, current_move_speed + current_move_speed * FALL_GAIN_SPEED * dt );
 
 		if ( dest.y >= target_pos.y )
 		{
@@ -62,7 +75,15 @@ void Missile::render()
 {
 	Vector2 origin { dest.width / 2.0f, dest.height / 2.0f };
 
+	GameCamera* camera = GameCamera::get_current();
+	Rectangle clipping = camera->world_to_viewport( world_clipping );
+
 	//  draw missile
+	//DrawRectangleLinesEx( world_clipping, 1.0f, RED );
+	bool should_clip = !is_falling && clipping.width > 0.0f;
+	if ( should_clip )
+		BeginScissorMode( clipping.x, clipping.y, clipping.width, clipping.height );
+
 	DrawTexturePro( texture, quad, dest, origin, angle, WHITE );
 	
 	//  draw team color
@@ -77,6 +98,9 @@ void Missile::render()
 	{
 		DrawTexturePro( texture, flame_quad, dest, origin, angle, WHITE );
 	}
+
+	if ( should_clip )
+		EndScissorMode();
 }
 
 void Missile::impact()

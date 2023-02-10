@@ -9,9 +9,17 @@
 class Missile : public Entity
 {
 protected:
+	const float LAUNCH_GAIN_SPEED = 0.75f;
+	const float FALL_GAIN_SPEED = 2.0f;
+	const float TIME_TO_START_FALLING = 2.0f;
+	const float MAX_SHAKE_TIME = 0.75f;
+	const float HEAVY_SHAKE_FREQUENCY = 5.0f;
+	const float LOW_SHAKE_FREQUENCY = 1.0f;
+
 	Vector2 target_pos;
-	float move_speed = 200.0f;
+	float move_speed = 300.0f, fall_move_speed = 400.0f;
 	float current_move_speed = 0.0f;
+	float life_time = 0.0f;
 
 	int damage = 100;
 	int explosion_radius = 5;
@@ -22,6 +30,7 @@ protected:
 	Texture texture;
 	Animator animator;
 	Rectangle team_quad {}, flame_quad {};
+	Rectangle world_clipping {};
 
 	float angle = 0.0f;
 	bool is_falling = false;
@@ -33,6 +42,8 @@ public:
 	void render() override;
 
 	void set_owner( std::weak_ptr<WorldEntity> ent ) { owner = ent; }
+
+	void set_clipping( Rectangle clip ) { world_clipping = clip; }
 
 	virtual void impact();
 };

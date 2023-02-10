@@ -122,6 +122,22 @@ public:
 		return mouse_pos;
 	}
 
+	Rectangle world_to_viewport( const Rectangle& world_rect )
+	{
+		Vector2 viewport_size = get_viewport_size();
+		Rectangle rect( world_rect );
+
+		//  apply translation
+		rect.x += viewport_size.x - camera.target.x;
+		rect.y += viewport_size.y - camera.target.y;
+
+		//  apply zoom
+		rect.x *= camera.zoom; rect.y *= camera.zoom;
+		rect.width *= camera.zoom, rect.height *= camera.zoom;
+
+		return rect;
+	}
+
 	void set_offset( const float x, const float y ) 
 	{ 
 		camera.offset.x = x; 

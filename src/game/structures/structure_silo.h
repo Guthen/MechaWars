@@ -28,7 +28,22 @@ public:
 		if ( !map_tmp )
 			return;
 
+		//  open the hatch
+		set_opened( true );
+
+		//  spawn missile
 		auto missile = GameManager::create<Missile>( map, Int2 { pos.x, pos.y + 1 }, map_tmp->get_size() / 2, 100, 10);
 		missile->set_owner( _get_shared_from_this<WorldEntity>() );
+
+		//  clip missile rendering (exit from silo)
+		Rectangle missile_dest = missile->get_dest_rect();
+		missile->set_clipping( 
+			Rectangle { 
+				missile_dest.x - missile_dest.width, 
+				0.0f, 
+				missile_dest.width * 2.0f, 
+				dest.y + Map::TILE_SIZE - 2.0f
+			}
+		);
 	}
 };
