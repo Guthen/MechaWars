@@ -1,9 +1,9 @@
 #include "assets_manager.h"
 
-std::map<const char*, Texture, utility::StrComp> AssetsManager::textures;
-std::map<const char*, Shader, utility::StrComp> AssetsManager::shaders;
+std::map<std::string, Texture> AssetsManager::textures;
+std::map<std::string, Shader> AssetsManager::shaders;
 
-Texture AssetsManager::get_or_load_texture( const char* filename )
+Texture AssetsManager::get_or_load_texture( std::string filename )
 {
 	//  retrieve our registered texture
 	if ( textures.find( filename ) != textures.end() )
@@ -13,13 +13,13 @@ Texture AssetsManager::get_or_load_texture( const char* filename )
 	}
 
 	//  load texture
-	Texture texture = LoadTexture( filename );
-	textures.insert( std::pair<const char*, Texture>( filename, texture ) );
-	//printf( "\nAssets: texture \"%s\" (ID: %d) has been loaded\n", filename, texture.id );
+	Texture texture = LoadTexture( filename.c_str() );
+	textures.insert( std::pair<std::string, Texture>( filename, texture ) );
+	printf( "\nAssets: texture \"%s\" (ID: %d) has been loaded\n", filename.c_str(), texture.id);
 	return texture;
 }
 
-Shader AssetsManager::get_or_load_shader( const char* filename )
+Shader AssetsManager::get_or_load_shader( std::string filename )
 {
 	//  retrieve our registered shader
 	if ( shaders.find( filename ) != shaders.end() )
@@ -29,9 +29,9 @@ Shader AssetsManager::get_or_load_shader( const char* filename )
 	}
 
 	//  load texture
-	Shader shader = LoadShader( 0, filename );
-	shaders.insert( std::pair<const char*, Shader>( filename, shader ) );
-	//printf( "\nAssets: texture \"%s\" (ID: %d) has been loaded\n", filename, texture.id );
+	Shader shader = LoadShader( 0, filename.c_str() );
+	shaders.insert( std::pair<std::string, Shader>( filename, shader ) );
+	printf( "\nAssets: shader \"%s\" (ID: %d) has been loaded\n", filename.c_str(), shader.id);
 	return shader;
 }
 
@@ -52,18 +52,18 @@ std::vector<Rectangle> AssetsManager::slice_texture( const Texture texture, cons
 void AssetsManager::free()
 {
 	//  textures
-	for ( const std::pair<const char*, Texture>& pair : textures )
+	for ( const auto& pair : textures )
 	{
 		UnloadTexture( pair.second );
-		//printf( "Assets: texture \"%s\" has been freed\n", pair.first );
+		printf( "Assets: texture \"%s\" has been freed\n", pair.first.c_str() );
 	}
 	textures.clear();
 
 	//  shaders
-	for ( const std::pair<const char*, Shader>& pair : shaders )
+	for ( const auto& pair : shaders )
 	{
 		UnloadShader( pair.second );
-		//printf( "Assets: texture \"%s\" has been freed\n", pair.first );
+		printf( "Assets: shader \"%s\" has been freed\n", pair.first.c_str() );
 	}
 	shaders.clear();
 }
