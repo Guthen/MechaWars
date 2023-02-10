@@ -31,7 +31,7 @@ public:
 	bool is_visible( const Int2& pos );
 	void provide_vision( Int2 pos, float range );
 
-	void force_update();
+	bool force_update();
 
 	void update( float dt ) override;
 	void render() override;

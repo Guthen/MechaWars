@@ -89,15 +89,17 @@ void FogOfWar::provide_vision( Int2 pos, float range )
 		}
 }
 
-void FogOfWar::force_update()
+bool FogOfWar::force_update()
 {
+	auto entities = commander->get_owned_entities();
+	if ( entities->empty() ) return false;
+
 	//  clear visibility
 	for ( int y = 0; y < visible_tiles.size(); y++ )
 		for ( int x = 0; x < visible_tiles[y].size(); x++ )
 			visible_tiles[y][x] = false;
 
 	//  update all-entities vision
-	auto entities = commander->get_owned_entities();
 	for ( auto itr = entities->begin(); itr != entities->end(); itr++ )
 	{
 		std::weak_ptr<WorldEntity> ent = *itr;
@@ -111,14 +113,16 @@ void FogOfWar::force_update()
 
 	//  ask for render update
 	should_update_rt = true;
+
+	return true;
 }
 
 void FogOfWar::update( float dt )
 {
 	if ( should_update )
 	{
-		force_update();
-		should_update = false;
+		if ( force_update() )
+			should_update = false;
 	}
 
 	//  update render target
