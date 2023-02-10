@@ -39,7 +39,7 @@ public:
 	};
 
 	Map( int w, int h );
-	//~Map() override { printf( "hey map is going out" ); }
+	~Map();
 
 	void set_size( const int w, const int h ) override
 	{

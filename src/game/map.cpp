@@ -29,6 +29,13 @@ Map::Map( int w, int h )
 	//fill( 0, 0, w, h, 0 );
 }
 
+Map::~Map()
+{
+	UnloadRenderTexture( rt );
+
+	Pathfinder::release();
+}
+
 void Map::_rt_update()
 {
 	BeginTextureMode( rt );

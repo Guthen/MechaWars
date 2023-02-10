@@ -22,6 +22,7 @@ public:
 
 	static void init( int w, int h );
 	static void render();
+	static void release();
 
 	static void set_pos_weight( Int2 pos, float weight );
 	static void set_pos_disabled( Int2 pos, bool disabled );

@@ -23,6 +23,11 @@ FogOfWar::FogOfWar( Commander* commander, std::shared_ptr<Map> map )
 	explored_tiles = bool_vector2D( map_size.y, row );
 }
 
+FogOfWar::~FogOfWar()
+{
+	UnloadRenderTexture( rt );
+}
+
 void FogOfWar::_rt_update()
 {
 	BeginTextureMode( rt );

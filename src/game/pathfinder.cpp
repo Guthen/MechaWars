@@ -111,6 +111,11 @@ void Pathfinder::render()
 	DrawTexturePro( rt.texture, source, dest, Vector2 { 0 ,0 }, 0.0f, WHITE );
 }
 
+void Pathfinder::release()
+{
+	UnloadRenderTexture( rt );
+}
+
 void Pathfinder::set_pos_weight( Int2 pos, float weight )
 {
 	int node_id = get_pos_id( pos.x, pos.y );

@@ -24,6 +24,7 @@ private:
 	std::weak_ptr<Map> map;
 public:
 	FogOfWar( Commander* commander, std::shared_ptr<Map> map );
+	~FogOfWar();
 
 	void schedule_update() { should_update = true; }
 
