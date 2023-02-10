@@ -15,7 +15,8 @@ void GameScene::init()
 	camera.set_bounds( 0, 0, map_tmp->get_size().x * 8.0f, map_tmp->get_size().y * 8.0f );
 	//camera.set_is_bounded( true );
 	//camera.move_to( camera.get_bounds().width / 2, camera.get_bounds().height / 2 );
-	camera.move_to( 0.0f, 0.0f );
+	Int2 start_pos = Commander::PLAYER_COMMANDER->start_pos * Map::TILE_SIZE;
+	camera.move_to( start_pos.x, start_pos.y );
 
 	//  create tile cursor
 	tile_cursor = GameManager::create<UITileCursor>( map );

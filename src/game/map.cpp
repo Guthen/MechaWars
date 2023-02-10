@@ -220,6 +220,7 @@ void Map::generate( const unsigned int _seed )
 
 			//  search for a valid nexus position
 			Int2 pos = find_nexus_position( get_start_position_for_player( id ));
+			commander->start_pos = pos + Int2 { 1, 1 };
 
 			//  create nexus
 			/*auto nexus = GameManager::create<StructureNexus>( pos.x, pos.y, weak_ptr );
@@ -258,11 +259,11 @@ void Map::generate( const unsigned int _seed )
 
 			//  create blueprint
 			StructureData data = Defs::get_structure( "nexus" ).data;
-			auto blueprint = GameManager::create<StructureBlueprint>( pos.x - 1, pos.y - 1, data, weak_ptr );
-			blueprint->set_team( team );
-			blueprint->reserve_pos();
+			auto nexus = GameManager::create<Structure>( pos.x - 1, pos.y - 1, data, weak_ptr );
+			nexus->set_team( team );
+			nexus->reserve_pos();
 
-			blueprint = GameManager::create<StructureBlueprint>( pos.x + 1, pos.y - 1, Defs::get_structure( "drill" ).data, weak_ptr );
+			auto blueprint = GameManager::create<StructureBlueprint>( pos.x + 1, pos.y - 1, Defs::get_structure( "drill" ).data, weak_ptr );
 			blueprint->set_team( team );
 			blueprint->reserve_pos();
 

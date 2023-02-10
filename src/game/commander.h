@@ -16,6 +16,8 @@ private:
 	std::weak_ptr<Map> map;
 	world_entity_vector owned_entities;
 public:
+	Int2 start_pos { 0, 0 };
+
 	static Commander* PLAYER_COMMANDER;
 	static std::vector<Commander*> ALL;
 
