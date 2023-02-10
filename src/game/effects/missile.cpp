@@ -33,7 +33,7 @@ void Missile::update( float dt )
 	if ( !is_falling )
 	{
 		//  speed update
-		current_move_speed = utility::lerp( current_move_speed, move_speed, dt * 2.0f );
+		current_move_speed = utility::lerp( current_move_speed, move_speed, dt * 0.5f );
 
 		if ( dest.y <= -Map::TILE_SIZE - move_speed * 2.0f )
 		{
