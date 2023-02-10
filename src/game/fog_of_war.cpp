@@ -9,8 +9,13 @@ FogOfWar::FogOfWar( Commander* commander, std::shared_ptr<Map> map )
 	Int2 map_size = map->get_size();
 	set_size( map_size );
 
-	rt = LoadRenderTexture( map_size.x * Map::TILE_SIZE, map_size.y * Map::TILE_SIZE );
-	quad = Rectangle { 0, 0, (float) rt.texture.width, (float) -rt.texture.height };
+	//  NOTE: I had to inset the actual fog of war texture to avoid a 
+	//		  visual issue which reveals the opposite edges w/ bilinear
+	rt = LoadRenderTexture( map_size.x + 2, map_size.y + 2 );
+	SetTextureFilter( rt.texture, TEXTURE_FILTER_BILINEAR );
+	quad = Rectangle { 1, 1, (float) map_size.x, (float) -map_size.y };
+	dest.x = 0.0f, dest.y = 0.0f;
+	dest.width = map_size.x * Map::TILE_SIZE, dest.height = map_size.y * Map::TILE_SIZE;
 
 	//  init bool 2D vector
 	bool_vector row( map_size.x, false );
@@ -21,7 +26,13 @@ FogOfWar::FogOfWar( Commander* commander, std::shared_ptr<Map> map )
 void FogOfWar::_rt_update()
 {
 	BeginTextureMode( rt );
-	ClearBackground( Color { 0, 0, 0, 0 } );
+	ClearBackground( BLANK );
+
+	//  fix the bilinear smoothing edges
+	DrawRectangle( 0, 0, rt.texture.width, 1, BLACK );
+	DrawRectangle( 0, 0, 1, rt.texture.height, BLACK );
+	DrawRectangle( 0, rt.texture.height - 1, rt.texture.width, 1, BLACK );
+	DrawRectangle( rt.texture.width - 1, 0, 1, rt.texture.height, BLACK );
 
 	//  draw non-visible tiles
 	for ( int y = 0; y < visible_tiles.size(); y++ )
@@ -30,9 +41,9 @@ void FogOfWar::_rt_update()
 			if ( !visible_tiles[y][x] )
 			{
 				if ( explored_tiles[y][x] )
-					DrawRectangle( x * Map::TILE_SIZE, y * Map::TILE_SIZE, Map::TILE_SIZE, Map::TILE_SIZE, Color { 0, 0, 0, 127 } );
+					DrawRectangle( x + 1, y + 1, 1, 1, Color { 0, 0, 0, 127 } );
 				else
-					DrawRectangle( x * Map::TILE_SIZE, y * Map::TILE_SIZE, Map::TILE_SIZE, Map::TILE_SIZE, BLACK );
+					DrawRectangle( x + 1, y + 1, 1, 1, BLACK );
 			}
 		}
 
@@ -118,5 +129,5 @@ void FogOfWar::render()
 	if ( !( commander == Commander::PLAYER_COMMANDER ) ) return;
 
 	//  draw render texture
-	DrawTextureRec( rt.texture, quad, Vector2 { 0.0f, 0.0f }, WHITE );
+	DrawTexturePro( rt.texture, quad, dest, Vector2 { 0.0f, 0.0f }, 0.0f, WHITE );
 }
