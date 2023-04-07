@@ -44,6 +44,8 @@ private:
 	static int sorting_frames_delay;
 	static bool _is_clearing;
 public:
+	static float time_scale;
+
 	GameManager() = delete;
 
 	template <typename T, typename... Args> 

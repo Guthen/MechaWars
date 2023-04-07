@@ -20,6 +20,8 @@ bool GameManager::is_queued_sorting;
 int GameManager::sorting_frames_delay;
 bool GameManager::_is_clearing;
 
+float GameManager::time_scale = 1.0f;
+
 void GameManager::change_scene_to( std::shared_ptr<Scene> scene )
 {
 	clear();
@@ -93,6 +95,7 @@ void GameManager::handle_input()
 	int mouse_button = -1;
 	bool is_pressed = false;
 
+	//  retrieving mouse button
 	for ( int button = MOUSE_BUTTON_LEFT; button < MOUSE_BUTTON_BACK; button++ )
 	{
 		if ( IsMouseButtonPressed( button ) )
@@ -109,6 +112,7 @@ void GameManager::handle_input()
 		}
 	}
 
+	//  invoke event
 	if ( mouse_button >= 0 )
 		for ( const std::shared_ptr<Entity>& ent : entities )
 		{
@@ -140,6 +144,8 @@ void GameManager::update( float dt )
 
 	//  update entities
 	handle_input();
+
+	float scaled_dt = dt * time_scale;
 	for ( const std::shared_ptr<Entity>& ent : entities )
 	{
 		//  init
@@ -150,7 +156,7 @@ void GameManager::update( float dt )
 		}
 
 		//  update
-		ent->update( dt );
+		ent->update( scaled_dt );
 	}
 
 	//  update deletion queue

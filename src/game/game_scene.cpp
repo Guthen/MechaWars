@@ -38,6 +38,13 @@ void GameScene::update( float dt )
 		);
 	else if ( IsKeyPressed( KEY_COMMA ) )
 		GameManager::set_debug_state( (DEBUG_STATE) ( ( (int) GameManager::get_debug_state() + 1 ) % DEBUG_STATE_COUNT ) );
+	
+	//  debug
+	if ( GameManager::get_debug_state() > DEBUG_STATE::NONE )
+	{
+		if ( IsKeyPressed( KEY_CAPS_LOCK ) )
+			GameManager::time_scale = GameManager::time_scale == 1.0f ? 0.2f : 1.0f;
+	}
 }
 
 void GameScene::render_hud()
