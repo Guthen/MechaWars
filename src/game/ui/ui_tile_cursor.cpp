@@ -42,7 +42,8 @@ void UITileCursor::_update_to_hovered()
 
 UITileCursor::UITileCursor( std::weak_ptr<Map> map ) : UIBase(), map( map ), applied_pos( { 0, 0 } )
 {
-	texture = AssetsManager::get_or_load_texture( "assets/textures/ui/tile_cursor.png" );
+	default_texture = AssetsManager::get_or_load_texture( "assets/textures/ui/tile_cursor.png" );
+	target_texture = AssetsManager::get_or_load_texture( "assets/textures/ui/target.png" );
 }
 
 bool UITileCursor::unhandled_mouse_click( int mouse_button, bool is_pressed )
@@ -56,6 +57,12 @@ bool UITileCursor::unhandled_mouse_click( int mouse_button, bool is_pressed )
 	{
 		//  left click: select/unselect structure
 		case MOUSE_BUTTON_LEFT:
+			if ( target_callback != nullptr )
+			{
+				exit_target_mode( true, applied_pos );
+				break;
+			}
+
 			if ( hovered_tmp )
 			{
 				if ( !( hovered_tmp == selected_tmp ) )
@@ -73,6 +80,12 @@ bool UITileCursor::unhandled_mouse_click( int mouse_button, bool is_pressed )
 			break;
 		//  right click: custom behaviour
 		case MOUSE_BUTTON_RIGHT:
+			if ( target_callback != nullptr )
+			{
+				exit_target_mode( false, applied_pos );
+				break;
+			}
+
 			if ( selected_tmp )
 				selected_tmp->on_right_click_selected();
 			break;
@@ -146,6 +159,14 @@ void UITileCursor::update( float dt )
 const int OFFSET = 1;
 void UITileCursor::render()
 {
+	//  draw target mode
+	if ( target_callback != nullptr )
+	{
+		DrawTexture( target_texture, applied_pos.x * Map::TILE_SIZE, applied_pos.y * Map::TILE_SIZE, color );
+		return;
+	}
+
+	//  draw default cursor
 	float offset = OFFSET;
 	if ( is_selecting )
 		offset += 1 + abs( sin( GameManager::get_time() * 3.0f ) ) * .5f;
@@ -153,13 +174,13 @@ void UITileCursor::render()
 		offset += 1;
 
 	//  top-left
-	DrawTextureEx( texture, Vector2 { dest.x - offset, dest.y - offset }, 0.0f, 1.0f, color );
+	DrawTextureEx( default_texture, Vector2 { dest.x - offset, dest.y - offset }, 0.0f, 1.0f, color );
 	//  top-right
-	DrawTextureEx( texture, Vector2 { dest.x + size.x * Map::TILE_SIZE + offset, dest.y - offset }, 90.0f, 1.0f, color );
+	DrawTextureEx( default_texture, Vector2 { dest.x + size.x * Map::TILE_SIZE + offset, dest.y - offset }, 90.0f, 1.0f, color );
 	//  bottom-left
-	DrawTextureEx( texture, Vector2 { dest.x - offset, dest.y + size.y * Map::TILE_SIZE + offset }, 270.0f, 1.0f, color );
+	DrawTextureEx( default_texture, Vector2 { dest.x - offset, dest.y + size.y * Map::TILE_SIZE + offset }, 270.0f, 1.0f, color );
 	//  bottom-right
-	DrawTextureEx( texture, Vector2 { dest.x + size.x * Map::TILE_SIZE + offset, dest.y + size.y * Map::TILE_SIZE + offset }, 180.0f, 1.0f, color );
+	DrawTextureEx( default_texture, Vector2 { dest.x + size.x * Map::TILE_SIZE + offset, dest.y + size.y * Map::TILE_SIZE + offset }, 180.0f, 1.0f, color );
 }
 
 void UITileCursor::select( std::weak_ptr<WorldEntity> target )
@@ -173,4 +194,17 @@ void UITileCursor::select( std::weak_ptr<WorldEntity> target )
 	//  update to structure
 	hovered_structure = selected_structure;
 	_update_to_hovered();
+}
+
+void UITileCursor::enter_target_mode( std::function<void( bool, Int2 )> callback )
+{
+	target_callback = callback;
+}
+
+void UITileCursor::exit_target_mode( bool is_success, Int2 pos )
+{
+	if ( target_callback == nullptr ) return;
+
+	target_callback( is_success, pos );
+	target_callback = nullptr;
 }

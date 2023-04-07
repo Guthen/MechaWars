@@ -8,7 +8,10 @@
 class UITileCursor : public UIBase
 {
 private:
-	Texture texture;
+	Texture default_texture;
+	Texture target_texture;
+
+	std::function<void( bool, Int2 )> target_callback { nullptr };
 
 	std::weak_ptr<Map> map;
 
@@ -31,4 +34,7 @@ public:
 	void render() override;
 
 	void select( std::weak_ptr<WorldEntity> target );
+
+	void enter_target_mode( std::function<void( bool, Int2 )> callback);
+	void exit_target_mode( bool is_success, Int2 pos );
 };
