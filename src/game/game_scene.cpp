@@ -2,6 +2,7 @@
 
 #include "pathfinder.h"
 #include "commander.h"
+#include "fog_of_war.h"
 
 void GameScene::init()
 {
@@ -44,6 +45,15 @@ void GameScene::update( float dt )
 	{
 		if ( IsKeyPressed( KEY_CAPS_LOCK ) )
 			GameManager::time_scale = GameManager::time_scale == 1.0f ? 0.2f : 1.0f;
+		if ( IsKeyPressed( KEY_F ) )
+		{
+			Commander* commander = Commander::PLAYER_COMMANDER;
+			auto fow_tmp = commander->get_fog_of_war().lock();
+			auto map_tmp = map.lock();
+
+			fow_tmp->provide_vision( map_tmp->get_size() / 2, map_tmp->get_size().x );
+			fow_tmp->force_update();
+		}
 	}
 }
 
